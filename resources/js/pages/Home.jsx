@@ -1,6 +1,10 @@
-const Home=()=>{
-    return(
-        <h3>Home</h3>
+import Banner from "../components/Banner";
+
+const Home = () => {
+    return (
+        <div className="home">
+            <Banner />
+        </div>
     )
 
 }
