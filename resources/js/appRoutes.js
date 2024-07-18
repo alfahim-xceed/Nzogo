@@ -1,14 +1,17 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import ExampleComponent from './components/ExampleComponent';
-import LoginComponent from './components/LoginComponent';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Navbar from './components/Navbar';
 
 function AppRoutes() {
     return (
-        <Routes>
-            <Route path="/" element={<ExampleComponent />} />
-            <Route path="/login" element={<LoginComponent />} />
-        </Routes>
+        <>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </>
     );
 }
 
