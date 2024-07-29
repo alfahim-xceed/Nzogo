@@ -32,6 +32,6 @@ Route::middleware('auth:sanctum')->get('/user-info', [GetUserInfo::class,'show']
 //     return response()->json(['msg' => 'date received']);
 // });
 
-Route::get('/example', function () {
-    return response()->json(['message' => 'Hello, user!']);
+Route::get('/test', function () {
+    return response()->json(['message' => 'server is running!']);
 });
