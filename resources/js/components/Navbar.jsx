@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -45,9 +46,11 @@ const Navbar = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                         </svg>
                     </button>
-                    <a href="/" className="text-2xl font-bold text-blue-900 ml-2">
+                    <span className="text-2xl font-bold text-blue-900 ml-2">
+                        <Link to="/">
                         <span className="text-gray-500">VISA</span>Thing
-                    </a>
+                        </Link>
+                    </span>
                 </div>
                 <div className={`md:flex items-center ${isOpen ? 'block' : 'hidden'}`}>
                     <div
@@ -167,7 +170,11 @@ const Navbar = () => {
 
 
 
-                    <a href="#" className="block mt-4 md:inline-block md:mt-0 text-blue-900 hover:text-blue-700 mr-4">Log In</a>
+                    <div className="block mt-4 md:inline-block md:mt-0 text-blue-900 hover:text-blue-700 mr-4">
+                        <Link to="/login">
+                        Log In
+                        </Link>
+                    </div>
                     <button className="mt-4 md:mt-0 bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">Create Profile</button>
                 </div>
             </div>
