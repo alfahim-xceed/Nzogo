@@ -14,14 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//user
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\GetUserInfo;
 
-Route::get('/example-endpoint', function () {
-    return response()->json(['message' => 'Hello, world!']);
-});
 
-Route::post('/example-endpoint', function (Request $request) {
-    return response()->json(['msg' => 'date received']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
+Route::middleware('auth:sanctum')->get('/user-info', [GetUserInfo::class,'show']);
+
+// Route::get('/example-endpoint', function () {
+//     return response()->json(['message' => 'Hello, world!']);
+// });
+
+// Route::post('/example-endpoint', function (Request $request) {
+//     return response()->json(['msg' => 'date received']);
+// });
+
+Route::get('/example', function () {
+    return response()->json(['message' => 'Hello, user!']);
 });

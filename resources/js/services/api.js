@@ -9,7 +9,7 @@ export const api = createApi({
         }),
         postExampleData: builder.mutation({
             query: (data) => ({
-                url: 'example-endpoint',
+                url: '/example-endpoint',
                 method: 'POST',
                 body: data,
             }),
