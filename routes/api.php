@@ -14,23 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//user
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\GetUserInfo;
+//auth
+Route::prefix('/auth')->group(base_path('routes/auth.php'));
 
 
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
-Route::middleware('auth:sanctum')->get('/user-info', [GetUserInfo::class,'show']);
+// role
+Route::prefix('/role')->group(base_path('routes/role.php'));
 
-// Route::get('/example-endpoint', function () {
-//     return response()->json(['message' => 'Hello, world!']);
-// });
+// nid
+Route::prefix('/nid')->group(base_path('routes/nid.php'));
 
-// Route::post('/example-endpoint', function (Request $request) {
-//     return response()->json(['msg' => 'date received']);
-// });
+// passport
+Route::prefix('/passport')->group(base_path('routes/passport.php'));
 
 Route::get('/test', function () {
     return response()->json(['message' => 'server is running!']);
