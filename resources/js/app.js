@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './appRoutes';
 import '../css/app.css'; // Import Tailwind CSS
 
+
 function App() {
     return (
         <Provider store={store}>

@@ -20,9 +20,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('role_id'); // Add this line to create a role_id foreign key
             $table->timestamps();
 
-            // Set up foreign key constraint
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-        });
+        });  // Ensure the InnoDB engine is used
     }
 
     /**

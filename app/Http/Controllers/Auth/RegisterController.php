@@ -13,6 +13,9 @@ class RegisterController extends Controller
 {
     public function register(Request $request)
     {
+
+        // return response()->json(['message' => 'server is running!']);
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -35,6 +38,9 @@ class RegisterController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['user' => $user, 'token' => $token], 201);
+        return response()->json([
+            'access_token' => $token,
+            'id' => $user->id,
+        ], 201);
     }
 }

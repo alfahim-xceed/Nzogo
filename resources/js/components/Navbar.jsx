@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCompanyOpen, setIsCompanyOpen] = useState(false);
     const [isServicesOpen, setIsServicesOpen] = useState(false);
     const [isInformationOpen, setIsInformationOpen] = useState(false);
+
+    const token = useSelector((state) => state.auth.token);
+
 
     let companyTimeout, servicesTimeout, informationTimeout;
 
@@ -48,7 +52,7 @@ const Navbar = () => {
                     </button>
                     <span className="text-2xl font-bold text-blue-900 ml-2">
                         <Link to="/">
-                        <span className="text-gray-500">VISA</span>Thing
+                            <span className="text-gray-500">VISA</span>Thing
                         </Link>
                     </span>
                 </div>
@@ -168,14 +172,20 @@ const Navbar = () => {
                         </button>
                     </div>
 
-
-
-                    <div className="block mt-4 md:inline-block md:mt-0 text-blue-900 hover:text-blue-700 mr-4">
-                        <Link to="/login">
-                        Log In
+                    {token ? <button className="mt-4 md:mt-0 bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">
+                        <Link to="/user/profile">
+                            Create Profile
                         </Link>
-                    </div>
-                    <button className="mt-4 md:mt-0 bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">Create Profile</button>
+                    </button> :
+                        <div className="block mt-4 md:inline-block md:mt-0 text-blue-900 hover:text-blue-700 mr-4">
+                            <Link to="/login">
+                                Log In
+                            </Link>
+                        </div>
+                    }
+
+
+
                 </div>
             </div>
         </nav>

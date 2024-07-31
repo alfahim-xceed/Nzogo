@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//auth
+// auth
 Route::prefix('/auth')->group(base_path('routes/auth.php'));
 
 
