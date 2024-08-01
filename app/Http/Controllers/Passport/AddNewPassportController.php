@@ -12,7 +12,7 @@ class AddNewPassportController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'passport_url' => 'required|string',
+            'passport_url' => 'string',
             'passport_given_name' => 'required|string|max:255',
             'passport_surname' => 'required|string|max:255',
             'passport_number' => 'required|string|max:20',

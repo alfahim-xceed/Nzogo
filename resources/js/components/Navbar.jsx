@@ -174,7 +174,7 @@ const Navbar = () => {
 
                     {token ? <button className="mt-4 md:mt-0 bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">
                         <Link to="/user/profile">
-                            Create Profile
+                            My Profile
                         </Link>
                     </button> :
                         <div className="block mt-4 md:inline-block md:mt-0 text-blue-900 hover:text-blue-700 mr-4">

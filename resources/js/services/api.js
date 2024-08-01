@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // Fetch CSRF token from meta tag
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-import { useSelector } from 'react-redux'; // Import useSelector for functional components
-
 
 export const api = createApi({
     reducerPath: 'api',
@@ -22,6 +20,7 @@ export const api = createApi({
             return headers;
         },
     }),
+    tagTypes:["User","Nid"],
     endpoints: (builder) => ({
         getExampleData: builder.query({
             query: () => '/example-endpoint',
@@ -33,6 +32,7 @@ export const api = createApi({
                 body: data,
             }),
         }),
+        // Auth
         loginUser: builder.mutation({
             query: (data) => ({
                 url: "/auth/login",
@@ -50,7 +50,17 @@ export const api = createApi({
         getUserDetails: builder.query({
             query: () => ({
                 url: "/auth/logged-user-info"
-            })
+            }),
+            providesTags:["User"]
+        }),
+
+        updateUserDetails:builder.mutation({
+            query:({id,...credentials})=>({
+                url:`/auth/update/${id}`,
+                method:"PUT",
+                body:credentials
+            }),
+            invalidatesTags:["User"]
         }),
 
         logoutUser: builder.mutation({
@@ -58,8 +68,35 @@ export const api = createApi({
                 url: "/auth/logout",
                 method: "POST"
             })
+        }),
+
+        // NID
+        getNidDetails:builder.query({
+            query:(user_id)=>({
+                url:`/nid/details/${user_id}`,
+                method:"GET"
+            }),
+            providesTags:["Nid"]
+        }),
+        manageNid:builder.mutation({
+            query:(data)=>({
+                url:"/nid/manage-nid",
+                method:"POST",
+                body:data
+            }),
+            invalidatesTags:["Nid"]
         })
     }),
 });
 
-export const { useGetExampleDataQuery, usePostExampleDataMutation, useLoginUserMutation, useRegisterUserMutation, useGetUserDetailsQuery, useLogoutUserMutation } = api;
+export const { 
+    useGetExampleDataQuery, 
+    usePostExampleDataMutation, 
+    useLoginUserMutation, 
+    useRegisterUserMutation, 
+    useGetUserDetailsQuery, 
+    useLogoutUserMutation,
+    useUpdateUserDetailsMutation,
+    useGetNidDetailsQuery,
+    useManageNidMutation
+} = api;

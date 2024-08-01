@@ -3,13 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useGetUserDetailsQuery } from '../../services/api';
+import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from '../../services/api';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     email: Yup.string().email('Invalid email address').required('Email is required'),
-    phone: Yup.string().required('Phone number is required').matches(/^\d{10}$/, 'Phone number must be 10 digits'),
+    phone: Yup.string().required('Phone number is required').matches(/^\d{11}$/, 'Phone number must be 11 digits'),
 });
 
 const ManageProfile = () => {
@@ -19,7 +21,11 @@ const ManageProfile = () => {
         phone: '',
     });
 
+    const id=useSelector((state)=>state.auth.id);
+
+
     const { data: details, error, isLoading } = useGetUserDetailsQuery();
+    const [updateUserDetails,updateError]=useUpdateUserDetailsMutation();
 
     useEffect(() => {
         if (details) {
@@ -31,9 +37,22 @@ const ManageProfile = () => {
         }
     }, [details]);
 
-    const handleSubmit = (values, { resetForm }) => {
+    const handleSubmit = async (values, { resetForm }) => {
         // Handle form submission
         console.log('Form Data:', values);
+        
+
+        try {
+            let{name,email,phone}=values;
+            const res = await updateUserDetails({id,name,email,phone}).unwrap(); // Use unwrap for better error handling
+            console.log("res => ",res);
+            
+            toast.success("Profile updated");
+            
+        } catch (err) {
+            toast.error(err.message || "An error occurred");
+        }
+
     };
 
     if (isLoading) return <p>Loading...</p>;

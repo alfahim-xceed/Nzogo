@@ -42,7 +42,7 @@ const Register = () => {
             } else {
                 console.log(res.data.access_token);
                 dispatch(setToken(res.data.access_token));
-                console.log("id = > ",res.data.id);
+                console.log("id = > ", res.data.id);
                 dispatch(setId(res.data.id));
                 resetForm();
                 toast.success("Register successful");
@@ -139,7 +139,7 @@ const Register = () => {
                                     </div>
                                     <button
                                         type="submit"
-                                        className="w-full dark:bg-blue-900 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                        className="w-full bg-blue-900 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                     >
                                         Create an account
                                     </button>
