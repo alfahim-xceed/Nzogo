@@ -20,7 +20,7 @@ export const api = createApi({
             return headers;
         },
     }),
-    tagTypes:["User","Nid"],
+    tagTypes:["User","Nid","Passport"],
     endpoints: (builder) => ({
         getExampleData: builder.query({
             query: () => '/example-endpoint',
@@ -55,20 +55,29 @@ export const api = createApi({
         }),
 
         updateUserDetails:builder.mutation({
-            query:({id,...credentials})=>({
-                url:`/auth/update/${id}`,
+            query:(data)=>({
+                url:"/auth/update/my-profile",
                 method:"PUT",
-                body:credentials
+                body:data
             }),
             invalidatesTags:["User"]
         }),
 
+        updateMyPassword:builder.mutation({
+            query:(data)=>({
+                url:"/auth/update/my-password",
+                method:"PUT",
+                body:data
+            })
+        })
+        ,
         logoutUser: builder.mutation({
             query: () => ({
                 url: "/auth/logout",
                 method: "POST"
             })
         }),
+        
 
         // NID
         getNidDetails:builder.query({
@@ -85,6 +94,23 @@ export const api = createApi({
                 body:data
             }),
             invalidatesTags:["Nid"]
+        }),
+
+        // Passport
+        getPassportDetails:builder.query({
+            query:(user_id)=>({
+                url:`/passport/details/${user_id}`,
+                method:"GET"
+            }),
+            providesTags:["Passport"]
+        }),
+        managePassport:builder.mutation({
+            query:(data)=>({
+                url:"/passport/manage-passport",
+                method:"POST",
+                body:data
+            }),
+            invalidatesTags:["Passport"]
         })
     }),
 });
@@ -97,6 +123,14 @@ export const {
     useGetUserDetailsQuery, 
     useLogoutUserMutation,
     useUpdateUserDetailsMutation,
+    useUpdateMyPasswordMutation,
+    
     useGetNidDetailsQuery,
-    useManageNidMutation
+    useManageNidMutation,
+
+
+    useGetPassportDetailsQuery,
+    useManagePassportMutation
+
+
 } = api;

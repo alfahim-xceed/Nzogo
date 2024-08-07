@@ -173,7 +173,7 @@ const Navbar = () => {
                     </div>
 
                     {token ? <button className="mt-4 md:mt-0 bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">
-                        <Link to="/user/profile">
+                        <Link to="/profile">
                             My Profile
                         </Link>
                     </button> :

@@ -10,11 +10,11 @@ import Layout from './components/Layout';
 import UserList from './pages/admin/manage_users/UserList';
 import UpdateUser from './pages/admin/manage_users/UpdateUser';
 import CreateUser from './pages/admin/manage_users/CreateUser';
-import ManageNid from './components/profile/ManageNid';
-import ManagePassport from './components/profile/ManagePassport';
+import ManageNid from './pages/auth/ManageNid';
+import ManagePassport from './pages/auth/ManagePassport';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
-import ManageProfile from './components/profile/ManageProfile';
+import ManageProfile from './pages/auth/ManageProfile';
 
 function AppRoutes() {
     return (
@@ -25,7 +25,7 @@ function AppRoutes() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path='/' element={<Layout />}>
-                    <Route path="/user/profile" element={<Profile />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/admin/user-list" element={<UserList/>} />
                     <Route path="/admin/create-user" element={<CreateUser/>}/>
                     <Route path="/admin/update-user" element={<UpdateUser/>}/>

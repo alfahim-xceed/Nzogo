@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ManageUserNidController extends Controller
 {
+    public function __construct()
+    {
+        // Ensure the user is authenticated
+        $this->middleware('auth');
+    }
+
     public function manage(Request $request)
     {
         // Validation rules for NID
@@ -17,6 +23,12 @@ class ManageUserNidController extends Controller
             'nid_number' => 'required|string|max:255',
             'address' => 'required|string',
         ]);
+
+        // Check if the authenticated user is the owner of the NID or an admin
+        $user = Auth::user();
+        if ($user->id !== $validatedData['user_id'] && $user->role->name!='admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
         // Find or create an NID record for the given user ID
         $nid = Nid::firstOrNew(['user_id' => $validatedData['user_id']]);

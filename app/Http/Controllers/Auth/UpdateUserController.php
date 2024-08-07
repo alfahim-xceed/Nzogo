@@ -44,6 +44,7 @@ class UpdateUserController extends Controller
         // If the user is not an admin, prevent them from updating the role field
         if ($authenticatedUser->role->name !== 'admin') {
             unset($validatedData['role_id']);
+            unset($validatedData['password']);
         }
 
         if ($request->filled('password')) {
