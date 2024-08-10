@@ -52,7 +52,7 @@ const Navbar = () => {
                     </button>
                     <span className="text-2xl font-bold text-blue-900 ml-2">
                         <Link to="/">
-                            <span className="text-gray-500">VISA</span>Thing
+                            <span className="text-gray-500">N</span>zogo
                         </Link>
                     </span>
                 </div>
