@@ -38,16 +38,25 @@ export const api = createApi({
                 url: "/auth/login",
                 method: "POST",
                 body: data
-            })
+            }),
+            invalidatesTags:["User","Nid","Passport"]
         }),
         registerUser: builder.mutation({
             query: (data) => ({
                 url: "/auth/register",
                 method: "POST",
                 body: data
-            })
+            }),
+            invalidatesTags:["User","Nid","Passport"]
         }),
         getUserDetails: builder.query({
+            query: (id) => ({
+                url: `/auth/details/${id}`
+            }),
+            providesTags:["User"]
+        }),
+
+        getMyProfile: builder.query({
             query: () => ({
                 url: "/auth/logged-user-info"
             }),
@@ -55,8 +64,8 @@ export const api = createApi({
         }),
 
         updateUserDetails:builder.mutation({
-            query:(data)=>({
-                url:"/auth/update/my-profile",
+            query:({id,...data})=>({
+                url:`auth/update/${id}`,
                 method:"PUT",
                 body:data
             }),
@@ -75,9 +84,26 @@ export const api = createApi({
             query: () => ({
                 url: "/auth/logout",
                 method: "POST"
-            })
+            }),
+            invalidatesTags:["User","Nid","Passport"]
         }),
-        
+
+        getUserList:builder.query({
+            query:()=>({
+                url:"/auth/all",
+                method:"GET",
+            }),
+            providesTags:["User"]
+        }),
+
+        deleteUser:builder.mutation({
+            query:(id)=>({
+                url:`/auth/delete/${id}`,
+                method:"DELETE",
+            }),
+            invalidatesTags:["User"]
+        }),
+
 
         // NID
         getNidDetails:builder.query({
@@ -115,16 +141,19 @@ export const api = createApi({
     }),
 });
 
-export const { 
-    useGetExampleDataQuery, 
-    usePostExampleDataMutation, 
-    useLoginUserMutation, 
-    useRegisterUserMutation, 
-    useGetUserDetailsQuery, 
+export const {
+    useGetExampleDataQuery,
+    usePostExampleDataMutation,
+    useLoginUserMutation,
+    useRegisterUserMutation,
+    useGetUserDetailsQuery,
     useLogoutUserMutation,
     useUpdateUserDetailsMutation,
     useUpdateMyPasswordMutation,
-    
+    useGetUserListQuery,
+    useGetMyProfileQuery,
+    useDeleteUserMutation,
+
     useGetNidDetailsQuery,
     useManageNidMutation,
 

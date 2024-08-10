@@ -1,14 +1,21 @@
 import { Link } from "react-router-dom";
 
-import { useGetUserDetailsQuery } from "../../services/api";
+import { useGetMyProfileQuery } from "../../services/api";
 import { data } from "autoprefixer";
+import { useSelector } from "react-redux";
 
 const ProfileCard = () => {
 
-    const { data: details, error, isLoading } = useGetUserDetailsQuery();
+
+
+    // return <>Id is {id}</>
+    const { data: details, error, isLoading } = useGetMyProfileQuery();
 
     if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error fetching user details.</p>;
+    if (error) {
+        console.log("profile err ", error);
+        return <p>Error fetching user details.</p>;
+    }
 
     return (
         <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">

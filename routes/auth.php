@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\UpdateUserController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\UpdateMyProfileController;
 use App\Http\Controllers\Auth\UpdateMyPasswordController;
+use App\Http\Controllers\Auth\DeleteUserController;
 
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -34,7 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('/all', [GetUserListController::class, 'index']);
         Route::get('/details/{id}', [GetUserDetailsController::class, 'show']);
+        Route::delete('/delete/{id}',[DeleteUserController::class,'deleteUser']);
     });
-    
+
 });
 

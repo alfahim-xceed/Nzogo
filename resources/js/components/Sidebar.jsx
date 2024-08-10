@@ -1,21 +1,30 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 // Adjust the import path
-import {clearToken,clearId} from "../slices/authSlice"
-import { useLogoutUserMutation } from '../services/api';
+import { clearToken, clearId } from "../slices/authSlice"
+import { useGetMyProfileQuery, useLogoutUserMutation } from '../services/api';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
     const [logoutUser, { isLoading, isError }] = useLogoutUserMutation();
     const dispatch = useDispatch();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const { data: details, error, loading } = useGetMyProfileQuery();
+
+    if (loading) {
+        return <>Loading..</>
+    }
+
+    console.log("data is ", details);
     const handleLogout = async () => {
         try {
-            clearToken
+
             await logoutUser().unwrap(); // Use unwrap to handle the resolved value or throw an error
             dispatch(clearToken()); // Clear user data from Redux
             dispatch(clearId());
+            localStorage.removeItem("token");
+            localStorage.removeItem("id");
             toast.success("Logout successful");
             navigate("/");
 
@@ -26,25 +35,52 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="bg-gray-300 text-white min-h-screen p-4">
+        <aside className="bg-gray-300 text-white min-h-screen p-4 sticky top-0 h-screen">
             <h2 className="text-xl font-bold mb-4 text-center text-black dark:text-black">Menu</h2>
             <nav>
                 <ul>
-                    <li className="mb-2">
-                        <a href="#overview" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                            <span className="text-black dark:text-black">Overview</span>
-                        </a>
-                    </li>
-                    <li className="mb-2">
-                        <a href="#applied-visa" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                            <span className="text-black dark:text-black">Applied Visa</span>
-                        </a>
-                    </li>
-                    <li className="mb-2">
-                        <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                            <span className="text-black dark:text-black">Transactions</span>
-                        </a>
-                    </li>
+                    {details?.role_id == 1 ? <>
+
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/user-list">
+                                    <span className="text-black dark:text-black">Manage Users</span>
+                                </Link>
+                            </div>
+                        </li>
+                        <li className="mb-2">
+                            <a href="#applied-visa" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <span className="text-black dark:text-black">Manage Country</span>
+                            </a>
+                        </li>
+                        <li className="mb-2">
+                            <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <span className="text-black dark:text-black">Manage visa category</span>
+                            </a>
+                        </li>
+                        <li className="mb-2">
+                            <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <span className="text-black dark:text-black">Manage visa type</span>
+                            </a>
+                        </li>
+                    </> :
+                        <>
+                            <li className="mb-2">
+                                <a href="#overview" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                    <span className="text-black dark:text-black">Overview</span>
+                                </a>
+                            </li>
+                            <li className="mb-2">
+                                <a href="#applied-visa" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                    <span className="text-black dark:text-black">Applied Visa</span>
+                                </a>
+                            </li>
+                            <li className="mb-2">
+                                <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                    <span className="text-black dark:text-black">Transactions</span>
+                                </a>
+                            </li>
+                        </>}
                     <li className="mt-4">
                         <button
                             onClick={handleLogout}

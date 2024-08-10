@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
     date_of_birth: Yup.date().required('Date of birth is required').nullable(),
 });
 
-const ManagePassport = () => {
+const ManagePassport = ({ user_id }) => {
 
     const [initialValues, setInitialValues] = useState({
         passport_given_name: '',
@@ -29,33 +29,35 @@ const ManagePassport = () => {
         date_of_birth: null,
     });
 
-    const user_id = useSelector((state) => state.auth.id);
+    if (user_id == null) {
+        user_id = useSelector((state) => state.auth.id);;
+    }
+
+
     const { data: details, error, loading } = useGetPassportDetailsQuery(user_id, { skip: !user_id });
 
     const [managePassport] = useManagePassportMutation();
 
-
-
-
-
     const handleSubmit = async (values, { resetForm }) => {
-
         try {
-            let { passport_given_name,
+            let {
+                passport_given_name,
                 passport_surname,
                 passport_number,
                 passport_expiry_date,
-                date_of_birth } = values
+                date_of_birth,
+            } = values;
 
-            passport_expiry_date = formatDateString(passport_expiry_date);
-            date_of_birth = formatDateString(date_of_birth);
+            passport_expiry_date = passport_expiry_date ? formatDateString(passport_expiry_date) : null;
+            date_of_birth = date_of_birth ? formatDateString(date_of_birth) : null;
+
             const res = await managePassport({
                 user_id,
                 passport_given_name,
                 passport_surname,
                 passport_number,
                 passport_expiry_date,
-                date_of_birth
+                date_of_birth,
             }).unwrap();
 
             console.log("res => ", res);
@@ -66,16 +68,14 @@ const ManagePassport = () => {
         }
     };
 
-
     useEffect(() => {
         if (details) {
-            // console.log("details ",details);
             setInitialValues({
-                passport_given_name: details.passport_given_name,
-                passport_surname: details.passport_surname,
-                passport_number: details.passport_number,
-                passport_expiry_date: new Date(details.passport_expiry_date),
-                date_of_birth: new Date(details.date_of_birth),
+                passport_given_name: details.passport_given_name || '',
+                passport_surname: details.passport_surname || '',
+                passport_number: details.passport_number || '',
+                passport_expiry_date: details.passport_expiry_date ? new Date(details.passport_expiry_date) : null,
+                date_of_birth: details.date_of_birth ? new Date(details.date_of_birth) : null,
             });
         }
     }, [details]);

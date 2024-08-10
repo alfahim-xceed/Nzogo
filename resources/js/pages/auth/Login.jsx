@@ -30,9 +30,11 @@ const Login = () => {
             console.log("id => ",res.id);
             dispatch(setId(res.id));
             dispatch(setToken(res.access_token));
+            localStorage.setItem("token",res.access_token);
+            localStorage.setItem("id",res.id);
             toast.success("Login successful");
             resetForm();
-            navigate("/");
+            navigate("/profile");
         } catch (err) {
             toast.error(err.message || "An error occurred");
         }

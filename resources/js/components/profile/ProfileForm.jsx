@@ -14,18 +14,20 @@ const validationSchema = Yup.object({
     phone: Yup.string().required('Phone number is required').matches(/^\d{11}$/, 'Phone number must be 11 digits'),
 });
 
-const ProfileForm = () => {
+const ProfileForm = ({id}) => {
     const [initialValues, setInitialValues] = useState({
         name: '',
         email: '',
         phone: '',
     });
 
-    const id = useSelector((state) => state.auth.id);
 
 
-    const { data: details, error, isLoading } = useGetUserDetailsQuery();
+
+    const { data: details, error, isLoading } = useGetUserDetailsQuery(id,{skip:!id});
     const [updateUserDetails, updateError] = useUpdateUserDetailsMutation();
+
+
 
     useEffect(() => {
         if (details) {
@@ -44,7 +46,7 @@ const ProfileForm = () => {
 
         try {
             let { name, email, phone } = values;
-            const res = await updateUserDetails({ name, email, phone }).unwrap(); // Use unwrap for better error handling
+            const res = await updateUserDetails({ id,name, email, phone }).unwrap(); // Use unwrap for better error handling
             console.log("res => ", res);
 
             toast.success("Profile updated");

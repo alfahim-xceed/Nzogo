@@ -37,16 +37,18 @@ const Register = () => {
         let { name, email, password, phone } = values;
         await registerUser({ name, email, password, phone, role_id: 1 }).then((res) => {
             if (res.error) {
-                console.log(res.error.data.error);
+                // console.log(res.error.data.error);
                 toast.error(res.error.data.error);
             } else {
                 console.log(res.data.access_token);
                 dispatch(setToken(res.data.access_token));
-                console.log("id = > ", res.data.id);
+                // console.log("id = > ", res.data.id);
                 dispatch(setId(res.data.id));
+                localStorage.setItem("token",res.access_token);
+                localStorage.setItem("id",res.id);
                 resetForm();
                 toast.success("Register successful");
-                navigate("/");
+                navigate("/profile");
             }
         }).catch((err) => {
             console.log("err => ", err);
