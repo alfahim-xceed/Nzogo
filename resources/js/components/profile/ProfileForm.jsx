@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from '../../services/api';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import UploadProfilePhoto from './UploadProfilePhoto';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
@@ -118,6 +119,9 @@ const ProfileForm = ({id}) => {
                     </Form>
                 )}
             </Formik>
+
+            {/* profile photo */}
+            {/* <UploadProfilePhoto/> */}
         </>
     );
 };

@@ -54,4 +54,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Passport::class);
     }
+
+
+    public function storages()
+    {
+        return $this->morphMany(Storage::class, 'storable');
+    }
 }

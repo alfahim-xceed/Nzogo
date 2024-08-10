@@ -31,10 +31,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('/update/{id}', [UpdateUserController::class, 'update']);
 
+    Route::get('/details/{id}', [GetUserDetailsController::class, 'show']);
 
     Route::middleware('admin')->group(function () {
         Route::get('/all', [GetUserListController::class, 'index']);
-        Route::get('/details/{id}', [GetUserDetailsController::class, 'show']);
+
         Route::delete('/delete/{id}',[DeleteUserController::class,'deleteUser']);
     });
 
