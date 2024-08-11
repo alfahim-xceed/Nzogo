@@ -15,12 +15,14 @@ export const api = createApi({
             if (token) {
                 headers.set("Authorization", `Bearer ${token}`);
             }
+            
             headers.set("Content-Type", "application/json");
+            
             headers.set('X-CSRF-TOKEN', csrfToken);
             return headers;
         },
     }),
-    tagTypes:["User","Nid","Passport"],
+    tagTypes: ["User", "Nid", "Passport"],
     endpoints: (builder) => ({
         getExampleData: builder.query({
             query: () => '/example-endpoint',
@@ -39,7 +41,7 @@ export const api = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags:["User","Nid","Passport"]
+            invalidatesTags: ["User", "Nid", "Passport"]
         }),
         registerUser: builder.mutation({
             query: (data) => ({
@@ -47,36 +49,36 @@ export const api = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags:["User","Nid","Passport"]
+            invalidatesTags: ["User", "Nid", "Passport"]
         }),
         getUserDetails: builder.query({
             query: (id) => ({
                 url: `/auth/details/${id}`
             }),
-            providesTags:["User"]
+            providesTags: ["User"]
         }),
 
         getMyProfile: builder.query({
             query: () => ({
                 url: "/auth/logged-user-info"
             }),
-            providesTags:["User"]
+            providesTags: ["User"]
         }),
 
-        updateUserDetails:builder.mutation({
-            query:({id,...data})=>({
-                url:`auth/update/${id}`,
-                method:"PUT",
-                body:data
+        updateUserDetails: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `auth/update/${id}`,
+                method: "PUT",
+                body: data
             }),
-            invalidatesTags:["User"]
+            invalidatesTags: ["User"]
         }),
 
-        updateMyPassword:builder.mutation({
-            query:(data)=>({
-                url:"/auth/update/my-password",
-                method:"PUT",
-                body:data
+        updateMyPassword: builder.mutation({
+            query: (data) => ({
+                url: "/auth/update/my-password",
+                method: "PUT",
+                body: data
             })
         })
         ,
@@ -85,58 +87,83 @@ export const api = createApi({
                 url: "/auth/logout",
                 method: "POST"
             }),
-            invalidatesTags:["User","Nid","Passport"]
+            invalidatesTags: ["User", "Nid", "Passport"]
         }),
 
-        getUserList:builder.query({
-            query:()=>({
-                url:"/auth/all",
-                method:"GET",
+        getUserList: builder.query({
+            query: () => ({
+                url: "/auth/all",
+                method: "GET",
             }),
-            providesTags:["User"]
+            providesTags: ["User"]
         }),
 
-        deleteUser:builder.mutation({
-            query:(id)=>({
-                url:`/auth/delete/${id}`,
-                method:"DELETE",
+        deleteUser: builder.mutation({
+            query: (id) => ({
+                url: `/auth/delete/${id}`,
+                method: "DELETE",
             }),
-            invalidatesTags:["User"]
+            invalidatesTags: ["User"]
         }),
+
+        //storage
+        getMediaPath: builder.query({
+            query: (user_id) => ({
+                url: `/media/get-path/${user_id}`,
+                method: "GET"
+            })
+        }),
+
+        createNewMedia: builder.mutation({
+            query: (data) => ({
+                url: "/media/create",
+                method: "POST",
+                body: data
+            })
+        }),
+
+        deleteMedia: builder.mutation({
+            query: (user_id) => ({
+                url: `/media/delete/${user_id}`,
+                method: "DELETE"
+            })
+        }),
+
+
 
 
         // NID
-        getNidDetails:builder.query({
-            query:(user_id)=>({
-                url:`/nid/details/${user_id}`,
-                method:"GET"
+        getNidDetails: builder.query({
+            query: (user_id) => ({
+                url: `/nid/details/${user_id}`,
+                method: "GET"
             }),
-            providesTags:["Nid"]
+            providesTags: ["Nid"]
         }),
-        manageNid:builder.mutation({
-            query:(data)=>({
-                url:"/nid/manage-nid",
-                method:"POST",
-                body:data
+        manageNid: builder.mutation({
+            query: (data) => ({
+                url: "/nid/manage-nid",
+                method: "POST",
+                body: data
             }),
-            invalidatesTags:["Nid"]
+            invalidatesTags: ["Nid"]
         }),
 
         // Passport
-        getPassportDetails:builder.query({
-            query:(user_id)=>({
-                url:`/passport/details/${user_id}`,
-                method:"GET"
+        getPassportDetails: builder.query({
+            query: (user_id) => ({
+                url: `/passport/details/${user_id}`,
+                method: "GET"
             }),
-            providesTags:["Passport"]
+            providesTags: ["Passport"]
         }),
-        managePassport:builder.mutation({
-            query:(data)=>({
-                url:"/passport/manage-passport",
-                method:"POST",
-                body:data
+        managePassport: builder.mutation({
+            query: (data) => ({
+                url: "/passport/manage-passport",
+                method: "POST",
+                body: data
             }),
-            invalidatesTags:["Passport"]
+            invalidatesTags: ["Passport"]
         })
     }),
 });
@@ -153,6 +180,11 @@ export const {
     useGetUserListQuery,
     useGetMyProfileQuery,
     useDeleteUserMutation,
+
+
+    useGetMediaPathQuery,
+    useCreateNewMediaMutation,
+    useDeleteMediaMutation,
 
     useGetNidDetailsQuery,
     useManageNidMutation,

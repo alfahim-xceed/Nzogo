@@ -23,7 +23,7 @@ class GetMediaPathController extends Controller
         $media = Storage::where('storable_id', $tableId)->first();
 
         if (!$media) {
-            return response()->json(['error' => 'Media not found'], 404);
+            return response()->json(['media_path' => null], 200);
         }
 
         // Check if the user is allowed to access this media

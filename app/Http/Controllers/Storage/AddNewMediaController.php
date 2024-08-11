@@ -6,6 +6,7 @@ use App\Models\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage as FileStorage;
+use Illuminate\Support\Facades\Log;
 
 class AddNewMediaController extends Controller
 {
@@ -17,31 +18,42 @@ class AddNewMediaController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
-        $validated = $request->validate([
-            'file' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:2048', // Adjust validation rules as needed
-            'table_id' => 'required|integer|exists:users,id', // Ensure the table_id exists in the users table
-        ]);
+        // dd($request->all());
 
-        $user = Auth::user();
-        $isAdmin = $user->role === 'admin'; // Adjust based on your role logic
-
-        // Determine the table_id based on user role
-        $tableId = $isAdmin ? $validated['table_id'] : $user->id;
-
-        // Handle file upload
-        $file = $request->file('file');
-        $path = $file->store('media'); // Store the file in the 'media' directory
-
-        // Save the file info in the database
-        Storage::create([
-            'location' => $path,
-            'storable_id' => $tableId,
-            'storable_type' => 'App\Models\User', // Adjust this as needed if using different models
-        ]);
+        // Log::info($request->all());
 
         return response()->json([
-            'path' => $path
+            'msg' => $request
         ]);
+        // Validate the request
+        // $validated = $request->validate([
+        //     'file' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:2048', // Adjust validation rules as needed
+        //     'table_id' => 'required|integer|exists:users,id', // Ensure the table_id exists in the users table
+        // ]);
+
+        // $user = Auth::user();
+        // $isAdmin = $user->role === 'admin'; // Adjust based on your role logic
+
+        // // Determine the table_id based on user role
+        // $tableId = $isAdmin ? $validated['table_id'] : $user->id;
+
+        // // Handle file upload
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     $path = $file->store('media'); // Store the file in the 'media' directory
+
+        //     // Save the file info in the database
+        //     Storage::create([
+        //         'location' => $path,
+        //         'storable_id' => $tableId,
+        //         'storable_type' => 'App\Models\User', // Adjust this as needed if using different models
+        //     ]);
+
+        //     return response()->json([
+        //         'path' => $path
+        //     ]);
+        // } else {
+        //     return response()->json(['error' => 'No file uploaded'], 400);
+        // }
     }
 }

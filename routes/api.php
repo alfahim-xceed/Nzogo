@@ -27,6 +27,18 @@ Route::prefix('/nid')->group(base_path('routes/nid.php'));
 // passport
 Route::prefix('/passport')->group(base_path('routes/passport.php'));
 
+// media
+Route::prefix("/media")->group(base_path("routes/storage.php"));
+
+// country
+Route::prefix("/country")->group(base_path("routes/country.php"));
+
+// visa category
+Route::prefix("/visa-category")->group(base_path("routes/visaCategory.php"));
+
+//service
+Route::prefix("/service")->group(base_path("routes/service.php"));
+
 Route::get('/test', function () {
     return response()->json(['message' => 'server is running!']);
 });
