@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useLoginUserMutation } from '../../services/api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { setToken,setId } from '../../slices/authSlice';
+import { setToken, setId } from '../../slices/authSlice';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
@@ -27,14 +27,19 @@ const Login = () => {
         try {
             const { email, password } = values;
             const res = await loginUser({ email, password }).unwrap(); // Use unwrap for better error handling
-            console.log("id => ",res.id);
+            console.log("id => ", res.id);
+
+
+
+
             dispatch(setId(res.id));
             dispatch(setToken(res.access_token));
-            localStorage.setItem("token",res.access_token);
-            localStorage.setItem("id",res.id);
+            localStorage.setItem("token", res.access_token);
+            localStorage.setItem("id", res.id);
             toast.success("Login successful");
             resetForm();
             navigate("/profile");
+
         } catch (err) {
             toast.error(err.message || "An error occurred");
         }

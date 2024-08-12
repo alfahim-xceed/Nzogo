@@ -18,18 +18,20 @@ const Sidebar = () => {
 
     // console.log("data is ", details);
     const handleLogout = async () => {
+
         try {
 
-            await logoutUser().unwrap(); // Use unwrap to handle the resolved value or throw an error
+            const res = await logoutUser().unwrap(); // Use unwrap to handle the resolved value or throw an error
+
             dispatch(clearToken()); // Clear user data from Redux
             dispatch(clearId());
             localStorage.removeItem("token");
             localStorage.removeItem("id");
             toast.success("Logout successful");
-            navigate("/");
+            window.location.href = "/";
 
         } catch (error) {
-            // console.error(':', error);
+            console.error(':', error);
             toast.error("Logout failed");
         }
     };
