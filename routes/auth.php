@@ -13,11 +13,12 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\UpdateMyProfileController;
 use App\Http\Controllers\Auth\UpdateMyPasswordController;
 use App\Http\Controllers\Auth\DeleteUserController;
-
+use App\Http\Controllers\Auth\Test;
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/logout', [LogoutController::class, 'logout']);
+Route::delete('/logout', [LogoutController::class, 'logout']);
+Route::delete('/test', [Test::class, 'clear_session']);
 
 Route::middleware('auth:sanctum')->get('/logged-user-info', [GetUserInfo::class,'show']);
 
@@ -27,7 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put("/update/my-profile",[UpdateMyProfileController::class,'update']);
     Route::put("/update/my-password",[UpdateMyPasswordController::class,'update']);
-
 
     Route::put('/update/{id}', [UpdateUserController::class, 'update']);
 

@@ -26,7 +26,7 @@ class ManageUserNidController extends Controller
 
         // Check if the authenticated user is the owner of the NID or an admin
         $user = Auth::user();
-        if ($user->id !== $validatedData['user_id'] && $user->role->name!='admin') {
+        if ($user->id != $validatedData['user_id'] && $user->role->name!='admin') {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 

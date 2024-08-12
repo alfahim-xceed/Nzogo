@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\PersonalAccessToken;
+
 
 class LogoutController extends Controller
 {
-    public function logout(Request $request)
+    public function logout()
     {
         // Get the authenticated user
         $user = Auth::user();
@@ -24,4 +23,5 @@ class LogoutController extends Controller
 
         return response()->json(['error' => 'Unauthorized'], 401);
     }
+
 }

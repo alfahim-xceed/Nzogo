@@ -30,8 +30,8 @@ class ManagePassportController extends Controller
 
         // Check if the authenticated user is the owner of the passport or an admin
         $user = Auth::user();
-        if ($user->id !== $validatedData['user_id'] && $user->role->name!='admin') {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        if ($user->id != $validatedData['user_id'] && $user->role->name!='admin') {
+            return response()->json(['error' => 'Unauthorized','one'=>$user->id,'two'=>$validatedData['user_id']], 403);
         }
 
         // Find or create a Passport record for the given user ID
