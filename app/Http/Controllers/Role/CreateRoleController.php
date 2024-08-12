@@ -8,6 +8,11 @@ use App\Models\Role;
 
 class CreateRoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
     public function store(Request $request)
     {
         $request->validate([

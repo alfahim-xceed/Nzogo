@@ -18,6 +18,21 @@ import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 import ManageProfile from './pages/auth/ManageProfile';
 import ManageUser from './pages/admin/manage_users/ManageUser';
 import { useSelector } from 'react-redux';
+import CountryList from './pages/admin/manage_countries/CountryList';
+import CreateCountry from './pages/admin/manage_countries/CreateCountry';
+import UpdateCountry from './pages/admin/manage_countries/UpdateCountry';
+import VisaCategoryList from './pages/admin/manage_visa_category/VisaCategoryList';
+import CreateVisaCategory from './pages/admin/manage_visa_category/CreateVisaCategory';
+import UpdateVisaCategory from './pages/admin/manage_visa_category/UpdateVisaCategory';
+import VisaTypeList from './pages/admin/manage_visa_type/VisaTypeList';
+import CreateVisaType from './pages/admin/manage_visa_type/CreateVisaType';
+import UpdateVisaType from './pages/admin/manage_visa_type/UpdateVisaType';
+import ServiceList from './pages/admin/manage_services/ServiceList';
+import CreateService from './pages/admin/manage_services/CreateService';
+import UpdateService from './pages/admin/manage_services/UpdateService';
+import RoleList from './pages/admin/manage_roles/RoleList';
+import CreateRole from './pages/admin/manage_roles/CreateRole';
+import UpdateRole from './pages/admin/manage_roles/UpdateRole';
 
 function AppRoutes() {
 
@@ -44,8 +59,40 @@ function AppRoutes() {
                     <Route path="/user/manage-passport" element={<ManagePassport />} />
                     <Route path="/user/manage-profile" element={<ManageProfile />} />
 
+                    {/* ADMIN */}
+
+                    {/* manage user */}
                     <Route path="admin/user-list" element={<UserList />} />
                     <Route path="admin/manage-user/:id" element={<ManageUser />} />
+
+                    {/* manage country */}
+                    <Route path="admin/country-list" element={<CountryList/>}/>
+                    <Route path="admin/add-country" element={<CreateCountry/>}/>
+                    <Route path="admin/country/update/:id" element={<UpdateCountry/>}/>
+
+
+                    {/* manage visa category  */}
+                    <Route path="admin/visa-category-list" element={<VisaCategoryList/>}/>
+                    <Route path="admin/add-visa-category" element={<CreateVisaCategory/>}/>
+                    <Route path="admin/visa-category/update/:id" element={<UpdateVisaCategory/>}/>
+
+
+                    {/* manage visa type  */}
+                    <Route path="admin/visa-type-list" element={<VisaTypeList/>}/>
+                    <Route path="admin/add-visa-type" element={<CreateVisaType/>}/>
+                    <Route path="admin/visa-type/update/:id" element={<UpdateVisaType/>}/>
+
+                    {/* manage service  */}
+                    <Route path="admin/service-list" element={<ServiceList/>}/>
+                    <Route path="admin/add-service" element={<CreateService/>}/>
+                    <Route path="admin/service/update/:id" element={<UpdateService/>}/>
+
+                    {/* role */}
+                    <Route path="admin/role-list" element={<RoleList/>}/>
+                    <Route path="admin/add-role" element={<CreateRole/>}/>
+                    <Route path="admin/role/update/:id" element={<UpdateRole/>}/>
+
+
                 </Route>
 
 

@@ -6,12 +6,12 @@ use App\Http\Controllers\Country\CreateCountryController;
 use App\Http\Controllers\Country\UpdateCountryController;
 use App\Http\Controllers\Country\DeleteCountryController;
 
-Route::get('/countries', [GetCountryListController::class, 'index']);
+Route::get('/all', [GetCountryListController::class, 'index']);
 
 Route::middleware('auth')->middleware('admin')->group(function () {
-    
-    Route::get('/countries/{id}', [GetCountryDetailsController::class, 'show']);
-    Route::post('/countries', [CreateCountryController::class, 'store']);
-    Route::put('/countries/{id}', [UpdateCountryController::class, 'update']);
-    Route::delete('/countries/{id}', [DeleteCountryController::class, 'destroy']);
+
+    Route::get('/details/{id}', [GetCountryDetailsController::class, 'show']);
+    Route::post('/create', [CreateCountryController::class, 'store']);
+    Route::put('/update/{id}', [UpdateCountryController::class, 'update']);
+    Route::delete('/delete/{id}', [DeleteCountryController::class, 'destroy']);
 });

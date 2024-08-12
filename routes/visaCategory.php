@@ -9,11 +9,12 @@ use App\Http\Controllers\VisaCategory\{
     DeleteVisaCategoryController
 };
 
-Route::get('/visa-categories', [GetVisaCategoryListController::class, 'index']);
-Route::get('/visa-categories/{id}', [GetVisaCategoryDetailsController::class, 'show']);
+Route::get('/all', [GetVisaCategoryListController::class, 'index']);
+Route::get('/details/{id}', [GetVisaCategoryDetailsController::class, 'show']);
 
-Route::middleware('auth')->group(function () {
-    Route::post('/visa-categories', [CreateVisaCategoryController::class, 'store']);
-    Route::put('/visa-categories/{id}', [UpdateVisaCategoryController::class, 'update']);
-    Route::delete('/visa-categories/{id}', [DeleteVisaCategoryController::class, 'destroy']);
+
+Route::middleware('auth')->middleware('admin')->group(function () {
+    Route::post('/create', [CreateVisaCategoryController::class, 'store']);
+    Route::put('/update/{id}', [UpdateVisaCategoryController::class, 'update']);
+    Route::delete('/delete/{id}', [DeleteVisaCategoryController::class, 'destroy']);
 });

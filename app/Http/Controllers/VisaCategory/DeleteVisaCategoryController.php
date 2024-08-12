@@ -11,12 +11,8 @@ class DeleteVisaCategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-            if (!Auth::check() || Auth::user()->role !== 'admin') {
-                return response()->json(['message' => 'Unauthorized'], 403);
-            }
-            return $next($request);
-        });
+        $this->middleware('auth');
+        $this->middleware('admin');
     }
 
     public function destroy($id)

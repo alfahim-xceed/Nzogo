@@ -36,6 +36,9 @@ Route::prefix("/country")->group(base_path("routes/country.php"));
 // visa category
 Route::prefix("/visa-category")->group(base_path("routes/visaCategory.php"));
 
+//visa type
+Route::prefix("/visa-type")->group(base_path("routes/visaType.php"));
+
 //service
 Route::prefix("/service")->group(base_path("routes/service.php"));
 

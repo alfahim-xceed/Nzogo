@@ -7,11 +7,11 @@ use App\Http\Controllers\Service\CreateServiceController;
 use App\Http\Controllers\Service\UpdateServiceController;
 use App\Http\Controllers\Service\DeleteServiceController;
 
-Route::get('/services', [GetServiceListController::class, 'index']);
-Route::get('/services/{id}', [GetServiceDetailsController::class, 'show']);
+Route::get('/all', [GetServiceListController::class, 'index']);
+Route::get('/details/{id}', [GetServiceDetailsController::class, 'show']);
 
 Route::middleware('auth', 'admin')->group(function () {
-    Route::post('/services', [CreateServiceController::class, 'store']);
-    Route::put('/services/{id}', [UpdateServiceController::class, 'update']);
-    Route::delete('/services/{id}', [DeleteServiceController::class, 'destroy']);
+    Route::post('/create', [CreateServiceController::class, 'store']);
+    Route::put('/update/{id}', [UpdateServiceController::class, 'update']);
+    Route::delete('/delete/{id}', [DeleteServiceController::class, 'destroy']);
 });

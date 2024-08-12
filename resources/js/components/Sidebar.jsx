@@ -16,7 +16,7 @@ const Sidebar = () => {
         return <>Loading..</>
     }
 
-    console.log("data is ", details);
+    // console.log("data is ", details);
     const handleLogout = async () => {
         try {
 
@@ -43,25 +43,47 @@ const Sidebar = () => {
 
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/role-list">
+                                    <span className="text-black dark:text-black">Manage Roles</span>
+                                </Link>
+                            </div>
+                        </li>
+
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
                                 <Link to="/admin/user-list">
                                     <span className="text-black dark:text-black">Manage Users</span>
                                 </Link>
                             </div>
                         </li>
                         <li className="mb-2">
-                            <a href="#applied-visa" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <span className="text-black dark:text-black">Manage Country</span>
-                            </a>
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/country-list">
+                                    <span className="text-black dark:text-black">Manage Country</span>
+                                </Link>
+                            </div>
                         </li>
                         <li className="mb-2">
-                            <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <span className="text-black dark:text-black">Manage visa category</span>
-                            </a>
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/visa-category-list">
+                                    <span className="text-black dark:text-black">Manage visa category</span>
+
+                                </Link>
+                            </div>
                         </li>
                         <li className="mb-2">
-                            <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <span className="text-black dark:text-black">Manage visa type</span>
-                            </a>
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/visa-type-list">
+                                    <span className="text-black dark:text-black">Manage visa type</span>
+                                </Link>
+                            </div>
+                        </li>
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/service-list">
+                                    <span className="text-black dark:text-black">Manage service</span>
+                                </Link>
+                            </div>
                         </li>
                     </> :
                         <>

@@ -8,6 +8,11 @@ use App\Models\Role;
 
 class UpdateRoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
     public function update(Request $request, $id)
     {
         $role = Role::findOrFail($id);

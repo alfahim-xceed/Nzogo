@@ -7,6 +7,11 @@ use App\Models\Role;
 
 class DeleteRoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
     public function destroy($id)
     {
         $role = Role::findOrFail($id);
