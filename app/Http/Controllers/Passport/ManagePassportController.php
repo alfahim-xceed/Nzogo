@@ -11,8 +11,7 @@ class ManagePassportController extends Controller
 {
     public function __construct()
     {
-        // Ensure the user is authenticated
-        $this->middleware('auth');
+        $this->middleware('auth:sanctum');
     }
 
     public function manage(Request $request)
@@ -29,7 +28,7 @@ class ManagePassportController extends Controller
         ]);
 
         // Check if the authenticated user is the owner of the passport or an admin
-        $user = Auth::user();
+        $user = $request->user();
         if ($user->id != $validatedData['user_id'] && $user->role->name!='admin') {
             return response()->json(['error' => 'Unauthorized','one'=>$user->id,'two'=>$validatedData['user_id']], 403);
         }

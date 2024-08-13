@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class GetCountryDetailsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
+    
 
     public function show($id)
     {

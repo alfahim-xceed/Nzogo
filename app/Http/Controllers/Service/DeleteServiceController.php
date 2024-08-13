@@ -10,12 +10,19 @@ class DeleteServiceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('admin'); // Assuming you have an 'admin' middleware to restrict access
+        $this->middleware('auth:sanctum');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+
+        $user=$request->user();
+        
+        if ($user->role->name !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+
         $service = Service::find($id);
 
         if (!$service) {

@@ -10,7 +10,8 @@ use App\Http\Controllers\Service\DeleteServiceController;
 Route::get('/all', [GetServiceListController::class, 'index']);
 Route::get('/details/{id}', [GetServiceDetailsController::class, 'show']);
 
-Route::middleware('auth', 'admin')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
+
     Route::post('/create', [CreateServiceController::class, 'store']);
     Route::put('/update/{id}', [UpdateServiceController::class, 'update']);
     Route::delete('/delete/{id}', [DeleteServiceController::class, 'destroy']);

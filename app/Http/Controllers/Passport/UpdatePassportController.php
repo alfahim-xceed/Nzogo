@@ -20,7 +20,7 @@ class UpdatePassportController extends Controller
             'date_of_birth' => 'sometimes|required|date',
         ]);
 
-        $user = Auth::user();
+        $user = $request->user();
         $passport = Passport::findOrFail($id);
 
         if ($user->role->name !== 'admin' && $passport->user_id !== $user->id) {

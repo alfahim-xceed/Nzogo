@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Nid;
 use App\Http\Controllers\Controller;
 use App\Models\Nid;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class GetNidDetailsController extends Controller
 {
-    public function show($user_id)
+    public function show(Request $request, $user_id)
     {
         // Return a test response to confirm server is running (uncomment if needed for debugging)
         // return response()->json(['message' => 'server is running!!1']);
         
-        $user = Auth::user();
+        $user = $request->user();
 
         // Find the NID record based on the user ID
         $nid = Nid::where('user_id', $user_id)->first();

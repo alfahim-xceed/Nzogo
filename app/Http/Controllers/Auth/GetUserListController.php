@@ -12,7 +12,6 @@ class GetUserListController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum');
-        $this->middleware('admin'); // Custom middleware for admin role
     }
 
     public function index()

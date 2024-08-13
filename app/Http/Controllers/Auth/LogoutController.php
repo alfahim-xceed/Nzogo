@@ -9,19 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
-    public function logout()
+    public function logout(Request $request)
     {
-        // Get the authenticated user
-        $user = Auth::user();
-
-        if ($user) {
-            // Revoke all tokens for the authenticated user
-            $user->tokens()->delete();
-
-            return response()->json(['message' => 'Logged out successfully.']);
-        }
-
-        return response()->json(['error' => 'Unauthorized'], 401);
+        // Revoke the user's token
+        $request->user()->currentAccessToken()->delete();
+        
+        return response()->json(['message' => 'Logged out successfully']);
     }
 
 }

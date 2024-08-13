@@ -16,7 +16,7 @@ class AddNewNidController extends Controller
             'address' => 'required|string',
         ]);
 
-        $user = Auth::user();
+        $user = $request->user();
 
         $nid = $user->nids()->create($validatedData);
 

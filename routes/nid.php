@@ -9,6 +9,7 @@ use App\Http\Controllers\Nid\UpdateNidController;
 use App\Http\Controllers\Nid\DeleteNidController;
 
 Route::middleware('auth:sanctum')->group(function () {
+
     Route::get('/all', [GetNidListController::class, 'index']);
     Route::get('/details/{user_id}', [GetNidDetailsController::class, 'show']);
     Route::post('/manage-nid', [ManageUserNidController::class, 'manage']);

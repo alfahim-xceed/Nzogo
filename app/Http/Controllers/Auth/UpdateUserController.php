@@ -25,7 +25,7 @@ class UpdateUserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $authenticatedUser = Auth::user();
+        $authenticatedUser = $request->user();
 
         // Check if the authenticated user is either the user being updated or an admin
         if ($authenticatedUser->id !== $user->id && $authenticatedUser->role->name !== 'admin') {

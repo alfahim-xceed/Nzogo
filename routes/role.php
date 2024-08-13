@@ -13,7 +13,7 @@ use App\Http\Controllers\Role\GetRoleDetailsController;
 Route::get('/all', [GetRoleListController::class, 'index']);
 Route::get('/details/{id}', [GetRoleDetailsController::class, 'show']);
 
-Route::middleware('auth')->middleware('admin')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/create', [CreateRoleController::class, 'store']);
     Route::put('/update/{id}', [UpdateRoleController::class, 'update']);

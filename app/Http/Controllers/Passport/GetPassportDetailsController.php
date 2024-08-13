@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Passport;
 use App\Http\Controllers\Controller;
 use App\Models\Passport;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class GetPassportDetailsController extends Controller
 {
    
 
-    public function show($user_id)
+    public function show(Request $request, $user_id)
     {
         
         
-        $user = Auth::user();
+        $user = $request->user();
 
       
         $passport = Passport::where('user_id', $user_id)->first();

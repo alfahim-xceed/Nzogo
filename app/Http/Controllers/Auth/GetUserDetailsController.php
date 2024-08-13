@@ -14,12 +14,12 @@ class GetUserDetailsController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        $authenticatedUser = Auth::user();
+        $authenticatedUser = $request->user();
 
         // Check if the authenticated user is an admin or the requested user
-        if ($authenticatedUser->role_id==1 || $authenticatedUser->id == $id) {
+        if ($authenticatedUser->role->name=="admin" || $authenticatedUser->id == $id) {
             $user = User::findOrFail($id);
             return response()->json($user);
         }

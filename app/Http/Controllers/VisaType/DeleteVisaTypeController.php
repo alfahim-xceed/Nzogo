@@ -11,12 +11,19 @@ class DeleteVisaTypeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('auth:sanctum');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+
+        $user=$request->user();
+        
+        if ($user->role->name !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+
         $visaType = VisaType::find($id);
 
         if ($visaType) {

@@ -20,7 +20,7 @@ class AddNewPassportController extends Controller
             'date_of_birth' => 'required|date',
         ]);
 
-        $user = Auth::user();
+        $user = $request->user();
 
         $passport = $user->passports()->create($validatedData);
 

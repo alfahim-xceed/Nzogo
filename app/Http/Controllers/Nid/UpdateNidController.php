@@ -16,7 +16,7 @@ class UpdateNidController extends Controller
             'address' => 'sometimes|required|string',
         ]);
 
-        $user = Auth::user();
+        $user = $request->user();
         $nid = Nid::findOrFail($id);
 
         if ($user->role->name !== 'admin' && $nid->user_id !== $user->id) {

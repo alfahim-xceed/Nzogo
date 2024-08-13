@@ -11,7 +11,8 @@ Route::get('/all', [GetVisaTypeListController::class, 'index']);
 Route::get('/details/{id}', [GetVisaTypeDetailsController::class, 'show']);
 
 
-Route::middleware('auth')->middleware('admin')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
+
     Route::post('/create', [CreateVisaTypeController::class, 'store']);
     Route::put('/update/{id}', [UpdateVisaTypeController::class, 'update']);
     Route::delete('/delete/{id}', [DeleteVisaTypeController::class, 'destroy']);

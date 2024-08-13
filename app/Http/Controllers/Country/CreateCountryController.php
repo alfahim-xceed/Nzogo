@@ -10,12 +10,19 @@ class CreateCountryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('auth:sanctum');
     }
 
     public function store(Request $request)
     {
+
+        $user=$request->user();
+        
+        if ($user->role->name !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);

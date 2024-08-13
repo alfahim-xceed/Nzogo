@@ -25,7 +25,7 @@ class UpdateMyProfileController extends Controller
     {
 
         // return response()->json(['msg'=>"ok3"]);
-        $user = Auth::user();
+        $user = $request->user();
 
         // Validate request data
         $validatedData = $request->validate([

@@ -13,7 +13,8 @@ Route::get('/all', [GetVisaCategoryListController::class, 'index']);
 Route::get('/details/{id}', [GetVisaCategoryDetailsController::class, 'show']);
 
 
-Route::middleware('auth')->middleware('admin')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
+
     Route::post('/create', [CreateVisaCategoryController::class, 'store']);
     Route::put('/update/{id}', [UpdateVisaCategoryController::class, 'update']);
     Route::delete('/delete/{id}', [DeleteVisaCategoryController::class, 'destroy']);

@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class DeleteUserController extends Controller
 {
-    public function deleteUser($id)
+    public function deleteUser(Request $request,$id)
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         // Check if the authenticated user is an admin
         if ($user->role->name !== 'admin') {

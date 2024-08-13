@@ -20,24 +20,24 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::delete('/logout', [LogoutController::class, 'logout']);
 Route::delete('/test', [Test::class, 'clear_session']);
 
-Route::middleware('auth:sanctum')->get('/logged-user-info', [GetUserInfo::class,'show']);
-
-
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('/logged-user-info', [GetUserInfo::class,'show']);
+    
     Route::put("/update/my-profile",[UpdateMyProfileController::class,'update']);
     Route::put("/update/my-password",[UpdateMyPasswordController::class,'update']);
+
 
     Route::put('/update/{id}', [UpdateUserController::class, 'update']);
 
     Route::get('/details/{id}', [GetUserDetailsController::class, 'show']);
 
-    Route::middleware('admin')->group(function () {
-        Route::get('/all', [GetUserListController::class, 'index']);
+    
+    Route::get('/all', [GetUserListController::class, 'index']);
 
-        Route::delete('/delete/{id}',[DeleteUserController::class,'deleteUser']);
-    });
+    Route::delete('/delete/{id}',[DeleteUserController::class,'deleteUser']);
+    
 
 });
 

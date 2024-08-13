@@ -18,7 +18,7 @@ class UpdateMyPasswordController extends Controller
      */
     public function update(Request $request)
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         // Validate request data
         $validator = Validator::make($request->all(), [

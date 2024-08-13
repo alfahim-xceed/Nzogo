@@ -8,7 +8,7 @@ use App\Http\Controllers\Country\DeleteCountryController;
 
 Route::get('/all', [GetCountryListController::class, 'index']);
 
-Route::middleware('auth')->middleware('admin')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/details/{id}', [GetCountryDetailsController::class, 'show']);
     Route::post('/create', [CreateCountryController::class, 'store']);
