@@ -27,8 +27,9 @@ const Sidebar = () => {
             dispatch(clearId());
             localStorage.removeItem("token");
             localStorage.removeItem("id");
+            
             toast.success("Logout successful");
-            window.location.href = "/";
+            navigate("/");
 
         } catch (error) {
             console.error(':', error);

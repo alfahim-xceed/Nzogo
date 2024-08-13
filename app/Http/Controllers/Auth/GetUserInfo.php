@@ -11,8 +11,8 @@ class GetUserInfo extends Controller
     public function show(Request $request)
     {
         // Retrieve the authenticated user
-        $user = Auth::user();
-
+        $user = $request->user();
+        // return response()->json(['role'=>$user->role->name]);
         // Return the user information as a JSON response
         return response()->json($user);
     }

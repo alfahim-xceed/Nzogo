@@ -27,7 +27,7 @@ const Login = () => {
         try {
             const { email, password } = values;
             const res = await loginUser({ email, password }).unwrap(); // Use unwrap for better error handling
-            console.log("id => ", res.id);
+            console.log("res => ", res);
 
 
 
@@ -36,6 +36,7 @@ const Login = () => {
             dispatch(setToken(res.access_token));
             localStorage.setItem("token", res.access_token);
             localStorage.setItem("id", res.id);
+            
             toast.success("Login successful");
             resetForm();
             navigate("/profile");

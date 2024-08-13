@@ -35,24 +35,22 @@ const Register = () => {
 
     const handleSubmit = async (values, { resetForm }) => {
         let { name, email, password, phone } = values;
-        await registerUser({ name, email, password, phone, role_id: 1 }).then((res) => {
-            if (res.error) {
-                // console.log(res.error.data.error);
-                toast.error(res.error.data.error);
-            } else {
-                console.log(res.data.access_token);
-                dispatch(setToken(res.data.access_token));
-                // console.log("id = > ", res.data.id);
-                dispatch(setId(res.data.id));
-                localStorage.setItem("token",res.access_token);
-                localStorage.setItem("id",res.id);
-                resetForm();
-                toast.success("Register successful");
-                navigate("/profile");
-            }
-        }).catch((err) => {
-            console.log("err => ", err);
-        });
+
+        try {
+            const res = await registerUser({ name, email, password, phone, role_id: 2 }).unwrap();
+            dispatch(setId(res.id));
+            dispatch(setToken(res.access_token));
+            localStorage.setItem("token", res.access_token);
+            localStorage.setItem("id", res.id);
+            resetForm();
+            toast.success("Register successful");
+            navigate("/profile");
+
+        } catch (error) {
+            console.error("err => ", error);
+            toast.error("Some error occured");
+        }
+        
     };
 
     return (
