@@ -31,6 +31,7 @@ import CreateRole from './pages/admin/manage_roles/CreateRole';
 import UpdateRole from './pages/admin/manage_roles/UpdateRole';
 import ManageVisaRoutes from './routes/ManageVisaRoutes';
 import ManageEmbassyRoutes from './routes/ManageEmbassyRoutes';
+import { Toaster } from 'react-toastify';
 
 function AppRoutes() {
     const location = useLocation();
@@ -92,7 +93,9 @@ function AppRoutes() {
                     {/* manage embassy */}
                     <Route path="/admin/manage-embassy/*" element={<ManageEmbassyRoutes/>}/>
                 </Route>
+
             </Routes>
+            <Toaster/>
 
         </>
     );
