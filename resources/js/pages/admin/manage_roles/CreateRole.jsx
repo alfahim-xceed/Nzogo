@@ -1,11 +1,9 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useCreateVisaCategoryMutation } from '../../../services/visa_category_api';
 import { useCreateRoleMutation } from '../../../services/role_api';
 
 // Define validation schema using Yup

@@ -27,7 +27,7 @@ const Sidebar = () => {
             dispatch(clearId());
             localStorage.removeItem("token");
             localStorage.removeItem("id");
-            
+
             toast.success("Logout successful");
             navigate("/");
 
@@ -85,6 +85,20 @@ const Sidebar = () => {
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
                                 <Link to="/admin/service-list">
                                     <span className="text-black dark:text-black">Manage service</span>
+                                </Link>
+                            </div>
+                        </li>
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/manage-visa/visa-list">
+                                    <span className="text-black dark:text-black">Manage visa</span>
+                                </Link>
+                            </div>
+                        </li>
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/manage-embassy/embassy-list">
+                                    <span className="text-black dark:text-black">Manage embassy</span>
                                 </Link>
                             </div>
                         </li>
