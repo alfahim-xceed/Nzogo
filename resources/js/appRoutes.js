@@ -31,8 +31,8 @@ import CreateRole from './pages/admin/manage_roles/CreateRole';
 import UpdateRole from './pages/admin/manage_roles/UpdateRole';
 import ManageVisaRoutes from './routes/ManageVisaRoutes';
 import ManageEmbassyRoutes from './routes/ManageEmbassyRoutes';
-import { Toaster } from 'react-toastify';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -95,7 +95,7 @@ function AppRoutes() {
                 </Route>
 
             </Routes>
-            <Toaster/>
+            <ToastContainer/>
 
         </>
     );
