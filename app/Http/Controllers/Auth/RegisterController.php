@@ -36,7 +36,7 @@ class RegisterController extends Controller
             'role_id' => $request->role_id,  // Assign role_id to user
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('YourAppName')->plainTextToken;
 
         return response()->json([
             'access_token' => $token,

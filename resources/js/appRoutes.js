@@ -33,6 +33,8 @@ import ManageVisaRoutes from './routes/ManageVisaRoutes';
 import ManageEmbassyRoutes from './routes/ManageEmbassyRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
+import VisaDetails from './pages/auth/visa_details/VisaDetails';
+import AppliedVisaList from './pages/auth/visa_details/AppliedVisaList';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -47,6 +49,7 @@ function AppRoutes() {
                 <Route path="/admin/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin/login" element={<Login />} />
+                <Route path="/visa/details" element={<VisaDetails/>}/>
                 <Route path="/" element={<Layout />}>
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/admin/user-list" element={<UserList />} />
@@ -55,6 +58,9 @@ function AppRoutes() {
                     <Route path="/user/manage-nid" element={<ManageNid />} />
                     <Route path="/user/manage-passport" element={<ManagePassport />} />
                     <Route path="/user/manage-profile" element={<ManageProfile />} />
+
+                    <Route path="/user/applied-visa-list" element={<AppliedVisaList />} />
+
 
                     {/* ADMIN */}
 

@@ -17,14 +17,14 @@ use App\Http\Controllers\Auth\Test;
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
-Route::delete('/logout', [LogoutController::class, 'logout']);
+
 Route::delete('/test', [Test::class, 'clear_session']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-
+    Route::delete('/logout', [LogoutController::class, 'logout']);
     Route::get('/logged-user-info', [GetUserInfo::class,'show']);
-    
+
     Route::put("/update/my-profile",[UpdateMyProfileController::class,'update']);
     Route::put("/update/my-password",[UpdateMyPasswordController::class,'update']);
 
@@ -33,11 +33,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/details/{id}', [GetUserDetailsController::class, 'show']);
 
-    
+
     Route::get('/all', [GetUserListController::class, 'index']);
 
     Route::delete('/delete/{id}',[DeleteUserController::class,'deleteUser']);
-    
+
 
 });
 
