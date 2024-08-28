@@ -15,7 +15,7 @@ const UpdateVisa = () => {
             <hr className="custom-line" />
             <VisaServiceList id={id}/>
             <hr className="custom-line" />
-            <DocumentList />
+            <DocumentList id={id}/>
         </div>
     )
 }

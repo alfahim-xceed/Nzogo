@@ -4,35 +4,42 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCreateDocumentMutation } from '../../../../../services/document_api';
 
-
+// Define validation schema using Yup
 const validationSchema = Yup.object({
     name: Yup.string().required('Document name is required'),
-    description: Yup.string().required('Description fee is required')
+    description: Yup.string().required('Description is required') // Fixed the message
 });
 
 const AddDocument = () => {
     const navigate = useNavigate();
 
-    const initialValues = {
-        name:"",
-        description:""
+    const [createDocument] = useCreateDocumentMutation();
 
+    const {visa_id}=useParams();
+
+    const initialValues = {
+        name: "",
+        description: ""
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        // Handle form submission logic here
-        // Example: send values to an API and handle the response
-        console.log(values);
-        setSubmitting(false);
-        toast.success('Visa service added successfully');
-        navigate('/admin/visa-list'); // Redirect after successful submission
+        try {
+            // Make API call to create a new document
+            await createDocument({visa_details_id:visa_id,...values}).unwrap();
+            toast.success('Document added successfully'); // Updated success message
+        } catch (error) {
+            toast.error('Failed to add document'); // Handle error
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h1 className="text-2xl font-semibold mb-6 text-gray-800">Add new document</h1>
+            <h1 className="text-2xl font-semibold mb-6 text-gray-800">Add New Document</h1>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -40,8 +47,6 @@ const AddDocument = () => {
             >
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
-
-
                         <div className="flex flex-col">
                             <label htmlFor="name" className="text-gray-700 mb-2">Name</label>
                             <Field
@@ -55,7 +60,7 @@ const AddDocument = () => {
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="description" className="text-gray-700 mb-2">description</label>
+                            <label htmlFor="description" className="text-gray-700 mb-2">Description</label>
                             <Field
                                 id="description"
                                 name="description"
@@ -66,7 +71,6 @@ const AddDocument = () => {
                             />
                             <ErrorMessage name="description" component="div" className="text-red-500 mt-1" />
                         </div>
-
 
                         <button
                             type="submit"

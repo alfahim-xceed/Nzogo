@@ -15,7 +15,7 @@ const VisaTypeList = ({id}) => {
     if(error){
         return <>Fetching error</>
     }
-    console.log(details);
+    // console.log(details);
 
     return (
         <div className="mt-7">

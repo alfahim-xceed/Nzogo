@@ -1,16 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useGetDocumentListQuery } from '../../../../../services/document_api';
 
-const DocumentList = () => {
 
-    const details = [];
+const DocumentList = ({id}) => {
+
+    const {data:details,isLoading,error}=useGetDocumentListQuery(id);
+
+    if(isLoading){
+        return <>Loading..</>
+    }
+
+    if(error){
+        console.error("doc error ",error);
+        return <>Fetching error</>
+    }
+    // console.log(details);
+
 
     return (
         <div className="mt-7">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Document List</h2>
-                <Link to="/admin/manage-visa/add-document/visa_id">
+                <Link to={`/admin/manage-visa/add-document/${id}`}>
                     <button className="px-2 py-1 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm">
                         <FontAwesomeIcon icon={faPlus} className="mr-1" />
                         Add New
@@ -30,18 +43,18 @@ const DocumentList = () => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {details && details.length > 0 ? (
-                            details.map((role, index) => (
-                                <tr key={role.id}>
+                            details.map((doc, index) => (
+                                <tr key={doc.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{role.name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{doc.name}</td>
 
 
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-500 hover:text-blue-700 cursor-pointer">
-                                        <Link to={`/admin/role/update/${role.id}`}>
+                                        <Link to={`/admin/manage-visa/update/document/${doc.id}`}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Link>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-500 hover:text-red-700 cursor-pointer" onClick={() => handleDelete(role.id)}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-500 hover:text-red-700 cursor-pointer" onClick={() => handleDelete(doc.id)}>
                                         <FontAwesomeIcon icon={faTrashAlt} />
                                     </td>
                                 </tr>

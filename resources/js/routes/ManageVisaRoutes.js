@@ -28,7 +28,7 @@ const ManageVisaRoutes = () => (
 
         {/* manage documents */}
         <Route path="/add-document/:visa_id" element={<AddDocument/>}/>
-        <Route path="/update/document/:visa_id/:document_id" element={<UpdateDocument/>}/>
+        <Route path="/update/document/:document_id" element={<UpdateDocument/>}/>
 
     </Routes>
 );
