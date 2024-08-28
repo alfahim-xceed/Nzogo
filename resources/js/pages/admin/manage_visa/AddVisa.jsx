@@ -4,48 +4,43 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useCreateRoleMutation } from '../../../services/role_api';
-
-// Example options for select fields
-const countryOptions = [
-    { value: 'usa', label: 'United States' },
-    { value: 'canada', label: 'Canada' },
-    // Add more countries as needed
-];
-
-const visaCategoryOptions = [
-    { value: 'tourist', label: 'Tourist' },
-    { value: 'business', label: 'Business' },
-    // Add more categories as needed
-];
+import { useGetCountryListQuery } from '../../../services/country_api';
+import { useGetVisaCategoryListListQuery } from '../../../services/visa_category_api';
+import { useCreateVisaDetailsMutation } from '../../../services/visa_details';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
-    from: Yup.string().required('From which country is required'),
-    to: Yup.string().required('To which country is required'),
-    visa_category: Yup.string().required('Visa category is required')
+    from_country_id: Yup.string().required('From which country is required'),
+    to_country_id: Yup.string().required('To which country is required'),
+    visa_category_id: Yup.string().required('Visa category is required')
 });
 
 const AddVisa = () => {
     const navigate = useNavigate();
-    const [createRole] = useCreateRoleMutation();
+    const { data: countries, isLoading: countriesLoading, error: countriesError } = useGetCountryListQuery();
+    const { data: visaCategories, isLoading: visaCategoriesLoading, error: visaCategoriesError } = useGetVisaCategoryListListQuery();
+    const [createVisaDetails] = useCreateVisaDetailsMutation();
 
     const initialValues = {
-        from: '',
-        to: '',
-        visa_category: ''
+        from_country_id: '',
+        to_country_id: '',
+        visa_category_id: ''
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            await createRole(values).unwrap();
+            await createVisaDetails(values).unwrap();
             toast.success("Visa created successfully");
-            navigate('/visa-list'); // Redirect to a different page after successful creation
+            navigate('/admin/manage-visa/visa-list'); // Redirect to a different page after successful creation
         } catch (error) {
+            console.error("error => ",error);
             toast.error("Failed to create visa");
         }
         setSubmitting(false);
     };
+
+    if (countriesLoading || visaCategoriesLoading) return <div>Loading...</div>;
+    if (countriesError || visaCategoriesError) return <div>Error loading data</div>;
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -58,57 +53,57 @@ const AddVisa = () => {
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
                         <div className="flex flex-col">
-                            <label htmlFor="from" className="text-gray-700 mb-2">From</label>
+                            <label htmlFor="from_country_id" className="text-gray-700 mb-2">From</label>
                             <Field
-                                id="from"
-                                name="from"
+                                id="from_country_id"
+                                name="from_country_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="">Select Country</option>
-                                {countryOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
+                                {countries && countries.map((country) => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
                                     </option>
                                 ))}
                             </Field>
-                            <ErrorMessage name="from" component="div" className="text-red-500 mt-1" />
+                            <ErrorMessage name="from_country_id" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="to" className="text-gray-700 mb-2">To</label>
+                            <label htmlFor="to_country_id" className="text-gray-700 mb-2">To</label>
                             <Field
-                                id="to"
-                                name="to"
+                                id="to_country_id"
+                                name="to_country_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="">Select Country</option>
-                                {countryOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
+                                {countries && countries.map((country) => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
                                     </option>
                                 ))}
                             </Field>
-                            <ErrorMessage name="to" component="div" className="text-red-500 mt-1" />
+                            <ErrorMessage name="to_country_id" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="visa_category" className="text-gray-700 mb-2">Visa Category</label>
+                            <label htmlFor="visa_category_id" className="text-gray-700 mb-2">Visa Category</label>
                             <Field
-                                id="visa_category"
-                                name="visa_category"
+                                id="visa_category_id"
+                                name="visa_category_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="">Select Visa Category</option>
-                                {visaCategoryOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
+                                {visaCategories && visaCategories.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.name}
                                     </option>
                                 ))}
                             </Field>
-                            <ErrorMessage name="visa_category" component="div" className="text-red-500 mt-1" />
+                            <ErrorMessage name="visa_category_id" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <button
@@ -123,7 +118,7 @@ const AddVisa = () => {
                 )}
             </Formik>
         </div>
-    )
-}
+    );
+};
 
 export default AddVisa;

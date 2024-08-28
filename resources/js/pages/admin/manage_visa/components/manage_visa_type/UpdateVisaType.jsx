@@ -3,17 +3,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetVisaDetailsVisaTypeDetailsQuery, useUpdateVisaDetailsVisaTypeMutation } from '../../../../../services/visa_details_visa_type_api';
+import { useGetVisaTypeListQuery } from '../../../../../services/visa_type_api';
 
-// Example options for select fields
-const visaTypeOptions = [
-    { value: 'Single entry', label: 'Single entry' },
-    { value: 'Multiple entry', label: 'Multiple entry' },
-    // Add more types as needed
-];
-
+// Define validation schema using Yup
 const validationSchema = Yup.object({
-    type: Yup.string().required('Visa type is required'),
+    visa_type_id: Yup.string().required('Visa type is required'),
     fee: Yup.string().required('Visa fee is required'),
     currency: Yup.string().required('Currency is required'),
     processing_time: Yup.string().required('Processing time is required')
@@ -21,22 +17,41 @@ const validationSchema = Yup.object({
 
 const UpdateVisaType = () => {
     const navigate = useNavigate();
+    const { visa_type_id } = useParams();
 
+    // Fetching visa details and visa type options
+    const { data: visaDetails,isLoading,error } = useGetVisaDetailsVisaTypeDetailsQuery(visa_type_id);
+    const { data: visaTypeOptions } = useGetVisaTypeListQuery();
+    const [updateVisaDetailsVisaType] = useUpdateVisaDetailsVisaTypeMutation();
+
+    // Initialize form values based on fetched data
     const initialValues = {
-        type: '',
-        free: '',
-        currency: '',
-        processing_time: ''
+        visa_type_id: visaDetails?.visa_type_id || '',
+        fee: visaDetails?.fee || '',
+        currency: visaDetails?.currency || '',
+        processing_time: visaDetails?.processing_time || ''
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        // Handle form submission logic here
-        // Example: send values to an API and handle the response
-        console.log(values);
+        try {
+
+            await updateVisaDetailsVisaType({ id:visa_type_id, ...values }).unwrap();
+            toast.success('Visa type updated successfully');
+
+        } catch (error) {
+            toast.error('Failed to update visa type');
+        }
         setSubmitting(false);
-        toast.success('Visa type added successfully');
-        navigate('/'); // Redirect after successful submission
     };
+
+    if(isLoading){
+        return <>Loading..</>
+    }
+
+    if(error){
+        return <>Fetching error</>
+    }
+    console.log(visaDetails);
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -49,25 +64,25 @@ const UpdateVisaType = () => {
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
                         <div className="flex flex-col">
-                            <label htmlFor="type" className="text-gray-700 mb-2">Visa Type</label>
+                            <label htmlFor="visa_type_id" className="text-gray-700 mb-2">Visa Type</label>
                             <Field
-                                id="type"
-                                name="type"
+                                id="visa_type_id"
+                                name="visa_type_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="">Select Visa Type</option>
-                                {visaTypeOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
+                                {visaTypeOptions?.map(option => (
+                                    <option key={option.id} value={option.id}>
+                                        {option.name}
                                     </option>
                                 ))}
                             </Field>
-                            <ErrorMessage name="type" component="div" className="text-red-500 mt-1" />
+                            <ErrorMessage name="visa_type_id" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="free" className="text-gray-700 mb-2">Fee</label>
+                            <label htmlFor="fee" className="text-gray-700 mb-2">Fee</label>
                             <Field
                                 id="fee"
                                 name="fee"

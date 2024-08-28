@@ -4,38 +4,49 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCreateVisaDetailsServiceMutation } from '../../../../../services/visa_details_service_api';
+import { useGetServiceListQuery } from '../../../../../services/service_api';
 
-// Example options for select fields
-const serviceTypeOptions = [
-    { value: 'Single entry', label: 'Single entry' },
-    { value: 'Multiple entry', label: 'Multiple entry' },
-    // Add more types as needed
-];
-
+// Define validation schema using Yup
 const validationSchema = Yup.object({
-    type: Yup.string().required('Visa type is required'),
-    fee: Yup.string().required('Visa fee is required'),
+    service_id: Yup.string().required('Service is required'),
+    fee: Yup.string().required('Fee is required'),
     currency: Yup.string().required('Currency is required')
 });
 
 const AddVisaService = () => {
     const navigate = useNavigate();
+    const { visa_id } = useParams();
+    const [createVisaDetailsService] = useCreateVisaDetailsServiceMutation();
+    const { data: serviceList, isLoading, error } = useGetServiceListQuery();
 
     const initialValues = {
-        type: '',
+        service_id: '', // Change from `type` to `service_id` to match validation schema
         fee: '',
         currency: ''
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        // Handle form submission logic here
-        // Example: send values to an API and handle the response
-        console.log(values);
-        setSubmitting(false);
-        toast.success('Visa service added successfully');
-        navigate('/admin/visa-list'); // Redirect after successful submission
+        try {
+            await createVisaDetailsService({ ...values, visa_details_id: visa_id }).unwrap();
+            toast.success('Visa service added successfully');
+
+        } catch (error) {
+            console.error(error);
+            toast.error('Failed to add visa service');
+        } finally {
+            setSubmitting(false);
+        }
     };
+
+    if (isLoading) {
+        return <>Loading..</>
+    }
+
+    if (error) {
+        return <>Fetching error.</>
+    }
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -48,21 +59,22 @@ const AddVisaService = () => {
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
                         <div className="flex flex-col">
-                            <label htmlFor="type" className="text-gray-700 mb-2">Visa service</label>
+                            <label htmlFor="service_id" className="text-gray-700 mb-2">Visa Service</label>
                             <Field
-                                id="type"
-                                name="type"
+                                id="service_id"
+                                name="service_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                                <option value="">Select service</option>
-                                {serviceTypeOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
+                                <option value="">Select Service</option>
+                                {serviceList && serviceList.map(service => (
+                                    <option key={service.id} value={service.id}>
+                                        {service.name} {/* Adjust based on your service properties */}
                                     </option>
                                 ))}
+
                             </Field>
-                            <ErrorMessage name="type" component="div" className="text-red-500 mt-1" />
+                            <ErrorMessage name="service_id" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <div className="flex flex-col">
@@ -72,7 +84,7 @@ const AddVisaService = () => {
                                 name="fee"
                                 type="text"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Enter visa fee"
+                                placeholder="Enter fee"
                             />
                             <ErrorMessage name="fee" component="div" className="text-red-500 mt-1" />
                         </div>
@@ -88,7 +100,6 @@ const AddVisaService = () => {
                             />
                             <ErrorMessage name="currency" component="div" className="text-red-500 mt-1" />
                         </div>
-
 
                         <button
                             type="submit"

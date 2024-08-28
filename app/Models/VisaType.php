@@ -14,4 +14,11 @@ class VisaType extends Model
 
     // Specify the attributes that are mass assignable
     protected $fillable = ['name'];
+
+
+    public function visaDetailsVisaTypes()
+    {
+        return $this->hasMany(VisaDetailsVisaType::class, 'visa_type_id');
+    }
+
 }

@@ -13,13 +13,14 @@ import UpdateDocument from '../pages/admin/manage_visa/components/manage_require
 
 const ManageVisaRoutes = () => (
     <Routes>
+        {/* manage visa */}
         <Route path="/visa-list" element={<VisaList />} />
         <Route path="/add-visa" element={<AddVisa />} />
         <Route path="/update/:id" element={<UpdateVisa />} />
 
         {/* manage visa type */}
         <Route path="/add-visa-type/:visa_id" element={<AddVisaType />} />
-        <Route path="/update/visa-type/:visa_id/:visa_type_id" element={<UpdateVisaType />} />
+        <Route path="/update/visa-type/:visa_type_id" element={<UpdateVisaType />} />
 
         {/* manage visa service */}
         <Route path="/add-visa-service/:visa_id" element={<AddVisaService/>}/>
