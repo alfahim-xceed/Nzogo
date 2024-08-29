@@ -1,11 +1,30 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useGetVisaDetailsServiceListQuery } from '../../../../../services/visa_details_service_api';
+import { useDeleteVisaDetailsServiceMutation, useGetVisaDetailsServiceListQuery } from '../../../../../services/visa_details_service_api';
+import { toast } from 'react-toastify';
 
 const VisaServiceList = ({id}) => {
 
-    const {data:details,isLoading,error}=useGetVisaDetailsServiceListQuery()
+    const {data:details,isLoading,error}=useGetVisaDetailsServiceListQuery(id);
+    const [deleteVisaDetailsService]=useDeleteVisaDetailsServiceMutation();
+
+    const handleDelete= async (id)=>{
+        try {
+
+            await deleteVisaDetailsService(id).unwrap();
+
+            toast.success("Item deleted successfully.");
+
+
+
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete item.");
+        }
+    }
+
+
     if (isLoading) {
         return <>Loading..</>
     }
@@ -13,7 +32,10 @@ const VisaServiceList = ({id}) => {
     if (error) {
         return <>Fetching error.</>
     }
-    console.log(details);
+
+    // console.log(details);
+
+
     return (
         <div className="mt-7">
             <div className="flex justify-between items-center mb-4">

@@ -25,8 +25,8 @@ export const visa_details_visa_type_api = createApi({
     tagTypes: ["VisaDetailsVisaType"],
     endpoints: (builder) => ({
         getVisaDetailsVisaTypeList:builder.query({
-            query:()=>({
-                url:"/all",
+            query:(id)=>({
+                url:`all/${id}`,
                 method:"GET"
             }),
             providesTags:["VisaDetailsVisaType"]

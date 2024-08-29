@@ -29,6 +29,11 @@ class VisaDetails extends Model
         return $this->hasMany(VisaDetailsVisaType::class, 'visa_details_id');
     }
 
+    public function visaDetailsService()
+    {
+        return $this->hasMany(VisaDetailsService::class, 'visa_details_id');
+    }
+
     public function documents()
     {
         return $this->hasMany(Document::class, 'visa_details_id');

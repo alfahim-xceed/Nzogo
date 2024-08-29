@@ -1,11 +1,28 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useGetVisaDetailsVisaTypeListQuery } from '../../../../../services/visa_details_visa_type_api';
+import { useDeleteVisaDetailsVisaTypeMutation, useGetVisaDetailsVisaTypeListQuery } from '../../../../../services/visa_details_visa_type_api';
+import { toast } from 'react-toastify';
 
 const VisaTypeList = ({id}) => {
 
-    const {data:details,isLoading,error}=useGetVisaDetailsVisaTypeListQuery();
+    const {data:details,isLoading,error}=useGetVisaDetailsVisaTypeListQuery(id);
+    const [deleteVisaDetailsVisaType]=useDeleteVisaDetailsVisaTypeMutation();
+
+    const handleDelete= async (id)=>{
+        try {
+
+            await deleteVisaDetailsVisaType(id).unwrap();
+
+            toast.success("Item deleted successfully.");
+
+
+
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete item.");
+        }
+    }
 
 
     if(isLoading){

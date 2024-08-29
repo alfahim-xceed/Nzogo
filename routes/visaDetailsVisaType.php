@@ -6,7 +6,7 @@ use App\Http\Controllers\VisaDetailsVisaType\CreateVisaDetailsVisaTypeController
 use App\Http\Controllers\VisaDetailsVisaType\UpdateVisaDetailsVisaTypeController;
 use App\Http\Controllers\VisaDetailsVisaType\DeleteVisaDetailsVisaTypeController;
 
-    Route::get('/all', GetVisaDetailsVisaTypeListController::class);
+    Route::get('/all/{visaDetailsId}', GetVisaDetailsVisaTypeListController::class);
 
     // Get details of a specific VisaDetailsVisaType entry by ID
     Route::get('/details/{id}', GetVisaDetailsVisaTypeController::class);

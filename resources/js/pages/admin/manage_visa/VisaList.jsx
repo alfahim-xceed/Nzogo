@@ -1,12 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useGetVisaDetailsListQuery } from '../../../services/visa_details';
+import { useDeleteVisaDetailsMutation, useGetVisaDetailsListQuery } from '../../../services/visa_details';
+import { toast } from 'react-toastify';
 
 const VisaList=()=>{
 
     const {data:details,isLoading,error}=useGetVisaDetailsListQuery();
-    console.log(details,isLoading,error);
+    const [deleteVisaDetails]=useDeleteVisaDetailsMutation();
+    // console.log(details,isLoading,error);
+
+    const handleDelete=async (id)=>{
+        try {
+            await deleteVisaDetails(id).unwrap();
+            toast.success("Item deleted successfully");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete item.");
+        }
+    }
 
     if(isLoading){
         return <>Loading..</>
@@ -16,7 +28,7 @@ const VisaList=()=>{
         return <>Fetching error occured.</>
     }
 
-    console.log("details ",details);
+    // console.log("details ",details);
 
     return (
         <div className="p-6">

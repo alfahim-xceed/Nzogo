@@ -8,7 +8,7 @@ use App\Http\Controllers\VisaDetailsService\{
     DeleteVisaDetailsServiceController
 };
 
-Route::get('/all', GetVisaDetailsServiceListController::class);
+Route::get('/all/{visaDetailsId}', GetVisaDetailsServiceListController::class);
 Route::get('/details/{id}', GetVisaDetailsServiceController::class);
 Route::post('/create', CreateVisaDetailsServiceController::class);
 Route::put('/update/{id}', UpdateVisaDetailsServiceController::class);

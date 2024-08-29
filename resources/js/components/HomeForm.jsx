@@ -1,45 +1,49 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-// Example options for select fields
-const countryOptions = [
-    { value: 'usa', label: 'United States' },
-    { value: 'canada', label: 'Canada' },
-    // Add more countries as needed
-];
-
-const visaCategoryOptions = [
-    { value: 'tourist', label: 'Tourist' },
-    { value: 'business', label: 'Business' },
-    // Add more visa categories as needed
-];
+import { useGetCountryListQuery } from "../services/country_api";
+import { useGetVisaCategoryListListQuery, visa_category_api } from "../services/visa_category_api";
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
-    travelling_to: Yup.string().required('It is required'),
-    visa_category: Yup.string().required('It is required')
+    travelling_to_id: Yup.string().required('Travelling to is required'),
+    visa_category_id: Yup.string().required('Visa category is required')
 });
 
 const HomeForm = () => {
     const navigate = useNavigate();
 
+    const { data: countryDetails, isLoading: countryLoading, error: countryError } = useGetCountryListQuery();
+    const { data: visaCategoryDetails, isLoading: visaCategoryLoading, error: visaCategoryError } = useGetVisaCategoryListListQuery();
+
     const initialValues = {
-        travelling_to: "",
-        visa_category: ""
+        travelling_to_id: "",
+        visa_category_id: ""
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        // Handle form submission logic here
         console.log(values);
         setSubmitting(false);
-        toast.success('Form submitted successfully');
-        navigate('/success'); // Redirect after successful submission
+        // toast.success('Form submitted successfully');
+        // navigate('/success'); // Redirect after successful submission
+        navigate(`/visa/details/${values.travelling_to_id}/${values.visa_category_id}`);
     };
+
+    // Handle loading and error states
+    if (countryLoading || visaCategoryLoading) return <div>Loading...</div>;
+    if (countryError || visaCategoryError) return <div>Error loading data</div>;
+
+    const countryOptions = countryDetails?.map(country => ({
+        value: country.id,
+        label: country.name
+    }));
+
+    const visaCategoryOptions = visaCategoryDetails?.map(category => ({
+        value: category.id,
+        label: category.name
+    }));
 
     return (
         <div className="w-[50%] mx-auto my-10">
@@ -52,10 +56,10 @@ const HomeForm = () => {
                     <Form className="flex items-end space-x-4">
                         {/* Field container with fixed height */}
                         <div className="flex flex-col w-1/3">
-                            <label htmlFor="travelling_to" className="text-gray-700 mb-2">Travelling To</label>
+                            <label htmlFor="travelling_to_id" className="text-gray-700 mb-2">Travelling To</label>
                             <Field
-                                id="travelling_to"
-                                name="travelling_to"
+                                id="travelling_to_id"
+                                name="travelling_to_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
@@ -66,16 +70,16 @@ const HomeForm = () => {
                                     </option>
                                 ))}
                             </Field>
-                            <div className="h-6"> {/* Fixed height container for error message */}
-                                <ErrorMessage name="travelling_to" component="div" className="text-red-500" />
+                            <div className="h-6">
+                                <ErrorMessage name="travelling_to_id" component="div" className="text-red-500" />
                             </div>
                         </div>
 
                         <div className="flex flex-col w-1/3">
-                            <label htmlFor="visa_category" className="text-gray-700 mb-2">Visa Category</label>
+                            <label htmlFor="visa_category_id" className="text-gray-700 mb-2">Visa Category</label>
                             <Field
-                                id="visa_category"
-                                name="visa_category"
+                                id="visa_category_id"
+                                name="visa_category_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
@@ -86,18 +90,17 @@ const HomeForm = () => {
                                     </option>
                                 ))}
                             </Field>
-                            <div className="h-6"> {/* Fixed height container for error message */}
-                                <ErrorMessage name="visa_category" component="div" className="text-red-500" />
+                            <div className="h-6">
+                                <ErrorMessage name="visa_category_id" component="div" className="text-red-500" />
                             </div>
                         </div>
 
-                        <div className="flex items-end mb-6"> {/* Ensure no extra margin */}
+                        <div className="flex items-end mb-6">
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                             >
-
                                 Check Details
                             </button>
                         </div>

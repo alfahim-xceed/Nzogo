@@ -54,6 +54,12 @@ Route::prefix("/visa-details-service")->group(base_path("routes/visaDetailsServi
 // document
 Route::prefix("/document")->group(base_path("routes/document.php"));
 
+// search
+Route::prefix("/search")->group(base_path("routes/search.php"));
+
+// visa applicaton
+Route::prefix("/visa-application")->group(base_path("routes/visaApplication.php"));
+
 Route::get('/test', function () {
     return response()->json(['message' => 'server is running!']);
 });

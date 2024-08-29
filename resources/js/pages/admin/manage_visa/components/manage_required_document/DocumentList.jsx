@@ -1,12 +1,32 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useGetDocumentListQuery } from '../../../../../services/document_api';
+import { useDeleteDocumentMutation, useGetDocumentListQuery } from '../../../../../services/document_api';
+import { toast } from 'react-toastify';
 
 
 const DocumentList = ({id}) => {
 
     const {data:details,isLoading,error}=useGetDocumentListQuery(id);
+
+    const [deleteDocument]=useDeleteDocumentMutation();
+
+
+    const handleDelete= async (id)=>{
+        try {
+
+            await deleteDocument(id).unwrap();
+
+            toast.success("Item deleted successfully.");
+
+
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete item.");
+        }
+    }
+
+
 
     if(isLoading){
         return <>Loading..</>
@@ -17,6 +37,8 @@ const DocumentList = ({id}) => {
         return <>Fetching error</>
     }
     // console.log(details);
+
+
 
 
     return (

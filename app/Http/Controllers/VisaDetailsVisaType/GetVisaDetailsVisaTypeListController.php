@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class GetVisaDetailsVisaTypeListController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request,$visaDetailsId)
     {
-        $visaDetailsVisaTypeList = VisaDetailsVisaType::with('visaType')->get()->map(function ($item) {
+        $visaDetailsVisaTypeList = VisaDetailsVisaType::with('visaType')
+        ->where('visa_details_id',$visaDetailsId)
+        ->get()->map(function ($item) {
             return [
                 'id' => $item->id,
                 'visa_details_id' => $item->visa_details_id,
