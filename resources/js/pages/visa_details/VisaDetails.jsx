@@ -16,8 +16,11 @@ const VisaDetails = () => {
     if (error) {
         return <p className="text-red-500">Error loading. Please try again later.</p>;
     }
-
+    if(details.length<=0){
     console.log("details ",details);
+
+        return <>No data found</>;
+    }
 
     const bannerInfo=[details[0].from_country,details[0].to_country,details[0].visa_category];
 
