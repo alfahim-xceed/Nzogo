@@ -13,7 +13,7 @@ import { visa_details_visa_type_api } from './services/visa_details_visa_type_ap
 import { visa_details_service_api } from './services/visa_details_service_api';
 import { document_api } from './services/document_api';
 import { search_api } from './services/search_api';
-
+import { visa_application_api } from './services/visa_application_api';
 import authReducer from './slices/authSlice';
 
 const store = configureStore({
@@ -29,6 +29,7 @@ const store = configureStore({
         [visa_details_service_api.reducerPath]:visa_details_service_api.reducer,
         [document_api.reducerPath]:document_api.reducer,
         [search_api.reducerPath]:search_api.reducer,
+        [visa_application_api.reducerPath]:visa_application_api.reducer,
 
 
         auth: authReducer
@@ -46,6 +47,7 @@ const store = configureStore({
             .concat(visa_details_service_api.middleware)
             .concat(document_api.middleware)
             .concat(search_api.middleware)
+            .concat(visa_application_api.middleware)
 });
 
 setupListeners(store.dispatch);

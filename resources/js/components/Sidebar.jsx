@@ -42,7 +42,7 @@ const Sidebar = () => {
             <h2 className="text-xl font-bold mb-4 text-center text-black dark:text-black">Menu</h2>
             <nav>
                 <ul>
-                    {details?.role_id == 1 ? <>
+                    {details?.role_id == 1 && <>
 
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
@@ -102,24 +102,25 @@ const Sidebar = () => {
                                 </Link>
                             </div>
                         </li>
-                    </> :
-                        <>
-                            <li className="mb-2">
-                                <a href="#overview" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                    <span className="text-black dark:text-black">Overview</span>
-                                </a>
-                            </li>
-                            <li className="mb-2">
-                                <a href="#applied-visa" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                    <span className="text-black dark:text-black">Applied Visa</span>
-                                </a>
-                            </li>
-                            <li className="mb-2">
-                                <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                    <span className="text-black dark:text-black">Transactions</span>
-                                </a>
-                            </li>
-                        </>}
+                    </>}
+                    {/* <li className="mb-2">
+                        <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                            <span className="text-black dark:text-black">Overview</span>
+                        </div>
+                    </li> */}
+                    <li className="mb-2">
+                        <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                            <Link to="/user/applied-visa-list">
+                                <span className="text-black dark:text-black">Applied Visa</span>
+                            </Link>
+                        </div>
+                    </li>
+                    <li className="mb-2">
+                        <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                            <span className="text-black dark:text-black">Transactions</span>
+                        </a>
+                    </li>
+
                     <li className="mt-4">
                         <button
                             onClick={handleLogout}

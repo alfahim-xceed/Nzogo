@@ -43,8 +43,11 @@ class VisaApplication extends Model
         return $this->belongsTo(VisaDetailsVisaType::class, 'visa_type_id');
     }
 
-    public function visaServices()
+    // Custom accessor to retrieve the visa services
+    public function getVisaServicesAttribute()
     {
-        return $this->hasMany(VisaDetailsService::class, 'id', 'visa_service_ids');
+        return VisaDetailsService::whereIn('id', $this->visa_service_ids)->get();
     }
+
+
 }

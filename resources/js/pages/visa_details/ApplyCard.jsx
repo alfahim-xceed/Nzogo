@@ -5,11 +5,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useCreateVisaApplicationMutation } from '../../services/visa_application_api';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
     visaType: Yup.string().required('Visa type is required'),
-    services: Yup.array().of(Yup.string()).required('At least one service is required'),
+    services: Yup.array().of(Yup.string()).min(1, 'At least one service is required'),
     travelDate: Yup.date().required('Travel date is required').nullable()
 });
 
@@ -17,30 +18,28 @@ const ApplyCard = ({ data }) => {
     const navigate = useNavigate();
     const [totalFee, setTotalFee] = useState(0);
 
+    const [createVisaApplication] = useCreateVisaApplicationMutation();
+
     const initialValues = {
         visaType: '',
-        services: [], // Ensure this is an array
+        services: [],
         travelDate: null
     };
 
     // Function to calculate the total fee
     const calculateTotalFee = (visaTypeId, serviceIds) => {
         let fee = 0;
-
-        // Ensure serviceIds is an array
         const validServiceIds = Array.isArray(serviceIds) ? serviceIds : [];
 
-        // Add fees for selected services
         validServiceIds.forEach(serviceId => {
-            const service = data.visa_details_service.find(s => s.service.id === parseInt(serviceId));
+            const service = data.visa_details_service.find(s => s.id === parseInt(serviceId, 10));
             if (service) {
                 fee += parseFloat(service.fee);
             }
         });
 
-        // Add fee for the selected visa type
         if (visaTypeId) {
-            const visaType = data.visa_details_visa_types.find(vt => vt.visa_type.id === parseInt(visaTypeId));
+            const visaType = data.visa_details_visa_types.find(vt => vt.id === parseInt(visaTypeId, 10));
             if (visaType) {
                 fee += parseFloat(visaType.fee);
             }
@@ -49,32 +48,36 @@ const ApplyCard = ({ data }) => {
         setTotalFee(fee);
     };
 
+
     const handleCheckboxChange = (e, setFieldValue, values) => {
         const { value, checked } = e.target;
-        console.log("Current values:", values, "Checked value:", value);
+        const updatedServices = checked
+            ? [...values.services, value]
+            : values.services.filter(service => service !== value);
 
-        setFieldValue('services', prevServices => {
-            // Ensure previous services is always an array
-            const currentServices = Array.isArray(prevServices) ? prevServices : [];
-            console.log("Previous services:", currentServices);
-
-            // Convert value to string to match the type used in services array
-            const stringValue = value.toString();
-
-            // Update the services array based on checkbox state
-            const updatedServices = checked
-                ? [...currentServices, stringValue] // Add service ID if checked
-                : currentServices.filter(service => service !== stringValue); // Remove service ID if unchecked
-
-            // Recalculate total fee with updated services
-            calculateTotalFee(values.visaType, updatedServices);
-
-            console.log("Updated services:", updatedServices);
-
-            // Return the updated services array
-            return updatedServices;
-        });
+        setFieldValue('services', updatedServices);
+        calculateTotalFee(values.visaType, updatedServices);
     };
+
+
+    const handleSubmit = async (values, { resetForm }) => {
+        try {
+            console.log('Submitted values:', values);
+            console.log("data ", data);
+            // Handle form submission here
+            const { visaType, travelDate, services } = values;
+
+            await createVisaApplication({ visa_type_id: visaType, visa_service_ids: services, visa_details_id: data.id, travel_date: travelDate }).unwrap();
+
+            toast.success('Application submitted successfully');
+            resetForm();
+            navigate("/user/applied-visa-list");
+
+        } catch (error) {
+            toast.error(error.message || 'An error occurred');
+        }
+    }
+
 
     return (
         <div className="flex flex-col items-center justify-center px-9 py-8 mx-auto lg:py-0">
@@ -84,18 +87,7 @@ const ApplyCard = ({ data }) => {
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={async (values, { resetForm }) => {
-                            try {
-                                console.log('Submitted values:', values);
-                                // Handle form submission here
-
-                                toast.success('Application submitted successfully');
-                                resetForm();
-                                navigate('/profile'); // Redirect after successful submission (optional)
-                            } catch (error) {
-                                toast.error(error.message || 'An error occurred');
-                            }
-                        }}
+                        onSubmit={handleSubmit}
                     >
                         {({ setFieldValue, values }) => (
                             <Form className="space-y-4 md:space-y-6">
@@ -105,11 +97,11 @@ const ApplyCard = ({ data }) => {
                                         onChange={(e) => {
                                             const selectedVisaType = e.target.value;
                                             setFieldValue('visaType', selectedVisaType);
-                                            calculateTotalFee(selectedVisaType, values.services); // Recalculate fee
+                                            calculateTotalFee(selectedVisaType, values.services);
                                         }}>
                                         <option value="">Select Visa Type</option>
                                         {data.visa_details_visa_types.map(vt => (
-                                            <option key={vt.visa_type.id} value={vt.visa_type.id}>
+                                            <option key={vt.id} value={vt.id}>
                                                 {`${vt.visa_type.name} (Fee: ${vt.fee} ${vt.currency})`}
                                             </option>
                                         ))}
@@ -121,18 +113,19 @@ const ApplyCard = ({ data }) => {
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Services</label>
                                     <div className="flex flex-col">
                                         {data.visa_details_service.map(vs => (
-                                            <label key={vs.service.id} className="flex items-center mb-2">
+                                            <label key={vs.id} className="flex items-center mb-2">
                                                 <input
                                                     type="checkbox"
                                                     name="services"
-                                                    value={vs.service.id}
+                                                    value={vs.id}
                                                     className="form-checkbox h-4 w-4 text-primary-600"
-                                                    checked={Array.isArray(values.services) && values.services.includes(vs.service.id.toString())}
-                                                    onChange={(e) => handleCheckboxChange(e, setFieldValue, values)} // Pass values here
+                                                    checked={values.services.includes(vs.id.toString())}
+                                                    onChange={(e) => handleCheckboxChange(e, setFieldValue, values)}
                                                 />
                                                 <span className="ml-2 text-gray-900 text-sm">{`${vs.service.name} (Fee: ${vs.fee} ${vs.currency})`}</span>
                                             </label>
                                         ))}
+
                                     </div>
                                     <ErrorMessage name="services" component="div" className="text-red-500 mt-1" />
                                 </div>
