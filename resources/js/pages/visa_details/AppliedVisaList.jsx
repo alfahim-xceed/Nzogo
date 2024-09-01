@@ -1,15 +1,27 @@
-import { useGetVisaApplicationListQuery } from "../../services/visa_application_api";
+import { toast } from "react-toastify";
+import { useDeleteVisaApplicationMutation, useGetVisaApplicationListQuery } from "../../services/visa_application_api";
 
 const AppliedVisaList = () => {
     const { data: details, isLoading, error } = useGetVisaApplicationListQuery();
+    const [deleteVisaApplication] = useDeleteVisaApplicationMutation();
+
+    const handleDelete = async (id) => {
+        try {
+            await deleteVisaApplication(id).unwrap();
+            toast.success("Deleted successfully.");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to delete.");
+        }
+    };
 
     if (isLoading) {
         return <>Loading...</>;
     }
+
     if (error) {
         return <>Fetching error</>;
     }
-    console.log(details);
 
     return (
         <div className="p-6">
@@ -17,7 +29,7 @@ const AppliedVisaList = () => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {details && details.length > 0 ? (
                     details.map((cur) => (
-                        <div key={cur.id} className="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+                        <div key={cur.id} className="bg-white shadow-md rounded-lg p-4 border border-gray-200 relative">
                             <h3 className="text-lg font-semibold mb-2">Application ID: {cur.id}</h3>
                             <p className="text-sm text-gray-700 mb-1"><strong>User:</strong> {cur.user?.name ?? 'N/A'} ({cur.user?.email ?? 'N/A'})</p>
                             <p className="text-sm text-gray-700 mb-1"><strong>Citizen Of:</strong> {cur.citizenOf?.name ?? 'N/A'}</p>
@@ -49,6 +61,12 @@ const AppliedVisaList = () => {
                                     )}
                                 </ul>
                             </div>
+                            <button
+                                onClick={() => handleDelete(cur.id)}
+                                className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+                            >
+                                Delete
+                            </button>
                         </div>
                     ))
                 ) : (
