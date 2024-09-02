@@ -12,4 +12,21 @@ class Country extends Model
     protected $fillable = [
         'name',
     ];
+
+
+    public function categoryCountries()
+    {
+        return $this->hasMany(CategoryCountry::class, 'country_id');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'desired_travel_destination_id');
+    }
+
+    public function countryServices()
+    {
+        return $this->hasMany(CountryService::class, 'country_id');
+    }
+
 }

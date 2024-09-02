@@ -88,13 +88,32 @@ const Sidebar = () => {
                                 </Link>
                             </div>
                         </li>
+
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <Link to="/admin/manage-visa/visa-list">
-                                    <span className="text-black dark:text-black">Manage visa</span>
+                                <Link to="/admin/manage-category-country/list">
+                                    <span className="text-black dark:text-black">Manage Category Country</span>
                                 </Link>
                             </div>
                         </li>
+
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/manage-required-documents/list">
+                                    <span className="text-black dark:text-black">Manage required documents</span>
+                                </Link>
+                            </div>
+                        </li>
+
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/manage-category-country-required-documents/list">
+                                    <span className="text-black dark:text-black">Manage Category Country required documents</span>
+                                </Link>
+                            </div>
+                        </li>
+
+
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
                                 <Link to="/admin/manage-embassy/embassy-list">

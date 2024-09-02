@@ -42,23 +42,31 @@ Route::prefix("/visa-type")->group(base_path("routes/visaType.php"));
 //service
 Route::prefix("/service")->group(base_path("routes/service.php"));
 
-// visa details
-Route::prefix("/visa-details")->group(base_path("routes/visaDetails.php"));
+// required documents
+Route::prefix("/required-documents")->group(base_path("routes/requiredDocument.php"));
 
-// visa details visa type
-Route::prefix("/visa-details-visa-type")->group(base_path("routes/visaDetailsVisaType.php"));
 
-// visa details service
-Route::prefix("/visa-details-service")->group(base_path("routes/visaDetailsService.php"));
 
-// document
-Route::prefix("/document")->group(base_path("routes/document.php"));
+// category country
+Route::prefix("/category-country")->group(base_path("routes/categoryCountry.php"));
+
+// country service
+Route::prefix("/country-service")->group(base_path("routes/countryService.php"));
+
+// category-country-required-documents
+Route::prefix("/category-country-required-documents")->group(base_path("routes/categoryCountryRequiredDocument.php"));
 
 // search
 Route::prefix("/search")->group(base_path("routes/search.php"));
 
+
+// visa
+Route::prefix("/visa")->group(base_path("routes/visa.php"));
+
 // visa applicaton
 Route::prefix("/visa-application")->group(base_path("routes/visaApplication.php"));
+
+//
 
 Route::get('/test', function () {
     return response()->json(['message' => 'server is running!']);

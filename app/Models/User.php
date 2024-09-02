@@ -60,4 +60,16 @@ class User extends Authenticatable
     {
         return $this->morphMany(Storage::class, 'storable');
     }
+
+    public function categoryCountries()
+    {
+        return $this->hasMany(CategoryCountry::class, 'user_id');
+    }
+
+    public function countryServices()
+    {
+        return $this->hasMany(CountryService::class, 'user_id');
+    }
+
+
 }

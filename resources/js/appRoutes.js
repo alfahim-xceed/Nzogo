@@ -35,6 +35,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 import VisaDetails from './pages/visa_details/VisaDetails';
 import AppliedVisaList from './pages/visa_details/AppliedVisaList';
+import ManageRequiredDocumentRoutes from './routes/ManageRequiredDocumentRoutes';
+import ManageCategoryCountryRequiredDocumentRoutes from './routes/ManageCategoryCountryRequiredDocumentRoutes';
+import ManageCategoryCountryRoutes from './routes/ManageCategoryCountryRoutes';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -93,6 +96,14 @@ function AppRoutes() {
                     <Route path="admin/add-role" element={<CreateRole />} />
                     <Route path="admin/role/update/:id" element={<UpdateRole />} />
 
+                    {/* manage required docs */}
+                    <Route path="/admin/manage-required-documents/*" element={<ManageRequiredDocumentRoutes/>}/>
+
+                    {/* /admin/manage-category-country-required-documents */}
+                    <Route path="/admin/manage-category-country-required-documents/*" element={<ManageCategoryCountryRequiredDocumentRoutes/>}/>
+
+                    {/* manage category country */}
+                    <Route path="/admin/manage-category-country/*" element={<ManageCategoryCountryRoutes/>}/>
                     {/* manage visa */}
                     <Route path="/admin/manage-visa/*" element={<ManageVisaRoutes/>}/>
 

@@ -16,4 +16,16 @@ class VisaCategory extends Model
     protected $fillable = [
         'name',
     ];
+
+
+    public function categoryCountries()
+    {
+        return $this->hasMany(CategoryCountry::class, 'category_id');
+    }
+
+    public function countryServices()
+    {
+        return $this->hasMany(CountryService::class, 'category_id');
+    }
+
 }
