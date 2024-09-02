@@ -38,6 +38,7 @@ import AppliedVisaList from './pages/visa_details/AppliedVisaList';
 import ManageRequiredDocumentRoutes from './routes/ManageRequiredDocumentRoutes';
 import ManageCategoryCountryRequiredDocumentRoutes from './routes/ManageCategoryCountryRequiredDocumentRoutes';
 import ManageCategoryCountryRoutes from './routes/ManageCategoryCountryRoutes';
+import ManageCountryServiceRoutes from './routes/ManageCountryServiceRoutes';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -52,7 +53,7 @@ function AppRoutes() {
                 <Route path="/admin/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin/login" element={<Login />} />
-                <Route path="/visa/details/:travelling_to_id/:visa_category_id" element={<VisaDetails/>}/>
+                <Route path="/visa/details/:travelling_to_id/:visa_category_id" element={<VisaDetails />} />
                 <Route path="/" element={<Layout />}>
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/admin/user-list" element={<UserList />} />
@@ -97,22 +98,26 @@ function AppRoutes() {
                     <Route path="admin/role/update/:id" element={<UpdateRole />} />
 
                     {/* manage required docs */}
-                    <Route path="/admin/manage-required-documents/*" element={<ManageRequiredDocumentRoutes/>}/>
+                    <Route path="/admin/manage-required-documents/*" element={<ManageRequiredDocumentRoutes />} />
 
                     {/* /admin/manage-category-country-required-documents */}
-                    <Route path="/admin/manage-category-country-required-documents/*" element={<ManageCategoryCountryRequiredDocumentRoutes/>}/>
+                    <Route path="/admin/manage-category-country-required-documents/*" element={<ManageCategoryCountryRequiredDocumentRoutes />} />
 
                     {/* manage category country */}
-                    <Route path="/admin/manage-category-country/*" element={<ManageCategoryCountryRoutes/>}/>
+                    <Route path="/admin/manage-category-country/*" element={<ManageCategoryCountryRoutes />} />
+
+                    {/* manage country service */}
+                    <Route path="/admin/manage-country-service/*" element={<ManageCountryServiceRoutes />} />
+
                     {/* manage visa */}
-                    <Route path="/admin/manage-visa/*" element={<ManageVisaRoutes/>}/>
+                    <Route path="/admin/manage-visa/*" element={<ManageVisaRoutes />} />
 
                     {/* manage embassy */}
-                    <Route path="/admin/manage-embassy/*" element={<ManageEmbassyRoutes/>}/>
+                    <Route path="/admin/manage-embassy/*" element={<ManageEmbassyRoutes />} />
                 </Route>
 
             </Routes>
-            <ToastContainer/>
+            <ToastContainer />
 
         </>
     );
