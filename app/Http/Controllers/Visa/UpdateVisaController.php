@@ -7,7 +7,7 @@ use App\Models\Visa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class UpdateVisa extends Controller
+class UpdateVisaController extends Controller
 {
     public function __invoke(Request $request, $id)
     {
@@ -15,7 +15,7 @@ class UpdateVisa extends Controller
             'type_id' => 'sometimes|exists:visa_types,id',
             'fee' => 'sometimes|string',
             'currency' => 'sometimes|string',
-            'processing_time' => 'sometimes|date',
+            'processing_time' => 'sometimes|string',
             'category_id' => 'sometimes|exists:visa_categories,id',
             'country_id' => 'sometimes|exists:countries,id'
         ]);

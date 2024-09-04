@@ -5,7 +5,7 @@ const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content
 export const visa_api = createApi({
     reducerPath: 'visa_api',
     baseQuery: fetchBaseQuery({
-        baseUrl: '/api/visa_api',
+        baseUrl: '/api/visa',
         prepareHeaders: (headers, { getState }) => {
             // const token = localStorage.getItem("token");
             // Get the token from the Redux state

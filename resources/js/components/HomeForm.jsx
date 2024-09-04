@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useGetCountryListQuery } from "../services/country_api";
-import { useGetVisaCategoryListListQuery, visa_category_api } from "../services/visa_category_api";
+import { useGetCategoryCountryListQuery } from "../services/category_country_api";
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
@@ -16,7 +16,17 @@ const HomeForm = () => {
     const navigate = useNavigate();
 
     const { data: countryDetails, isLoading: countryLoading, error: countryError } = useGetCountryListQuery();
-    const { data: visaCategoryDetails, isLoading: visaCategoryLoading, error: visaCategoryError } = useGetVisaCategoryListListQuery();
+    const [selectedCountry, setSelectedCountry] = useState("");
+    const { data: categoryCountryDetails, refetch: refetchCategories } = useGetCategoryCountryListQuery(
+        { travelling_to_id: selectedCountry },
+        { skip: !selectedCountry } // Skip query if no country is selected
+    );
+
+    useEffect(() => {
+        if (selectedCountry) {
+            refetchCategories();
+        }
+    }, [selectedCountry, refetchCategories]);
 
     const initialValues = {
         travelling_to_id: "",
@@ -26,24 +36,24 @@ const HomeForm = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         console.log(values);
         setSubmitting(false);
-        // toast.success('Form submitted successfully');
-        // navigate('/success'); // Redirect after successful submission
         navigate(`/visa/details/${values.travelling_to_id}/${values.visa_category_id}`);
     };
 
     // Handle loading and error states
-    if (countryLoading || visaCategoryLoading) return <div>Loading...</div>;
-    if (countryError || visaCategoryError) return <div>Error loading data</div>;
+    if (countryLoading) return <div>Loading...</div>;
+    if (countryError) return <div>Error loading data</div>;
 
     const countryOptions = countryDetails?.map(country => ({
         value: country.id,
         label: country.name
     }));
 
-    const visaCategoryOptions = visaCategoryDetails?.map(category => ({
-        value: category.id,
-        label: category.name
-    }));
+    console.log(" cc ", categoryCountryDetails);
+
+    const visaCategoryOptions = categoryCountryDetails?.map(category => ({
+        value: category.category_id,
+        label: category.category_name
+    })) || [];
 
     return (
         <div className="w-[50%] mx-auto my-10">
@@ -52,7 +62,7 @@ const HomeForm = () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                {({ isSubmitting }) => (
+                {({ isSubmitting, setFieldValue }) => (
                     <Form className="flex items-end space-x-4">
                         {/* Field container with fixed height */}
                         <div className="flex flex-col w-1/3">
@@ -62,6 +72,12 @@ const HomeForm = () => {
                                 name="travelling_to_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    setFieldValue("travelling_to_id", value);
+                                    setSelectedCountry(value);
+                                    setFieldValue("visa_category_id", ""); // Reset category when country changes
+                                }}
                             >
                                 <option value="">Select Country</option>
                                 {countryOptions.map(option => (
@@ -82,6 +98,7 @@ const HomeForm = () => {
                                 name="visa_category_id"
                                 as="select"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                disabled={!selectedCountry}
                             >
                                 <option value="">Select Visa Category</option>
                                 {visaCategoryOptions.map(option => (

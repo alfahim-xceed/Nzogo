@@ -53,8 +53,9 @@ const CountryServiceList = () => {
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serial</th>
 
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
 
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delete</th>
@@ -65,8 +66,10 @@ const CountryServiceList = () => {
                             details.map((doc, index) => (
                                 <tr key={doc.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{doc.country_name}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{doc.category_name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{doc.country.name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{doc.category.name}</td>
+
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{doc.service.name}</td>
 
 
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-500 hover:text-blue-700 cursor-pointer">

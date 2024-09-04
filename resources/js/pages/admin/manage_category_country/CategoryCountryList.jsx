@@ -9,7 +9,7 @@ import { useGetCategoryCountryListQuery, useDeleteCategoryCountryMutation } from
 
 const CategoryCountryList = () => {
 
-    const { data: details, isLoading, error } = useGetCategoryCountryListQuery();
+    const { data: details, isLoading, error } = useGetCategoryCountryListQuery({ travelling_to_id: null });
     const [deleteCategoryCountry] = useDeleteCategoryCountryMutation();
 
     const handleDelete = async (id) => {
@@ -30,7 +30,7 @@ const CategoryCountryList = () => {
         console.error("doc error ", error);
         return <>Fetching error</>
     }
-    console.log(details);
+    // console.log(details);
 
 
 

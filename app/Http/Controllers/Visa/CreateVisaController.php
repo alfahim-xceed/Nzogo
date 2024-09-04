@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-class CreateVisa extends Controller
+class CreateVisaController extends Controller
 {
     public function __invoke(Request $request)
     {
@@ -23,7 +23,7 @@ class CreateVisa extends Controller
             'type_id' => 'required|exists:visa_types,id',
             'fee' => 'required|string',
             'currency' => 'required|string',
-            'processing_time' => 'required|date_format:Y-m-d H:i:s', // Ensure datetime format
+            'processing_time' => 'required|string', // Ensure datetime format
             'category_id' => 'required|exists:visa_categories,id',
             'country_id' => 'required|exists:countries,id',
         ]);

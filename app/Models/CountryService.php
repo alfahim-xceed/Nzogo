@@ -45,4 +45,10 @@ class CountryService extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // Define the inverse relationship if needed
+    public function visaApplications()
+    {
+        return $this->belongsToMany(VisaApplication::class, 'visa_application_services', 'service_id', 'visa_application_id');
+    }
 }

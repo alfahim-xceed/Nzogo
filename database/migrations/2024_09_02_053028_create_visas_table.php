@@ -16,7 +16,7 @@ class CreateVisasTable extends Migration
             $table->unsignedBigInteger('type_id');
             $table->string('fee');
             $table->string('currency');
-            $table->dateTime('processing_time');
+            $table->string('processing_time'); // Changed from dateTime to string
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('user_id');
@@ -36,3 +36,4 @@ class CreateVisasTable extends Migration
         Schema::dropIfExists('visas');
     }
 }
+

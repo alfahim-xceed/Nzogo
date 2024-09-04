@@ -8,8 +8,8 @@ const Documents = ({ data }) => {
             {data.length > 0 ? (
                 data.map((cur, ind) => (
                     <div key={ind} className="bg-white shadow-md rounded-lg border border-gray-200 p-4">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-2">{cur.name}</h2>
-                        <p className="text-gray-600">{cur.description}</p>
+                        <h2 className="text-lg font-semibold text-gray-800 mb-2">{cur.required_document.name}</h2>
+                        <p className="text-gray-600">{cur.required_document.description}</p>
                     </div>
                 ))
             ) : (

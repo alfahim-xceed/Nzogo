@@ -25,8 +25,8 @@ export const category_country_api = createApi({
     tagTypes: ["CategoryCountry"],
     endpoints: (builder) => ({
         getCategoryCountryList:builder.query({
-            query:()=>({
-                url:"/all",
+            query:({travelling_to_id})=>({
+                url:`/all?country_id=${travelling_to_id}`,
                 method:"GET"
             }),
             providesTags:["CategoryCountry"]

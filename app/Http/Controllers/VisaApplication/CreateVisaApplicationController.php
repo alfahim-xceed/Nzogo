@@ -6,52 +6,46 @@ use App\Http\Controllers\Controller;
 use App\Models\VisaApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon; // Make sure to import Carbon
 
 class CreateVisaApplicationController extends Controller
 {
-    public function store(Request $request)
+    public function __invoke(Request $request)
     {
         $user = $request->user();
-
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return response()->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
-        // Prepare the data to be validated
-        $data = $request->all();
-        $data['user_id'] = $user->id;
-        $data['citizen_of'] = 9; // Set a default value for citizen_of
-        $data['status'] = 'pending'; // Set the default status
-        // Convert the travel_date to MySQL date format
-        if (isset($data['travel_date'])) {
-            $data['travel_date'] = date('Y-m-d', strtotime($data['travel_date']));
-        }
-
-        // Validate the request data
-        $validator = Validator::make($data, [
-            'user_id' => 'required|exists:users,id',
-            'citizen_of' => 'required|exists:countries,id',
-            'visa_details_id' => 'required|exists:visa_details,id',
-            'travel_date' => 'required|date',
+        // Validate incoming request data
+        $validator = Validator::make($request->all(), [
+            'visa_id' => 'required|exists:visas,id',
+            'visa_type_id' => 'required|exists:visa_types,id',
             'visa_service_ids' => 'required|array',
-            'visa_service_ids.*' => 'required|exists:visa_details_services,id', // Ensure each service ID exists
-            'visa_type_id' => 'required|exists:visa_details_visa_types,id',
-            'status' => 'required|string|in:pending,approved,rejected',
+            'visa_service_ids.*' => 'exists:country_services,id',
+            'travel_date' => 'required|date' // Adjust validation format to match ISO 8601
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return response()->json($validator->errors(), 422);
         }
 
-        // Create the VisaApplication record with validated data
+        // Convert the travel date to MySQL-compatible format
+        try {
+            $travelDate = Carbon::parse($request->input('travel_date'))->format('Y-m-d H:i:s');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Invalid date format'], 422);
+        }
+
+        // Create the visa application with user_id and fixed citizen_of value
         $visaApplication = VisaApplication::create([
-            'user_id' => $data['user_id'],
-            'citizen_of' => $data['citizen_of'],
-            'visa_details_id' => $data['visa_details_id'],
-            'travel_date' => $data['travel_date'],
-            'visa_service_ids' => $data['visa_service_ids'],
-            'visa_type_id' => $data['visa_type_id'],
-            'status' => $data['status'],
+            'user_id' => $request->user()->id,
+            'citizen_of' => 9,
+            'visa_id' => $request->input('visa_id'),
+            'visa_type_id' => $request->input('visa_type_id'),
+            'visa_service_ids' => json_encode($request->input('visa_service_ids')), // Encode array to JSON string
+            'travel_date' => $travelDate, // Use the formatted travel date
+            'status' => "pending"
         ]);
 
         return response()->json($visaApplication, 201);

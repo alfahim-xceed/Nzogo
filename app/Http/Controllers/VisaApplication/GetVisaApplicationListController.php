@@ -4,74 +4,54 @@ namespace App\Http\Controllers\VisaApplication;
 
 use App\Http\Controllers\Controller;
 use App\Models\VisaApplication;
-use App\Models\Country;
-use App\Models\Service;
-use App\Models\VisaType;
-use App\Models\VisaCategory;
-use App\Models\VisaDetailsService;
+use App\Models\CountryService;
 use Illuminate\Http\Request;
 
 class GetVisaApplicationListController extends Controller
 {
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
-        $user = $request->user();
+        // Fetch visa applications with their related models
+        $visaApplications = VisaApplication::with(['user', 'country', 'visa', 'visaType', 'visa.country'])->get();
 
-        // Define the relationships you want to load
-        $relationships = ['user', 'citizenOf', 'visaDetails', 'visaType'];
+        // Extract service IDs for each visa application
+        $visaServiceIds = $visaApplications->flatMap(function ($application) {
+            return json_decode($application->visa_service_ids, true); // Assuming it's stored as JSON
+        })->unique()->toArray();
 
-        // If the user's role is 'admin', get all visa applications with relationships
-        if ($user->role->name == 'admin') {
-            $visaApplications = VisaApplication::with($relationships)->get();
-        } else {
-            // Otherwise, get only the visa applications for this user with relationships
-            $visaApplications = VisaApplication::with($relationships)
-                ->where('user_id', $user->id)
-                ->get();
-        }
+        // Fetch the corresponding CountryService records including their related Service records
+        $services = CountryService::whereIn('id', $visaServiceIds)
+            ->with('service') // Include the related Service model
+            ->get();
 
-        // Apply filtering by visa_service_ids if provided
-        if ($request->has('visa_service_ids')) {
-            $visa_service_ids = $request->input('visa_service_ids');
-            $visaApplications = $visaApplications->filter(function ($application) use ($visa_service_ids) {
-                return count(array_intersect($application->visa_service_ids, $visa_service_ids)) > 0;
+        // Prepare a dictionary of services indexed by their IDs
+        $serviceDictionary = $services->keyBy('id');
+
+        // Add services to each visa application
+        $visaApplications->each(function ($application) use ($serviceDictionary) {
+            $serviceIds = json_decode($application->visa_service_ids, true);
+
+            // Add both the CountryService and related Service models
+            $application->services = $serviceDictionary->only($serviceIds)->map(function ($countryService) {
+                return [
+                    'id' => $countryService->id,
+                    'service_id' => $countryService->service_id,
+                    'fee' => $countryService->fee,
+                    'currency' => $countryService->currency,
+                    'category_id' => $countryService->category_id,
+                    'country_id' => $countryService->country_id,
+                    'service' => [
+                        'id' => $countryService->service->id,
+                        'name' => $countryService->service->name,
+                        'description' => $countryService->service->description, // Add more fields if necessary
+                    ]
+                ];
             });
-        }
 
-        // Transform the data
-
-        $formattedVisaApplications = $visaApplications->map(function ($application) {
-
-
-            // Fetch VisaDetailsService records using visa_service_ids
-            $visaDetailsServices = VisaDetailsService::whereIn('id', $application->visa_service_ids)->get();
-
-            // Extract service_ids from the VisaDetailsService records
-            $serviceIds = $visaDetailsServices->pluck('service_id');
-
-            // Fetch Service details using these service_ids
-            $serviceDetails = Service::whereIn('id', $serviceIds)->get();
-
-
-
-
-            return [
-                'id' => $application->id,
-                'user' => $application->user,
-                'citizenOf' => $application->citizenOf,
-                'visaDetails' => $application->visaDetails,
-                'visaType' => $application->visaType,
-                'visa_category_name'=>VisaCategory::find($application->visaDetails->visa_category_id)->name ?? null,
-                'visa_type_name' => VisaType::find($application->visaType->visa_type_id)->name ?? null,
-                'travel_date' => $application->travel_date,
-                'visa_service_ids' => $application->visa_service_ids,
-                'status' => $application->status,
-                'from_country_name' => Country::find($application->visaDetails->from_country_id)->name ?? null,
-                'to_country_name' => Country::find($application->visaDetails->to_country_id)->name ?? null,
-                'services' => $serviceDetails, // Include service details
-            ];
+            // Correctly set the visa_for attribute with the country name
+            $application->visa_for = $application->visa->country->name;
         });
 
-        return response()->json($formattedVisaApplications, 200);
+        return response()->json($visaApplications, 200);
     }
 }

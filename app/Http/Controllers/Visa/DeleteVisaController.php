@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Visa;
 use App\Http\Controllers\Controller;
 use App\Models\Visa;
 
-class DeleteVisa extends Controller
+class DeleteVisaController extends Controller
 {
     public function __invoke($id)
     {

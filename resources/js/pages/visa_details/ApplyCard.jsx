@@ -17,7 +17,6 @@ const validationSchema = Yup.object({
 const ApplyCard = ({ data }) => {
     const navigate = useNavigate();
     const [totalFee, setTotalFee] = useState(0);
-
     const [createVisaApplication] = useCreateVisaApplicationMutation();
 
     const initialValues = {
@@ -32,14 +31,18 @@ const ApplyCard = ({ data }) => {
         const validServiceIds = Array.isArray(serviceIds) ? serviceIds : [];
 
         validServiceIds.forEach(serviceId => {
-            const service = data.visa_details_service.find(s => s.id === parseInt(serviceId, 10));
+            const service = data.country.find(countryData =>
+                countryData.service && countryData.id === parseInt(serviceId, 10)
+            );
             if (service) {
                 fee += parseFloat(service.fee);
             }
         });
 
         if (visaTypeId) {
-            const visaType = data.visa_details_visa_types.find(vt => vt.id === parseInt(visaTypeId, 10));
+            const visaType = data.visa.find(visaData =>
+                visaData.type && visaData.type.id === parseInt(visaTypeId, 10)
+            );
             if (visaType) {
                 fee += parseFloat(visaType.fee);
             }
@@ -47,7 +50,6 @@ const ApplyCard = ({ data }) => {
 
         setTotalFee(fee);
     };
-
 
     const handleCheckboxChange = (e, setFieldValue, values) => {
         const { value, checked } = e.target;
@@ -59,15 +61,17 @@ const ApplyCard = ({ data }) => {
         calculateTotalFee(values.visaType, updatedServices);
     };
 
-
     const handleSubmit = async (values, { resetForm }) => {
         try {
-            console.log('Submitted values:', values);
-            console.log("data ", data);
-            // Handle form submission here
             const { visaType, travelDate, services } = values;
+            const visa_id = data.visa.find(v => v.type.id === parseInt(visaType, 10))?.id;
 
-            await createVisaApplication({ visa_type_id: visaType, visa_service_ids: services, visa_details_id: data.id, travel_date: travelDate }).unwrap();
+            await createVisaApplication({
+                visa_type_id: visaType,
+                visa_service_ids: services,
+                visa_id,
+                travel_date: travelDate
+            }).unwrap();
 
             toast.success('Application submitted successfully');
             resetForm();
@@ -76,8 +80,7 @@ const ApplyCard = ({ data }) => {
         } catch (error) {
             toast.error(error.message || 'An error occurred');
         }
-    }
-
+    };
 
     return (
         <div className="flex flex-col items-center justify-center px-9 py-8 mx-auto lg:py-0">
@@ -100,9 +103,9 @@ const ApplyCard = ({ data }) => {
                                             calculateTotalFee(selectedVisaType, values.services);
                                         }}>
                                         <option value="">Select Visa Type</option>
-                                        {data.visa_details_visa_types.map(vt => (
-                                            <option key={vt.id} value={vt.id}>
-                                                {`${vt.visa_type.name} (Fee: ${vt.fee} ${vt.currency})`}
+                                        {data.visa.map(vt => (
+                                            <option key={vt.type.id} value={vt.type.id}>
+                                                {`${vt.type.name} (Fee: ${vt.fee} ${vt.currency})`}
                                             </option>
                                         ))}
                                     </Field>
@@ -112,20 +115,21 @@ const ApplyCard = ({ data }) => {
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Services</label>
                                     <div className="flex flex-col">
-                                        {data.visa_details_service.map(vs => (
-                                            <label key={vs.id} className="flex items-center mb-2">
-                                                <input
-                                                    type="checkbox"
-                                                    name="services"
-                                                    value={vs.id}
-                                                    className="form-checkbox h-4 w-4 text-primary-600"
-                                                    checked={values.services.includes(vs.id.toString())}
-                                                    onChange={(e) => handleCheckboxChange(e, setFieldValue, values)}
-                                                />
-                                                <span className="ml-2 text-gray-900 text-sm">{`${vs.service.name} (Fee: ${vs.fee} ${vs.currency})`}</span>
-                                            </label>
+                                        {data.country.map(countryData => (
+                                            countryData.service && (
+                                                <label key={countryData.id} className="flex items-center mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="services"
+                                                        value={countryData.id}
+                                                        className="form-checkbox h-4 w-4 text-primary-600"
+                                                        checked={values.services.includes(countryData.id.toString())}
+                                                        onChange={(e) => handleCheckboxChange(e, setFieldValue, values)}
+                                                    />
+                                                    <span className="ml-2 text-gray-900 text-sm">{`${countryData.service.name} (Fee: ${countryData.fee} ${countryData.currency})`}</span>
+                                                </label>
+                                            )
                                         ))}
-
                                     </div>
                                     <ErrorMessage name="services" component="div" className="text-red-500 mt-1" />
                                 </div>

@@ -12,42 +12,41 @@ class VisaApplication extends Model
     protected $fillable = [
         'user_id',
         'citizen_of',
-        'visa_details_id',
-        'travel_date',
-        'visa_service_ids',
+        'visa_id',
         'visa_type_id',
-        'status',
+        'visa_service_ids',
+        'travel_date',
+        'status'
     ];
+
 
     protected $casts = [
         'visa_service_ids' => 'array',
     ];
+
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function citizenOf()
+    public function country()
     {
         return $this->belongsTo(Country::class, 'citizen_of');
     }
 
-    public function visaDetails()
+    public function visa()
     {
-        return $this->belongsTo(VisaDetails::class, 'visa_details_id');
+        return $this->belongsTo(Visa::class);
     }
 
     public function visaType()
     {
-        return $this->belongsTo(VisaDetailsVisaType::class, 'visa_type_id');
+        return $this->belongsTo(VisaType::class, 'visa_type_id');
     }
 
-    // Custom accessor to retrieve the visa services
-    public function getVisaServicesAttribute()
+    public function services()
     {
-        return VisaDetailsService::whereIn('id', $this->visa_service_ids)->get();
+        return $this->belongsToMany(CountryService::class, 'visa_application_services', 'visa_application_id', 'service_id');
     }
-
-
 }

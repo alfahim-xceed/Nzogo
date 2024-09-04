@@ -1,11 +1,12 @@
 const Banner = ({ data }) => {
+    // console.log("data ",data);
     return (
         <div className="banner bg-blue-50">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="py-8">
 
                     <h4 className="text-xl sm:text-4xl lg:text-2xl font-bold leading-tight mb-4">
-                        Apply online to {data[1].name} {data[2].name} visa from {data[0].name}
+                        Apply online to {data[1]} {data[2]} visa from {data[0]}
                     </h4>
 
 

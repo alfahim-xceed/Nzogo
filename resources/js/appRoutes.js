@@ -34,7 +34,7 @@ import ManageEmbassyRoutes from './routes/ManageEmbassyRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 import VisaDetails from './pages/visa_details/VisaDetails';
-import AppliedVisaList from './pages/visa_details/AppliedVisaList';
+import AppliedVisaList from './pages/AppliedVisaList';
 import ManageRequiredDocumentRoutes from './routes/ManageRequiredDocumentRoutes';
 import ManageCategoryCountryRequiredDocumentRoutes from './routes/ManageCategoryCountryRequiredDocumentRoutes';
 import ManageCategoryCountryRoutes from './routes/ManageCategoryCountryRoutes';
