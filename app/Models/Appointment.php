@@ -17,6 +17,7 @@ class Appointment extends Model
         'visa_category_id',
         'expected_travel_date',
         'service_id',
+        'user_id'
     ];
 
     // Define relationships

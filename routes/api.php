@@ -72,6 +72,9 @@ Route::prefix("/embassy")->group(base_path("routes/embassy.php"));
 // process steps
 Route::prefix("/process-steps")->group(base_path("routes/processStep.php"));
 
+// appointment
+Route::prefix("/appointment")->group(base_path("routes/appointment.php"));
+
 Route::get('/test', function () {
     return response()->json(['message' => 'server is running!']);
 });
