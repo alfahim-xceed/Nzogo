@@ -10,7 +10,7 @@ class GetProcessStepListByCountryIdController extends Controller
 {
     public function index($countryId)
     {
-        $processSteps = ProcessStep::where('country_id', $countryId)->get();
+        $processSteps = ProcessStep::with(["Country"])->where('country_id', $countryId)->get();
 
         return response()->json($processSteps);
     }

@@ -18,4 +18,10 @@ class Service extends Model
         return $this->hasMany(CountryService::class, 'service_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'service_id');
+    }
+
+
 }

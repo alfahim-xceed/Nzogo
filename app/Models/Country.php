@@ -20,10 +20,7 @@ class Country extends Model
         return $this->hasMany(CategoryCountry::class, 'country_id');
     }
 
-    public function appointments()
-    {
-        return $this->hasMany(Appointment::class, 'desired_travel_destination_id');
-    }
+
 
     public function countryServices()
     {
@@ -39,5 +36,12 @@ class Country extends Model
     {
         return $this->hasMany(ProcessStep::class);
     }
+
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'desired_travel_destination_id');
+    }
+
 
 }

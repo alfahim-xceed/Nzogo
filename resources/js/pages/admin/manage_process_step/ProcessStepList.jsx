@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useDeleteProcessStepMutation, useGetProcessStepListQuery } from '../../../services/process_step_api';
+import { useDeleteProcessStepMutation, useGetProcessStepListByCountryIdQuery, useGetProcessStepListQuery } from '../../../services/process_step_api';
 
-const ProcessStepList=()=>{
+const ProcessStepList = () => {
+    const { id } = useParams();
+    const { data: details, isLoading, error } = useGetProcessStepListByCountryIdQuery(id);
 
-    const {data:details,isLoading,error}=useGetProcessStepListQuery();
-
-    const [deleteProcessStep]=useDeleteProcessStepMutation()
+    const [deleteProcessStep] = useDeleteProcessStepMutation()
 
     const handleDelete = async (id) => {
         try {
@@ -32,13 +32,13 @@ const ProcessStepList=()=>{
         console.error("Error fetching countries:", error);
         return <>Error fetching countries</>;
     }
-    console.log(details);
+    // console.log(details);
 
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Process step List</h2>
-                <Link to="/admin/manage-process-step/create">
+                <Link to={`/admin/manage-process-step/create/${id}`}>
                     <button className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                         <FontAwesomeIcon icon={faPlus} className="mr-2" />
                         Add New
@@ -77,7 +77,7 @@ const ProcessStepList=()=>{
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No embassy to show.</td>
+                                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No step to show.</td>
                             </tr>
                         )}
                     </tbody>

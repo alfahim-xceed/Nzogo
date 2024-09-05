@@ -28,4 +28,9 @@ class VisaCategory extends Model
         return $this->hasMany(CountryService::class, 'category_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'visa_category_id');
+    }
+
 }

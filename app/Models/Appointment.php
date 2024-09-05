@@ -1,32 +1,37 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-class CreateAppointmentsTable extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Appointment extends Model
 {
-    public function up()
+    use HasFactory;
+
+    protected $fillable = [
+        'appointment_type',
+        'appointment_schedule',
+        'meeting_type',
+        'desired_travel_destination_id',
+        'visa_category_id',
+        'expected_travel_date',
+        'service_id',
+    ];
+
+    // Define relationships
+    public function country()
     {
-        Schema::create('appointments', function (Blueprint $table) {
-            $table->id();
-            $table->datetime('appointment_schedule');
-            $table->foreignId('desired_travel_destination_id')
-                ->constrained('countries')
-                ->onDelete('cascade');
-            $table->foreignId('visa_category_id')
-                ->constrained('visa_categories')
-                ->onDelete('cascade');
-            $table->date('expected_travel_date');
-            $table->foreignId('service_id')
-                ->constrained('services')
-                ->onDelete('cascade');
-            $table->timestamps();
-        });
+        return $this->belongsTo(Country::class, 'desired_travel_destination_id');
     }
 
-    public function down()
+    public function visaCategory()
     {
-        Schema::dropIfExists('appointments');
+        return $this->belongsTo(VisaCategory::class, 'visa_category_id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }
