@@ -71,5 +71,10 @@ class User extends Authenticatable
         return $this->hasMany(CountryService::class, 'user_id');
     }
 
+    public function processSteps()
+    {
+        return $this->hasMany(ProcessStep::class);
+    }
+
 
 }

@@ -122,10 +122,12 @@ const Navbar = () => {
                                             <span className="text-sm">Explore Embassies</span>
                                         </div>
                                     </Link>
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
-                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Document Legalization" className="w-5 h-5 mr-2" />
-                                        <span className="text-sm">Explore visa fees</span>
-                                    </a>
+                                    <Link to="/explore/countries">
+                                        <div className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
+                                            <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="E-Visa" className="w-5 h-5 mr-2" />
+                                            <span className="text-sm">Explore Countries</span>
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
 

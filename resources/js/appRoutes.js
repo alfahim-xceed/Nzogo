@@ -40,6 +40,7 @@ import ManageCategoryCountryRequiredDocumentRoutes from './routes/ManageCategory
 import ManageCategoryCountryRoutes from './routes/ManageCategoryCountryRoutes';
 import ManageCountryServiceRoutes from './routes/ManageCountryServiceRoutes';
 import ManageGeneralRoutes from './routes/ManageGeneralRoutes';
+import ManageProcessStepRoutes from './routes/ManageProcessStepRoutes';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -56,7 +57,7 @@ function AppRoutes() {
                 <Route path="/admin/login" element={<Login />} />
                 <Route path="/visa/details/:travelling_to_id/:visa_category_id" element={<VisaDetails />} />
                 {/* general routes */}
-                <Route path="/explore/*" element={<ManageGeneralRoutes/>}/>
+                <Route path="/explore/*" element={<ManageGeneralRoutes />} />
 
 
                 <Route path="/" element={<Layout />}>
@@ -120,6 +121,8 @@ function AppRoutes() {
                     {/* manage embassy */}
                     <Route path="/admin/manage-embassy/*" element={<ManageEmbassyRoutes />} />
 
+                    {/* manage process step */}
+                    <Route path="/admin/manage-process-step/*" element={<ManageProcessStepRoutes />} />
 
                 </Route>
 

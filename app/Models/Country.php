@@ -35,4 +35,9 @@ class Country extends Model
         return $this->hasMany(Embassy::class);
     }
 
+    public function processSteps()
+    {
+        return $this->hasMany(ProcessStep::class);
+    }
+
 }

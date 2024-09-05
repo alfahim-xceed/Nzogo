@@ -107,6 +107,14 @@ const Sidebar = () => {
 
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                                <Link to="/admin/manage-process-step/list">
+                                    <span className="text-black dark:text-black">Manage Process step</span>
+                                </Link>
+                            </div>
+                        </li>
+
+                        <li className="mb-2">
+                            <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
                                 <Link to="/admin/manage-required-documents/list">
                                     <span className="text-black dark:text-black">Manage required documents</span>
                                 </Link>

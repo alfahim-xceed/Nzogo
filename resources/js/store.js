@@ -22,6 +22,8 @@ import { category_country_api } from './services/category_country_api';
 
 import { embassy_api } from './services/embassy_api';
 
+import { process_step_api } from './services/process_step_api';
+
 import authReducer from './slices/authSlice';
 
 
@@ -29,14 +31,23 @@ import authReducer from './slices/authSlice';
 const store = configureStore({
     reducer: {
         [api.reducerPath]: api.reducer,
+
         [country_api.reducerPath]: country_api.reducer,
+
         [visa_category_api.reducerPath]:visa_category_api.reducer,
+
         [visa_type_api.reducerPath]:visa_type_api.reducer,
+
         [service_api.reducerPath]:service_api.reducer,
+
         [role_api.reducerPath]:role_api.reducer,
+
         [search_api.reducerPath]:search_api.reducer,
+
         [visa_application_api.reducerPath]:visa_application_api.reducer,
+
         [required_document_api.reducerPath]:required_document_api.reducer,
+
         [category_country_required_document_api.reducerPath]:category_country_required_document_api.reducer,
 
         [visa_api.reducerPath]:visa_api.reducer,
@@ -46,6 +57,8 @@ const store = configureStore({
         [category_country_api.reducerPath]:category_country_api.reducer,
 
         [embassy_api.reducerPath]:embassy_api.reducer,
+
+        [process_step_api.reducerPath]:process_step_api.reducer,
 
 
         auth: authReducer
@@ -66,6 +79,7 @@ const store = configureStore({
             .concat(country_service_api.middleware)
             .concat(category_country_api.middleware)
             .concat(embassy_api.middleware)
+            .concat(process_step_api.middleware)
 });
 
 setupListeners(store.dispatch);
