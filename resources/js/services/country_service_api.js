@@ -31,6 +31,13 @@ export const country_service_api = createApi({
             }),
             providesTags:["CountryService"]
         }),
+        getCountryServiceListByCountryId:builder.query({
+            query:(country_id)=>({
+                url:`/all/${country_id}`,
+                method:"GET"
+            }),
+            providesTags:["CountryService"]
+        }),
         getCountryServiceDetails:builder.query({
             query:(id)=>({
                 url:`/details/${id}`,
@@ -67,6 +74,7 @@ export const country_service_api = createApi({
 export const {
 
     useGetCountryServiceListQuery,
+    useGetCountryServiceListByCountryIdQuery,
     useGetCountryServiceDetailsQuery,
     useCreateCountryServiceMutation,
     useUpdateCountryServiceMutation,

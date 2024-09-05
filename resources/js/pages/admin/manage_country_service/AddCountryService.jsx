@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useCreateCountryServiceMutation } from '../../../services/country_service_api';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const AddCountryService = () => {
     const { data: countries = [], isLoading: isCountriesLoading } = useGetCountryListQuery();
@@ -14,10 +15,12 @@ const AddCountryService = () => {
 
     const [createCountryService] = useCreateCountryServiceMutation();
 
+    const {id}=useParams();
+
     const initialValues = {
         service_id: '',
         category_id: '',
-        country_id: '',
+        country_id: id,
         fee: '',
         currency: ''
     };

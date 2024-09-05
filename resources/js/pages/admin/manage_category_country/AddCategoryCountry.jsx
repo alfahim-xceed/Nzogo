@@ -5,16 +5,19 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useCreateCategoryCountryMutation } from '../../../services/category_country_api';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const AddCategoryCountry = () => {
     const { data: countries = [] } = useGetCountryListQuery();
     const { data: categories = [] } = useGetVisaCategoryListListQuery();
 
+    const {id}=useParams();
+
     const [createCategoryCountry] = useCreateCategoryCountryMutation();
 
     const initialValues = {
         category_id: '',
-        country_id: '',
+        country_id: id,
     };
 
     const validationSchema = Yup.object({
