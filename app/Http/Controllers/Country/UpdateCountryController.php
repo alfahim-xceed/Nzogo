@@ -15,17 +15,15 @@ class UpdateCountryController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = $request->user();
 
-        $user=$request->user();
-        
         if ($user->role->name !== 'admin') {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'flag_img_url' => 'nullable|url', // Validate flag_img_url as a URL if provided
         ]);
 
         $country = Country::findOrFail($id);

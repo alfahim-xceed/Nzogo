@@ -38,7 +38,7 @@ const ExploreEmbassies = () => {
                                     key={ind}
                                 >
                                     <img
-                                        src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg"
+                                        src={country?.flag_img_url}
                                         alt="Country flag"
                                         className="w-6 h-6 mr-3"
                                     />

@@ -10,27 +10,41 @@ import { useNavigate, useParams } from 'react-router-dom';
 // Define validation schema using Yup
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
+    flag_img_url: Yup.string().url('Invalid URL format').nullable(), // Validate flag_img_url as a URL if provided
 });
 
 const UpdateCountry = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const { data: details, isLoading } = useGetCountryDetailsQuery(id);
+    const { data: details, isLoading, error } = useGetCountryDetailsQuery(id);
     const [updateCountry] = useUpdateCountryMutation();
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-xl text-gray-700">Loading...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-red-500 text-lg">Error loading country details. Please try again later.</p>
+            </div>
+        );
     }
 
     // Ensure details is defined before setting initial values
     const initialValues = {
         name: details ? details.name : '',
+        flag_img_url: details ? details.flag_img_url : '',
     };
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
-            const res = await updateCountry({ id, name: values.name }).unwrap();
+            const res = await updateCountry({ id, ...values }).unwrap();
             resetForm();
             toast.success('Country updated successfully.');
             navigate('/admin/country-list');
@@ -57,9 +71,21 @@ const UpdateCountry = () => {
                                 name="name"
                                 type="text"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Enter name"
+                                placeholder="Enter country name"
                             />
                             <ErrorMessage name="name" component="div" className="text-red-500 mt-1" />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="flag_img_url" className="text-gray-700 mb-2">Flag Image URL</label>
+                            <Field
+                                id="flag_img_url"
+                                name="flag_img_url"
+                                type="text"
+                                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter flag image URL"
+                            />
+                            <ErrorMessage name="flag_img_url" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <button

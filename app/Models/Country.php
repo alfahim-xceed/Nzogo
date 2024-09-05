@@ -11,6 +11,7 @@ class Country extends Model
 
     protected $fillable = [
         'name',
+        'flag_img_url', // Add this field
     ];
 
 

@@ -40,7 +40,7 @@ class CreateVisaApplicationController extends Controller
         // Create the visa application with user_id and fixed citizen_of value
         $visaApplication = VisaApplication::create([
             'user_id' => $request->user()->id,
-            'citizen_of' => 9,
+            'citizen_of' => 12,
             'visa_id' => $request->input('visa_id'),
             'visa_type_id' => $request->input('visa_type_id'),
             'visa_service_ids' => json_encode($request->input('visa_service_ids')), // Encode array to JSON string
