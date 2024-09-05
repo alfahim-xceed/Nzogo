@@ -66,7 +66,8 @@ Route::prefix("/visa")->group(base_path("routes/visa.php"));
 // visa applicaton
 Route::prefix("/visa-application")->group(base_path("routes/visaApplication.php"));
 
-//
+// embassy
+Route::prefix("/embassy")->group(base_path("routes/embassy.php"));
 
 Route::get('/test', function () {
     return response()->json(['message' => 'server is running!']);

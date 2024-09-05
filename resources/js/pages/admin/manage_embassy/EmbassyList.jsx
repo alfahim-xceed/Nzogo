@@ -1,10 +1,38 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useDeleteEmbassyMutation, useGetEmbassyListQuery } from '../../../services/embassy_api';
+import { toast } from 'react-toastify';
 
 const EmbassyList=()=>{
 
-    const details=[{id:"1",name:"test",country:"text"}];
+    const {data:details,isLoading,error}=useGetEmbassyListQuery();
+
+    const [deleteEmbassy]=useDeleteEmbassyMutation()
+
+    const handleDelete = async (id) => {
+        try {
+            await deleteEmbassy(id).unwrap();
+            toast.success("Deleted successfully.");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete.");
+
+
+        }
+    }
+
+
+
+    if (isLoading) {
+        return <>Loading..</>;
+    }
+
+    if (error) {
+        console.error("Error fetching countries:", error);
+        return <>Error fetching countries</>;
+    }
+    console.log(details);
 
     return (
         <div className="p-6">
@@ -35,7 +63,7 @@ const EmbassyList=()=>{
                                 <tr key={embassy.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{embassy.name}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{embassy.country}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{embassy.country.name}</td>
 
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-500 hover:text-blue-700 cursor-pointer">
                                         <Link to={`/admin/manage-embassy/update/${embassy.id}`}>

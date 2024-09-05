@@ -39,6 +39,7 @@ import ManageRequiredDocumentRoutes from './routes/ManageRequiredDocumentRoutes'
 import ManageCategoryCountryRequiredDocumentRoutes from './routes/ManageCategoryCountryRequiredDocumentRoutes';
 import ManageCategoryCountryRoutes from './routes/ManageCategoryCountryRoutes';
 import ManageCountryServiceRoutes from './routes/ManageCountryServiceRoutes';
+import ManageGeneralRoutes from './routes/ManageGeneralRoutes';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -54,6 +55,10 @@ function AppRoutes() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin/login" element={<Login />} />
                 <Route path="/visa/details/:travelling_to_id/:visa_category_id" element={<VisaDetails />} />
+                {/* general routes */}
+                <Route path="/explore/*" element={<ManageGeneralRoutes/>}/>
+
+
                 <Route path="/" element={<Layout />}>
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/admin/user-list" element={<UserList />} />
@@ -114,6 +119,8 @@ function AppRoutes() {
 
                     {/* manage embassy */}
                     <Route path="/admin/manage-embassy/*" element={<ManageEmbassyRoutes />} />
+
+
                 </Route>
 
             </Routes>

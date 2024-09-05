@@ -20,6 +20,8 @@ import { country_service_api } from './services/country_service_api';
 
 import { category_country_api } from './services/category_country_api';
 
+import { embassy_api } from './services/embassy_api';
+
 import authReducer from './slices/authSlice';
 
 
@@ -43,6 +45,8 @@ const store = configureStore({
 
         [category_country_api.reducerPath]:category_country_api.reducer,
 
+        [embassy_api.reducerPath]:embassy_api.reducer,
+
 
         auth: authReducer
     },
@@ -61,6 +65,7 @@ const store = configureStore({
             .concat(visa_api.middleware)
             .concat(country_service_api.middleware)
             .concat(category_country_api.middleware)
+            .concat(embassy_api.middleware)
 });
 
 setupListeners(store.dispatch);

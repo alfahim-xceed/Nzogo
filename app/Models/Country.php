@@ -29,4 +29,9 @@ class Country extends Model
         return $this->hasMany(CountryService::class, 'country_id');
     }
 
+    public function embassies()
+    {
+        return $this->hasMany(Embassy::class);
+    }
+
 }

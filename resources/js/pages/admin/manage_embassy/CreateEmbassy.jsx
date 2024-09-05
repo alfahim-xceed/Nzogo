@@ -5,43 +5,55 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-// Example options for select fields
-const countryOptions = [
-    { value: 'usa', label: 'United States' },
-    { value: 'canada', label: 'Canada' },
-    // Add more countries as needed
-];
-
-
+import { useGetCountryListQuery } from "../../../services/country_api";
+import { useCreateEmbassyMutation } from '../../../services/embassy_api';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
-    country: Yup.string().required('Country is required'),
-    phone: Yup.string().required('Phone is required'),
+    name: Yup.string().required('Name is required'),
+    address: Yup.string().required('Address is required'),
+    phone_number: Yup.string().required('Phone is required'),
     email: Yup.string().email('Invalid email format').required('Email is required'),
     website_url: Yup.string().url('Invalid URL format'),
-    work_schedule: Yup.string().required('Work schedule is required')
+    work_schedule: Yup.string().required('Work schedule is required'),
+    country_id: Yup.string().required('Country is required'),
 });
 
 const CreateEmbassy = () => {
     const navigate = useNavigate();
+    const { data: countryList, isLoading, error } = useGetCountryListQuery();
+    const [createEmbassy] = useCreateEmbassyMutation();
 
     const initialValues = {
-        country: "",
-        phone: "",
+        name: "",
+        address: "",
+        phone_number: "",
         email: "",
         website_url: "",
-        work_schedule: ""
+        work_schedule: "",
+        country_id: ""
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        // Handle form submission logic here
-        console.log(values);
-        setSubmitting(false);
-        toast.success('Embassy created successfully');
-        navigate('/admin/embassy-list'); // Redirect after successful submission
+        try {
+            await createEmbassy(values).unwrap();
+            toast.success('Embassy created successfully');
+
+        } catch (error) {
+            toast.error('Failed to create embassy');
+        } finally {
+            setSubmitting(false);
+        }
     };
+
+    if (isLoading) {
+        return <>Loading..</>;
+    }
+
+    if (error) {
+        console.error("Error fetching countries:", error);
+        return <>Error fetching countries</>;
+    }
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -54,33 +66,39 @@ const CreateEmbassy = () => {
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
                         <div className="flex flex-col">
-                            <label htmlFor="country" className="text-gray-700 mb-2">Country</label>
+                            <label htmlFor="name" className="text-gray-700 mb-2">Name</label>
                             <Field
-                                id="country"
-                                name="country"
-                                as="select"
+                                id="name"
+                                name="name"
+                                type="text"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                <option value="">Select Country</option>
-                                {countryOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </Field>
-                            <ErrorMessage name="country" component="div" className="text-red-500 mt-1" />
+                                placeholder="Enter embassy name"
+                            />
+                            <ErrorMessage name="name" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="phone" className="text-gray-700 mb-2">Phone</label>
+                            <label htmlFor="address" className="text-gray-700 mb-2">Address</label>
                             <Field
-                                id="phone"
-                                name="phone"
+                                id="address"
+                                name="address"
+                                type="text"
+                                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter address"
+                            />
+                            <ErrorMessage name="address" component="div" className="text-red-500 mt-1" />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="phone_number" className="text-gray-700 mb-2">Phone Number</label>
+                            <Field
+                                id="phone_number"
+                                name="phone_number"
                                 type="text"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter phone number"
                             />
-                            <ErrorMessage name="phone" component="div" className="text-red-500 mt-1" />
+                            <ErrorMessage name="phone_number" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <div className="flex flex-col">
@@ -115,9 +133,27 @@ const CreateEmbassy = () => {
                                 as="textarea"
                                 className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter work schedule"
-                                rows="4" // Adjust the number of rows as needed
+                                rows="4"
                             />
                             <ErrorMessage name="work_schedule" component="div" className="text-red-500 mt-1" />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="country_id" className="text-gray-700 mb-2">Country</label>
+                            <Field
+                                id="country_id"
+                                name="country_id"
+                                as="select"
+                                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">Select Country</option>
+                                {countryList?.map((country) => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
+                                    </option>
+                                ))}
+                            </Field>
+                            <ErrorMessage name="country_id" component="div" className="text-red-500 mt-1" />
                         </div>
 
                         <button
@@ -133,6 +169,6 @@ const CreateEmbassy = () => {
             </Formik>
         </div>
     );
-}
+};
 
 export default CreateEmbassy;

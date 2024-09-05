@@ -35,7 +35,7 @@ const RequiredDocumentList = ({id}) => {
         console.error("doc error ",error);
         return <>Fetching error</>
     }
-    console.log(details);
+    // console.log(details);
 
 
 

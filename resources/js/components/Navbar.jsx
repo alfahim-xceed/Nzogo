@@ -116,10 +116,12 @@ const Navbar = () => {
                         {isInformationOpen && (
                             <div className="z-10 absolute left-0 mt-2 py-2 w-96 bg-white rounded-md shadow-xl transition-opacity duration-300">
                                 <div className="grid grid-cols-2 gap-4 p-4">
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
-                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="E-Visa" className="w-5 h-5 mr-2" />
-                                        <span className="text-sm">Explore countries</span>
-                                    </a>
+                                    <Link to="/explore/embassies">
+                                        <div className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
+                                            <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="E-Visa" className="w-5 h-5 mr-2" />
+                                            <span className="text-sm">Explore Embassies</span>
+                                        </div>
+                                    </Link>
                                     <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                         <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Document Legalization" className="w-5 h-5 mr-2" />
                                         <span className="text-sm">Explore visa fees</span>
