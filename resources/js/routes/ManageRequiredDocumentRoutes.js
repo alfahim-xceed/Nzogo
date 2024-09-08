@@ -1,4 +1,3 @@
-// /admin/manage-required-documents/list
 
 import { Route, Routes } from 'react-router-dom';
 

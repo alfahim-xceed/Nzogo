@@ -1,4 +1,3 @@
-// /admin/manage-category-country-required-documents
 
 import { Route, Routes } from 'react-router-dom';
 
