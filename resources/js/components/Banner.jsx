@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Banner = () => {
     return (
         <div className="banner bg-blue-50">
@@ -11,9 +13,11 @@ const Banner = () => {
                             Visa processing is a very challenging task when planning to go abroad from Bangladesh. VISAThing is the country's leading visa processing support center, providing solutions for visa-related issues for over 99 countries.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center">
-                            <button className="bg-blue-500 text-white text-sm sm:text-base font-bold py-2 px-6 rounded mb-2 sm:mb-0 sm:mr-4">
-                                Book Appointment
-                            </button>
+                            <Link to="/appointment/book">
+                                <button className="bg-blue-500 text-white text-sm sm:text-base font-bold py-2 px-6 rounded mb-2 sm:mb-0 sm:mr-4">
+                                    Book Appointment
+                                </button>
+                            </Link>
                             <button className="border border-blue-500 text-blue-500 text-sm sm:text-base font-bold py-2 px-6 rounded">
                                 Business with us
                             </button>

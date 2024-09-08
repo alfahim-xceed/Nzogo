@@ -76,5 +76,10 @@ class User extends Authenticatable
         return $this->hasMany(ProcessStep::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
 
 }

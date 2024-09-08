@@ -158,6 +158,14 @@ const Sidebar = () => {
                             </Link>
                         </div>
                     </li>
+
+                    <li className="mb-2">
+                        <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
+                            <Link to="/appointment/list">
+                                <span className="text-black dark:text-black">Manage Appointments</span>
+                            </Link>
+                        </div>
+                    </li>
                     <li className="mb-2">
                         <a href="#transactions" className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
                             <span className="text-black dark:text-black">Transactions</span>

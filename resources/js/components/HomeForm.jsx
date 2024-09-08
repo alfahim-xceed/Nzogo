@@ -48,7 +48,7 @@ const HomeForm = () => {
         label: country.name
     }));
 
-    console.log(" cc ", categoryCountryDetails);
+    // console.log(" cc ", categoryCountryDetails);
 
     const visaCategoryOptions = categoryCountryDetails?.map(category => ({
         value: category.category_id,

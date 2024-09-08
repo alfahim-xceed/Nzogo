@@ -31,7 +31,7 @@ const ExploreCountries = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {details && details.length > 0 ? (
                         details.map((country, ind) => (
-                            <Link to={`/explore/embassy-details/${country.id}`}>
+                            <Link to={`/explore/country-details/${country.id}`}>
 
                                 <div
                                     className="flex items-center p-4 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-sm transition duration-200 ease-in-out"

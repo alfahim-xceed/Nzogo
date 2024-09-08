@@ -10,7 +10,7 @@ class GetAppointmentDetailsController extends Controller
 {
     public function show($id)
     {
-        $appointment = Appointment::with(['country', 'visaCategory', 'service'])->findOrFail($id);
+        $appointment = Appointment::with(['country', 'visaCategory', 'service','user'])->findOrFail($id);
 
         return response()->json($appointment);
     }

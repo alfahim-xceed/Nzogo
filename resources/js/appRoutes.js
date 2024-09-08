@@ -41,6 +41,10 @@ import ManageCategoryCountryRoutes from './routes/ManageCategoryCountryRoutes';
 import ManageCountryServiceRoutes from './routes/ManageCountryServiceRoutes';
 import ManageGeneralRoutes from './routes/ManageGeneralRoutes';
 import ManageProcessStepRoutes from './routes/ManageProcessStepRoutes';
+import ManageAppointmentRoutes from './routes/ManageAppointmentRoutes';
+import BookAppointment from './pages/appointment/BookAppointment';
+import AppointmentList from './pages/appointment/AppointmentList';
+import AppointmentDetails from './pages/appointment/AppointmentDetails';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -59,6 +63,9 @@ function AppRoutes() {
                 {/* general routes */}
                 <Route path="/explore/*" element={<ManageGeneralRoutes />} />
 
+                {/* appointment routes */}
+                {/* <Route path="/appointment/*" element={<ManageAppointmentRoutes/>}/> */}
+                <Route path="/appointment/book" element={<BookAppointment />} />
 
                 <Route path="/" element={<Layout />}>
                     <Route path="/profile" element={<Profile />} />
@@ -123,6 +130,12 @@ function AppRoutes() {
 
                     {/* manage process step */}
                     <Route path="/admin/manage-process-step/*" element={<ManageProcessStepRoutes />} />
+
+                    {/* manage appointment */}
+                    <Route path="/appointment/list" element={<AppointmentList />} />
+                    <Route path="/appointment/details/:id" element={<AppointmentDetails />} />
+
+
 
                 </Route>
 
