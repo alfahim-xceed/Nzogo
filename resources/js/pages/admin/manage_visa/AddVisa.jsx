@@ -6,8 +6,13 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useGetVisaTypeListQuery } from '../../../services/visa_type_api';
 import { useCreateVisaMutation } from '../../../services/visa_api';
+import { useParams } from 'react-router-dom';
 
 const AddVisa = () => {
+
+    const {id}=useParams();
+
+
     const { data: countries = [], isLoading: isCountriesLoading } = useGetCountryListQuery();
     const { data: categories = [], isLoading: isCategoriesLoading } = useGetVisaCategoryListListQuery();
     const { data: types = [], isLoading: isTypesLoading } = useGetVisaTypeListQuery();
@@ -17,7 +22,7 @@ const AddVisa = () => {
     const initialValues = {
         type_id: '',
         category_id: '',
-        country_id: '',
+        country_id: id,
         fee: '',
         currency: '',
         processing_time: "",

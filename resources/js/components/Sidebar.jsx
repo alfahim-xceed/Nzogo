@@ -123,7 +123,7 @@ const Sidebar = () => {
 
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <Link to="/admin/manage-category-country-required-documents/list">
+                                <Link to="/admin/manage-category-country-required-documents/country-list">
                                     <span className="text-black dark:text-black">Manage Category Country required documents</span>
                                 </Link>
                             </div>
@@ -131,7 +131,7 @@ const Sidebar = () => {
 
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <Link to="/admin/manage-visa/list">
+                                <Link to="/admin/manage-visa/country-list">
                                     <span className="text-black dark:text-black">Manage Visa</span>
                                 </Link>
                             </div>
@@ -140,7 +140,7 @@ const Sidebar = () => {
 
                         <li className="mb-2">
                             <div className="block p-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200">
-                                <Link to="/admin/manage-embassy/embassy-list">
+                                <Link to="/admin/manage-embassy/country-list">
                                     <span className="text-black dark:text-black">Manage embassy</span>
                                 </Link>
                             </div>

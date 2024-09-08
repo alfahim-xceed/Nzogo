@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import { useDeleteEmbassyMutation, useGetEmbassyListQuery } from '../../../services/embassy_api';
+import { Link, useParams } from 'react-router-dom';
+import { useDeleteEmbassyMutation, useGetEmbassyListByCountryIdQuery, useGetEmbassyListQuery } from '../../../services/embassy_api';
 import { toast } from 'react-toastify';
 
 const EmbassyList=()=>{
 
-    const {data:details,isLoading,error}=useGetEmbassyListQuery();
+    const {id}=useParams();
+
+
+    const {data:details,isLoading,error}=useGetEmbassyListByCountryIdQuery(id);
 
     const [deleteEmbassy]=useDeleteEmbassyMutation()
 
@@ -38,7 +41,7 @@ const EmbassyList=()=>{
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Embassy List</h2>
-                <Link to="/admin/manage-embassy/create-embassy">
+                <Link to={`/admin/manage-embassy/create/${id}`}>
                     <button className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                         <FontAwesomeIcon icon={faPlus} className="mr-2" />
                         Add New

@@ -6,18 +6,21 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useCreateCategoryCountryRequiredDocumentMutation } from '../../../services/category_country_required_document_api';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const AddCategoryCountryRequiredDocument = () => {
     const { data: documents = [] } = useGetRequiredDocumentListQuery();
     const { data: countries = [] } = useGetCountryListQuery();
     const { data: categories = [] } = useGetVisaCategoryListListQuery();
 
+    const {id}=useParams();
+
     const [createCategoryCountryRequiredDocument]=useCreateCategoryCountryRequiredDocumentMutation();
 
     const initialValues = {
         requirement_document_id: '',
         category_id: '',
-        country_id: '',
+        country_id: id,
     };
 
     const validationSchema = Yup.object({

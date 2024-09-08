@@ -38,6 +38,13 @@ export const visa_api = createApi({
             }),
             providesTags:["Visa"]
         }),
+        getVisaListByCountryId:builder.query({
+            query:(id)=>({
+                url:`/all/${id}`,
+                method:"GET"
+            }),
+            providesTags:["Visa"]
+        }),
         createVisa:builder.mutation({
             query:(data)=>({
                 url:"/create",
@@ -67,6 +74,7 @@ export const visa_api = createApi({
 export const {
 
     useGetVisaListQuery,
+    useGetVisaListByCountryIdQuery,
     useGetVisaDetailsQuery,
     useCreateVisaMutation,
     useUpdateVisaMutation,

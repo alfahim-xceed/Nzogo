@@ -1,15 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import {useDeleteCategoryCountryRequiredDocumentMutation, useGetCategoryCountryRequiredDocumentListQuery} from "../../../services/category_country_required_document_api";
+import {useDeleteCategoryCountryRequiredDocumentMutation, useGetCategoryCountryRequiredDocumentListByCountryIdQuery} from "../../../services/category_country_required_document_api";
 
 
 
 const CategoryCountryRequiredDocumentList=()=>{
 
-    const {data:details,isLoading,error}=useGetCategoryCountryRequiredDocumentListQuery();
+    const {id}=useParams();
+
+    const {data:details,isLoading,error}=useGetCategoryCountryRequiredDocumentListByCountryIdQuery(id);
     const [deleteCategoryCountryRequiredDocument]=useDeleteCategoryCountryRequiredDocumentMutation();
 
     const handleDelete=async (id)=>{
@@ -39,7 +41,7 @@ const CategoryCountryRequiredDocumentList=()=>{
         <div className="mt-7">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Category Country Document List</h2>
-                <Link to="/admin/manage-category-country-required-documents/create">
+                <Link to={`/admin/manage-category-country-required-documents/create/${id}`}>
                     <button className="px-2 py-1 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm">
                         <FontAwesomeIcon icon={faPlus} className="mr-1" />
                         Add New

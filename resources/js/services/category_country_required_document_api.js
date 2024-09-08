@@ -38,6 +38,13 @@ export const category_country_required_document_api = createApi({
             }),
             providesTags:["CategoryCountryRequiredDocument"]
         }),
+        getCategoryCountryRequiredDocumentListByCountryId:builder.query({
+            query:(id)=>({
+                url:`/all/${id}`,
+                method:"GET"
+            }),
+            providesTags:["CategoryCountryRequiredDocument"]
+        }),
         createCategoryCountryRequiredDocument:builder.mutation({
             query:(data)=>({
                 url:"/create",
@@ -68,6 +75,7 @@ export const {
 
     useGetCategoryCountryRequiredDocumentListQuery,
     useGetCategoryCountryRequiredDocumentDetailsQuery,
+    useGetCategoryCountryRequiredDocumentListByCountryIdQuery,
     useCreateCategoryCountryRequiredDocumentMutation,
     useUpdateCategoryCountryRequiredDocumentMutation,
     useDeleteCategoryCountryRequiredDocumentMutation

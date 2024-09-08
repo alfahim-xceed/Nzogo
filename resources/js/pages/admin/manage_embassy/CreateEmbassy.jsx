@@ -4,7 +4,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetCountryListQuery } from "../../../services/country_api";
 import { useCreateEmbassyMutation } from '../../../services/embassy_api';
 
@@ -21,6 +21,9 @@ const validationSchema = Yup.object({
 
 const CreateEmbassy = () => {
     const navigate = useNavigate();
+
+    const {id} = useParams();
+
     const { data: countryList, isLoading, error } = useGetCountryListQuery();
     const [createEmbassy] = useCreateEmbassyMutation();
 
@@ -31,7 +34,7 @@ const CreateEmbassy = () => {
         email: "",
         website_url: "",
         work_schedule: "",
-        country_id: ""
+        country_id: id
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
