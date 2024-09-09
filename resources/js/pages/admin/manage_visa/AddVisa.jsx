@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 
 const AddVisa = () => {
 
-    const {id}=useParams();
+    const { id } = useParams();
 
 
     const { data: countries = [], isLoading: isCountriesLoading } = useGetCountryListQuery();
@@ -57,21 +57,22 @@ const AddVisa = () => {
                 onSubmit={handleSubmit}
             >
                 <Form className="space-y-4">
+
                     <div className="form-group">
-                        <label htmlFor="type_id" className="block text-sm font-medium text-gray-700">Visa Type</label>
-                        <Field as="select" id="type_id" name="type_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <option value="" label="Select Visa Type" />
-                            {isTypesLoading ? (
-                                <option value="" label="Loading visa types..." />
+                        <label htmlFor="country_id" className="block text-sm font-medium text-gray-700">Country</label>
+                        <Field as="select" id="country_id" name="country_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <option value="" label="Select Country" />
+                            {isCountriesLoading ? (
+                                <option value="" label="Loading countries..." />
                             ) : (
-                                types.map((type) => (
-                                    <option key={type.id} value={type.id}>
-                                        {type.name}
+                                countries.map((country) => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
                                     </option>
                                 ))
                             )}
                         </Field>
-                        <ErrorMessage name="type_id" component="div" className="text-red-600 text-sm" />
+                        <ErrorMessage name="country_id" component="div" className="text-red-600 text-sm" />
                     </div>
 
                     <div className="form-group">
@@ -92,20 +93,20 @@ const AddVisa = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="country_id" className="block text-sm font-medium text-gray-700">Country</label>
-                        <Field as="select" id="country_id" name="country_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <option value="" label="Select Country" />
-                            {isCountriesLoading ? (
-                                <option value="" label="Loading countries..." />
+                        <label htmlFor="type_id" className="block text-sm font-medium text-gray-700">Visa Type</label>
+                        <Field as="select" id="type_id" name="type_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <option value="" label="Select Visa Type" />
+                            {isTypesLoading ? (
+                                <option value="" label="Loading visa types..." />
                             ) : (
-                                countries.map((country) => (
-                                    <option key={country.id} value={country.id}>
-                                        {country.name}
+                                types.map((type) => (
+                                    <option key={type.id} value={type.id}>
+                                        {type.name}
                                     </option>
                                 ))
                             )}
                         </Field>
-                        <ErrorMessage name="country_id" component="div" className="text-red-600 text-sm" />
+                        <ErrorMessage name="type_id" component="div" className="text-red-600 text-sm" />
                     </div>
 
                     <div className="form-group">

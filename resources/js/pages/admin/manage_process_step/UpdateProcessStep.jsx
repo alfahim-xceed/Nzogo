@@ -63,6 +63,26 @@ const UpdateProcessStep = () => {
             >
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
+
+                        <div className="flex flex-col">
+                            <label htmlFor="country_id" className="text-gray-700 mb-2">Country</label>
+                            <Field
+                                id="country_id"
+                                name="country_id"
+                                as="select"
+                                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">Select Country</option>
+                                {countryList?.map((country) => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
+                                    </option>
+                                ))}
+                            </Field>
+                            <ErrorMessage name="country_id" component="div" className="text-red-500 mt-1" />
+                        </div>
+
+
                         <div className="flex flex-col">
                             <label htmlFor="title" className="text-gray-700 mb-2">Title</label>
                             <Field
@@ -88,23 +108,7 @@ const UpdateProcessStep = () => {
                             <ErrorMessage name="description" component="div" className="text-red-500 mt-1" />
                         </div>
 
-                        <div className="flex flex-col">
-                            <label htmlFor="country_id" className="text-gray-700 mb-2">Country</label>
-                            <Field
-                                id="country_id"
-                                name="country_id"
-                                as="select"
-                                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                <option value="">Select Country</option>
-                                {countryList?.map((country) => (
-                                    <option key={country.id} value={country.id}>
-                                        {country.name}
-                                    </option>
-                                ))}
-                            </Field>
-                            <ErrorMessage name="country_id" component="div" className="text-red-500 mt-1" />
-                        </div>
+
 
                         <button
                             type="submit"

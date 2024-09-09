@@ -23,8 +23,8 @@ const UpdateCountryService = () => {
         service_id: details?.service_id || '',
         category_id: details?.category_id || '',
         country_id: details?.country_id || '',
-        fee:details?.fee||"",
-        currency:details?.currency||""
+        fee: details?.fee || "",
+        currency: details?.currency || ""
     };
 
     const validationSchema = Yup.object({
@@ -35,10 +35,10 @@ const UpdateCountryService = () => {
         currency: Yup.string().required('Currency is required'),
     });
     const handleSubmit = async (values) => {
-        console.log('Form Data:', values);
+        // console.log('Form Data:', values);
         // Handle form submission
         try {
-            await updateCountryService({id,...values}).unwrap();
+            await updateCountryService({ id, ...values }).unwrap();
             toast.success("Updated successfully.");
         } catch (err) {
             console.error(err);
@@ -64,22 +64,26 @@ const UpdateCountryService = () => {
                 onSubmit={handleSubmit}
             >
                 <Form className="space-y-4">
+
+
+
                     <div className="form-group">
-                        <label htmlFor="service_id" className="block text-sm font-medium text-gray-700">Service</label>
-                        <Field as="select" id="service_id" name="service_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <option value="" label="Select Service" />
-                            {isServicesLoading ? (
-                                <option value="" label="Loading services..." />
+                        <label htmlFor="country_id" className="block text-sm font-medium text-gray-700">Country</label>
+                        <Field as="select" id="country_id" name="country_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <option value="" label="Select Country" />
+                            {isCountriesLoading ? (
+                                <option value="" label="Loading countries..." />
                             ) : (
-                                services.map((service) => (
-                                    <option key={service.id} value={service.id}>
-                                        {service.name}
+                                countries.map((country) => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
                                     </option>
                                 ))
                             )}
                         </Field>
-                        <ErrorMessage name="service_id" component="div" className="text-red-600 text-sm" />
+                        <ErrorMessage name="country_id" component="div" className="text-red-600 text-sm" />
                     </div>
+
 
                     <div className="form-group">
                         <label htmlFor="category_id" className="block text-sm font-medium text-gray-700">Category</label>
@@ -98,22 +102,25 @@ const UpdateCountryService = () => {
                         <ErrorMessage name="category_id" component="div" className="text-red-600 text-sm" />
                     </div>
 
+
                     <div className="form-group">
-                        <label htmlFor="country_id" className="block text-sm font-medium text-gray-700">Country</label>
-                        <Field as="select" id="country_id" name="country_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <option value="" label="Select Country" />
-                            {isCountriesLoading ? (
-                                <option value="" label="Loading countries..." />
+                        <label htmlFor="service_id" className="block text-sm font-medium text-gray-700">Service</label>
+                        <Field as="select" id="service_id" name="service_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <option value="" label="Select Service" />
+                            {isServicesLoading ? (
+                                <option value="" label="Loading services..." />
                             ) : (
-                                countries.map((country) => (
-                                    <option key={country.id} value={country.id}>
-                                        {country.name}
+                                services.map((service) => (
+                                    <option key={service.id} value={service.id}>
+                                        {service.name}
                                     </option>
                                 ))
                             )}
                         </Field>
-                        <ErrorMessage name="country_id" component="div" className="text-red-600 text-sm" />
+                        <ErrorMessage name="service_id" component="div" className="text-red-600 text-sm" />
                     </div>
+
+
 
                     <div className="form-group">
                         <label htmlFor="fee" className="block text-sm font-medium text-gray-700">Fee</label>

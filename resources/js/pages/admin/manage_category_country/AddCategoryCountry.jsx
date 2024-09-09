@@ -11,7 +11,7 @@ const AddCategoryCountry = () => {
     const { data: countries = [] } = useGetCountryListQuery();
     const { data: categories = [] } = useGetVisaCategoryListListQuery();
 
-    const {id}=useParams();
+    const { id } = useParams();
 
     const [createCategoryCountry] = useCreateCategoryCountryMutation();
 
@@ -49,6 +49,21 @@ const AddCategoryCountry = () => {
 
 
                     <div className="form-group">
+                        <label htmlFor="country_id" className="block text-sm font-medium text-gray-700">Country</label>
+                        <Field as="select" id="country_id" name="country_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <option value="" label="Select Country" />
+                            {countries.map((country) => (
+                                <option key={country.id} value={country.id}>
+                                    {country.name}
+                                </option>
+                            ))}
+                        </Field>
+                        <ErrorMessage name="country_id" component="div" className="text-red-600 text-sm" />
+                    </div>
+
+
+
+                    <div className="form-group">
                         <label htmlFor="category_id" className="block text-sm font-medium text-gray-700">Category</label>
                         <Field as="select" id="category_id" name="category_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                             <option value="" label="Select Category" />
@@ -61,18 +76,6 @@ const AddCategoryCountry = () => {
                         <ErrorMessage name="category_id" component="div" className="text-red-600 text-sm" />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="country_id" className="block text-sm font-medium text-gray-700">Country</label>
-                        <Field as="select" id="country_id" name="country_id" className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <option value="" label="Select Country" />
-                            {countries.map((country) => (
-                                <option key={country.id} value={country.id}>
-                                    {country.name}
-                                </option>
-                            ))}
-                        </Field>
-                        <ErrorMessage name="country_id" component="div" className="text-red-600 text-sm" />
-                    </div>
 
                     <button type="submit" className="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600">
                         Submit

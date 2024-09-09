@@ -10,7 +10,7 @@ import CountryList from '../pages/admin/manage_country_service/CountryList';
 
 const ManageCountryServiceRoutes = () => (
     <Routes>
-        <Route path="/list" element={<CountryList/>}/>
+        <Route path="/country-list" element={<CountryList/>}/>
         <Route path="/country-service-list/:id" element={<CountryServiceList/>}/>
         <Route path="/create/:id" element={<AddCountryService/>}/>
         <Route path="/update/:id" element={<UpdateCountryService/>}/>

@@ -10,7 +10,7 @@ import CountryList from '../pages/admin/manage_category_country/CountryList.jsx'
 
 const ManageCategoryCountryRoutes = () => (
     <Routes>
-        <Route path="/list" element={<CountryList/>}/>
+        <Route path="/country-list" element={<CountryList/>}/>
         <Route path="/category-country-list/:id" element={<CategoryCountryList/>}/>
         <Route path="/create/:id" element={<AddCategoryCountry/>}/>
         <Route path="/update/:id" element={<UpdateCategoryCountry/>}/>

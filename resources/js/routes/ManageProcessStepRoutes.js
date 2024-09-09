@@ -8,7 +8,7 @@ import CountryList from '../pages/admin/manage_process_step/CountryList';
 
 const ManageProcessStepRoutes = () => (
     <Routes>
-        <Route path="/list" element={<CountryList />} />
+        <Route path="/country-list" element={<CountryList />} />
         <Route path="/step-list/:id" element={<ProcessStepList />} />
         <Route path="/create/:id" element={<CreateProcessStep />} />
         <Route path="/update/:id" element={<UpdateProcessStep />} />
