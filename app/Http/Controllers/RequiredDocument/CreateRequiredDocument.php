@@ -26,6 +26,12 @@ class CreateRequiredDocument extends Controller
         // Add the authenticated user's ID to the validated data
         $validated['user_id'] = $user->id;
 
+        $existingDocument= RequiredDocument::where('name', $request->name)->first();
+
+        if ($existingDocument) {
+            return response()->json(['error' => 'Document already exists.'], 409);
+        }
+
         // Create a new RequiredDocument record
         $requiredDocument = RequiredDocument::create($validated);
 

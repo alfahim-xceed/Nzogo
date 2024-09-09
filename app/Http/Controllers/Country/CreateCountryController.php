@@ -26,6 +26,12 @@ class CreateCountryController extends Controller
             'flag_img_url' => 'nullable|url', // Validate flag_img_url as a URL if provided
         ]);
 
+        $existingCountry = Country::where('name', $request->name)->first();
+
+        if ($existingCountry) {
+            return response()->json(['error' => 'Country already exists.'], 409);
+        }
+
         // Create the country with the validated data
         $country = Country::create($validated);
 

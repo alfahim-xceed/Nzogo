@@ -65,7 +65,14 @@ const CountryList = () => {
                             details.map((country, index) => (
                                 <tr key={country.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{country.flag_img_url}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-[50%]">
+                                        <img
+                                            src={country.flag_img_url}
+                                            alt={`${country.name} flag`}
+                                            className="w-16 h-16 object-cover"  // Adjust size as needed
+                                        />
+                                    </td>
+
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{country.name}</td>
 
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-500 hover:text-blue-700 cursor-pointer">

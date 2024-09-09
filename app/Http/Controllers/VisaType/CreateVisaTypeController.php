@@ -18,15 +18,21 @@ class CreateVisaTypeController extends Controller
     {
 
         $user=$request->user();
-        
+
         if ($user->role->name !== 'admin') {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
+
+        $existingVisaType = VisaType::where('name', $request->name)->first();
+
+        if ($existingVisaType) {
+            return response()->json(['error' => 'VisaType already exists.'], 409);
+        }
 
         $visaType = VisaType::create($validated);
 

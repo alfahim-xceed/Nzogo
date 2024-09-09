@@ -18,15 +18,22 @@ class CreateRoleController extends Controller
     {
 
         $user=$request->user();
-        
+
         if ($user->role->name !== 'admin') {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
+
+
+        $existingRole = Role::where('name', $request->name)->first();
+
+        if ($existingRole) {
+            return response()->json(['error' => 'Role already exists.'], 409);
+        }
 
         $role = Role::create($request->all());
 

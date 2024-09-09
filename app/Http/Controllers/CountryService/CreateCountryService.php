@@ -32,8 +32,21 @@ class CreateCountryService extends Controller
             return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        // Get validated data and add user_id
+        // Get validated data
         $validatedData = $validator->validated();
+
+        // Check if a record with the same service_id, category_id, and country_id already exists
+        $existingRecord = CountryService::where([
+            'service_id' => $validatedData['service_id'],
+            'category_id' => $validatedData['category_id'],
+            'country_id' => $validatedData['country_id'],
+        ])->first();
+
+        if ($existingRecord) {
+            return response()->json(['message' => 'Record already exists.'], Response::HTTP_CONFLICT);
+        }
+
+        // Add user_id to validated data
         $validatedData['user_id'] = $user->id;
 
         // Create a new CountryService record
