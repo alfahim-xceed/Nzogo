@@ -31,10 +31,23 @@ class Appointment extends Model
         return $this->belongsTo(VisaCategory::class, 'visa_category_id');
     }
 
+    public function countryService()
+    {
+        return $this->belongsTo(CountryService::class, 'service_id');
+    }
+
     public function service()
     {
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->hasOneThrough(
+            Service::class,
+            CountryService::class,
+            'id', // Foreign key on CountryService
+            'id', // Foreign key on Service
+            'service_id', // Local key on Appointment
+            'service_id'  // Local key on CountryService
+        );
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

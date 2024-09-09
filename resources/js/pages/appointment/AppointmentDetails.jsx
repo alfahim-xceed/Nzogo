@@ -13,6 +13,9 @@ const AppointmentDetails = () => {
         return <p className="text-red-500">Error loading appointment details. Please try again later.</p>;
     }
 
+    // console.log("details ",details);
+
+
     const {
         appointment_type,
         appointment_schedule,

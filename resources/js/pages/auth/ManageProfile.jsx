@@ -12,7 +12,7 @@ const ManageProfile = () => {
         <div className="max-w-4xl mx-auto p-6">
             <h1 className="text-2xl font-semibold mb-6 text-gray-800">Manage Profile</h1>
             <ProfileForm id={id} />
-            <UploadProfilePhoto user_id={id}/>
+            {/* <UploadProfilePhoto user_id={id}/> */}
             <PasswordForm />
 
 

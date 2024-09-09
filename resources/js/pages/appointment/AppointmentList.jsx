@@ -65,7 +65,7 @@ const AppointmentList = () => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No countries to show.</td>
+                                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No appointment to show.</td>
                             </tr>
                         )}
                     </tbody>

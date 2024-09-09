@@ -51,4 +51,9 @@ class CountryService extends Model
     {
         return $this->belongsToMany(VisaApplication::class, 'visa_application_services', 'service_id', 'visa_application_id');
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

@@ -19,10 +19,10 @@ class GetAppointmentListController extends Controller
 
         if ($user->role->name === 'admin') {
             // Admin users can see all appointments
-            $appointments = Appointment::with(['country', 'visaCategory', 'service'])->get();
+            $appointments = Appointment::with(['country', 'visaCategory', 'countryService'])->get();
         } else {
             // Non-admin users can see only their own appointments
-            $appointments = Appointment::with(['country', 'visaCategory', 'service'])
+            $appointments = Appointment::with(['country', 'visaCategory', 'countryService'])
                 ->where('user_id', $user->id)
                 ->get();
         }

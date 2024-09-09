@@ -23,7 +23,7 @@ class CreateAppointmentController extends Controller
             'desired_travel_destination_id' => 'required|exists:countries,id',
             'visa_category_id' => 'required|exists:visa_categories,id',
             'expected_travel_date' => 'required|date',
-            'service_id' => 'required|exists:services,id',
+            'service_id' => 'required|exists:country_services,id',
         ]);
         $validated['user_id']=$user->id;
 

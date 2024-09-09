@@ -15,13 +15,10 @@ class Service extends Model
 
     public function countryServices()
     {
-        return $this->hasMany(CountryService::class, 'service_id');
+        return $this->hasMany(CountryService::class);
     }
 
-    public function appointments()
-    {
-        return $this->hasMany(Appointment::class, 'service_id');
-    }
+
 
 
 }
