@@ -10,7 +10,7 @@ const ManageCategoryCountryRequiredDocumentRoutes = () => (
     <Routes>
         <Route path="/category-list/:country_id" element={<CategoryList />} />
         <Route path="/country-list" element={<CountryList />} />
-        <Route path="/create/:country_id/:category_id" element={<ManageCategoryCountryRequiredDocument />} />
+        <Route path="/manage/:country_id/:category_id" element={<ManageCategoryCountryRequiredDocument />} />
     </Routes>
 );
 

@@ -37,7 +37,7 @@ const CategoryList = () => {
                                 <tr key={visa_category.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <Link to={`/admin/manage-category-country-required-documents/create/${country_id}/${visa_category.id}`}>{visa_category.name}</Link>
+                                        <Link to={`/admin/manage-category-country-required-documents/manage/${country_id}/${visa_category.id}`}>{visa_category.name}</Link>
                                     </td>
 
 

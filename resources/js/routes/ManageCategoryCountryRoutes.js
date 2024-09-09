@@ -1,19 +1,15 @@
 
 import { Route, Routes } from 'react-router-dom';
 
-import AddCategoryCountry from "../pages/admin/manage_category_country/AddCategoryCountry";
 
-import CategoryCountryList from "../pages/admin/manage_category_country/CategoryCountryList.jsx";
-
-import UpdateCategoryCountry from "../pages/admin/manage_category_country/UpdateCategoryCountry";
 import CountryList from '../pages/admin/manage_category_country/CountryList.jsx';
+import ManageCategoryCountry from '../pages/admin/manage_category_country/ManageCategoryCountry';
 
 const ManageCategoryCountryRoutes = () => (
     <Routes>
         <Route path="/country-list" element={<CountryList/>}/>
-        <Route path="/category-country-list/:id" element={<CategoryCountryList/>}/>
-        <Route path="/create/:id" element={<AddCategoryCountry/>}/>
-        <Route path="/update/:id" element={<UpdateCategoryCountry/>}/>
+
+        <Route path="/manage/:id" element={<ManageCategoryCountry/>}/>
     </Routes>
 );
 
