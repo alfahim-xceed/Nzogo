@@ -167,6 +167,7 @@ function AppRoutes() {
 
             </Routes>
             <ToastContainer />
+            {/* {![['/admin/*']].includes(location.pathname) && <Footer /> } */}
             <Footer />
 
         </>
