@@ -56,7 +56,7 @@ const Navbar = () => {
                         </Link>
                     </span>
                 </div>
-                <div className={`md:flex items-center ${isOpen ? 'block' : 'hidden'}`}>
+                <div className={`text-sm md:flex items-center ${isOpen ? 'block' : 'hidden'}`}>
                     <div
                         className="relative group"
                         onMouseEnter={() => handleMouseEnter(setIsCompanyOpen)}
@@ -67,36 +67,22 @@ const Navbar = () => {
                             <FontAwesomeIcon icon={faAngleDown} />
                         </div>
                         {isCompanyOpen && (
-                            <div className="z-10 absolute left-0 mt-2 py-2 w-96 bg-white rounded-md shadow-xl transition-opacity duration-300">
+                            <div className="z-10 absolute left-0 mt-2 py-2 w-96 bg-white rounded-md shadow-xl transition-opacity duration-300 ">
                                 <div className="grid grid-cols-2 gap-4 p-2">
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
-                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="About VISAThing" className="w-5 h-5 mr-2" />
-                                        <span className="text-sm">About VISAThing</span>
-                                    </a>
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
+                                    <Link to="/about" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
+                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="About Nzogo" className="w-5 h-5 mr-2" />
+                                        <span className="text-xs">About Nzogo</span>
+                                    </Link>
+                                    <Link to="/career" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                         <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Career" className="w-5 h-5 mr-2" />
-                                        <span className="text-sm">Career</span>
-                                    </a>
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
-                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="News & Press" className="w-5 h-5 mr-2" />
+                                        <span className="text-xs">Career</span>
+                                    </Link>
 
-                                        <span className="text-sm">News & Press</span>
-                                    </a>
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
-                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Media Library" className="w-5 h-5 mr-2" />
-
-                                        <span className="text-sm"> Media Library</span>
-                                    </a>
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
-                                        <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Business Networks" className="w-5 h-5 mr-2" />
-
-                                        <span className="text-sm">Business Networks</span>
-                                    </a>
-                                    <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
+                                    <Link to="/contact-us" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                         <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Contact Us" className="w-5 h-5 mr-2" />
 
-                                        <span className="text-sm">Contact Us</span>
-                                    </a>
+                                        <span className="text-xs">Contact Us</span>
+                                    </Link>
                                 </div>
                             </div>
                         )}
@@ -119,13 +105,13 @@ const Navbar = () => {
                                     <Link to="/explore/embassies">
                                         <div className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                             <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="E-Visa" className="w-5 h-5 mr-2" />
-                                            <span className="text-sm">Explore Embassies</span>
+                                            <span className="text-xs">Explore Embassies</span>
                                         </div>
                                     </Link>
                                     <Link to="/explore/countries">
                                         <div className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                             <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="E-Visa" className="w-5 h-5 mr-2" />
-                                            <span className="text-sm">Explore Countries</span>
+                                            <span className="text-xs">Explore Countries</span>
                                         </div>
                                     </Link>
                                 </div>
@@ -149,11 +135,11 @@ const Navbar = () => {
                                 <div className="grid grid-cols-2 gap-4 p-4">
                                     <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                         <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="E-Visa" className="w-5 h-5 mr-2" />
-                                        <span className="text-sm">E-Visa</span>
+                                        <span className="text-xs">E-Visa</span>
                                     </a>
                                     <a href="#" className="flex items-center p-2 text-gray-800 hover:bg-gray-200 rounded-md">
                                         <img src="https://unispaces.sgp1.digitaloceanspaces.com/nebula/images/1714999400370.svg" alt="Document Legalization" className="w-5 h-5 mr-2" />
-                                        <span className="text-sm">Document Legalization</span>
+                                        <span className="text-xs">Document Legalization</span>
                                     </a>
                                 </div>
                             </div>

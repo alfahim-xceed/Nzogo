@@ -2,9 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .custom-line {
     border: none;
-    border-top: 2px solid #333; /* Customize the thickness and color */
-    margin: 5rem 0; /* Customize the margin around the line */
+    border-top: 2px solid #333;
+    /* Customize the thickness and color */
+    margin: 5rem 0;
+    /* Customize the margin around the line */
+}
+
+body {
+    @apply font-sans;
 }

@@ -37,8 +37,8 @@ const Sidebar = () => {
 
     return (
         <aside className="bg-gray-800 text-white min-h-screen w-64 p-4 sticky top-0">
-            <h2 className="text-2xl font-bold mb-6 text-center">Menu</h2>
-            <nav>
+            <h2 className="text-xl font-bold mb-6 text-center">Menu</h2>
+            <nav className="text-xs">
                 <ul className="space-y-4">
 
                     {/* Static menu items */}
@@ -78,7 +78,7 @@ const Sidebar = () => {
                                     <FontAwesomeIcon icon={isAdvanceOpen ? faChevronUp : faChevronDown} />
                                 </button>
                                 {isAdvanceOpen && (
-                                    <ul className="ml-4 mt-2 space-y-2 text-sm">
+                                    <ul className="ml-4 mt-2 space-y-2 text-xs">
                                         <li>
                                             <Link to="/admin/manage-category-country/country-list" className="block p-2 rounded-md hover:bg-gray-700 transition duration-300">Allocation Categories</Link>
                                         </li>
@@ -113,7 +113,7 @@ const Sidebar = () => {
                                     <FontAwesomeIcon icon={isGeneralOpen ? faChevronUp : faChevronDown} />
                                 </button>
                                 {isGeneralOpen && (
-                                    <ul className="ml-4 mt-2 space-y-2 text-sm">
+                                    <ul className="ml-4 mt-2 space-y-2 text-xs">
                                         <li>
                                             <Link to="/admin/role-list" className="block p-2 rounded-md hover:bg-gray-700 transition duration-300">Roles</Link>
                                         </li>

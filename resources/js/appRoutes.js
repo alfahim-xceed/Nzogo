@@ -45,6 +45,10 @@ import ManageAppointmentRoutes from './routes/ManageAppointmentRoutes';
 import BookAppointment from './pages/appointment/BookAppointment';
 import AppointmentList from './pages/appointment/AppointmentList';
 import AppointmentDetails from './pages/appointment/AppointmentDetails';
+import Footer from './components/Footer';
+import Contact from './pages/general/Contact';
+import Career from './pages/general/career/Career';
+import About from './pages/general/About';
 function AppRoutes() {
     const location = useLocation();
     const hideNavbarRoutes = ['/admin/register', '/admin/login'];
@@ -66,6 +70,18 @@ function AppRoutes() {
                 {/* appointment routes */}
                 {/* <Route path="/appointment/*" element={<ManageAppointmentRoutes/>}/> */}
                 <Route path="/appointment/book" element={<BookAppointment />} />
+
+
+
+                {/* contact */}
+                <Route path="/contact-us" element={<Contact />} />
+
+                {/* career */}
+                <Route path="/career" element={<Career />} />
+
+                {/* about */}
+                <Route path="/about" element={<About/>}/>
+
 
                 <Route path="/" element={<Layout />}>
                     {/* user profile */}
@@ -145,10 +161,13 @@ function AppRoutes() {
 
 
 
+
+
                 </Route>
 
             </Routes>
             <ToastContainer />
+            <Footer />
 
         </>
     );

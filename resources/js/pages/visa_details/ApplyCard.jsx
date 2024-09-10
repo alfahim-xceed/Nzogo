@@ -86,17 +86,17 @@ const ApplyCard = ({ data }) => {
         <div className="flex flex-col items-center justify-center px-9 py-8 mx-auto lg:py-0">
             <div className="w-full bg-white rounded-lg shadow-md dark:border md:mt-0 sm:max-w-md xl:p-0 dark:border-gray-700">
                 <div className="px-6 sm:p-8">
-                    <h5 className="text-xl font-medium text-dark-900">Total Fee: Tk {totalFee.toFixed(2)}</h5>
+                    <h5 className="text-lg font-medium text-dark-900 mb-3">Total Fee: Tk {totalFee.toFixed(2)}</h5>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
                     >
                         {({ setFieldValue, values }) => (
-                            <Form className="space-y-4 md:space-y-6">
+                            <Form className="space-y-4 md:space-y-6 text-xs">
                                 <div>
-                                    <label htmlFor="visaType" className="block mb-2 text-sm font-medium text-gray-900">Visa Type</label>
-                                    <Field as="select" name="visaType" id="visaType" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    <label htmlFor="visaType" className="block mb-2  font-medium text-gray-900">Visa Type</label>
+                                    <Field as="select" name="visaType" id="visaType" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         onChange={(e) => {
                                             const selectedVisaType = e.target.value;
                                             setFieldValue('visaType', selectedVisaType);
@@ -113,7 +113,7 @@ const ApplyCard = ({ data }) => {
                                 </div>
 
                                 <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-900">Services</label>
+                                    <label className="block mb-2  font-medium text-gray-900">Services</label>
                                     <div className="flex flex-col">
                                         {data.country.map(countryData => (
                                             countryData.service && (
@@ -126,7 +126,7 @@ const ApplyCard = ({ data }) => {
                                                         checked={values.services.includes(countryData.id.toString())}
                                                         onChange={(e) => handleCheckboxChange(e, setFieldValue, values)}
                                                     />
-                                                    <span className="ml-2 text-gray-900 text-sm">{`${countryData.service.name} (Fee: ${countryData.fee} ${countryData.currency})`}</span>
+                                                    <span className="ml-2 text-gray-900 ">{`${countryData.service.name} (Fee: ${countryData.fee} ${countryData.currency})`}</span>
                                                 </label>
                                             )
                                         ))}
@@ -135,11 +135,11 @@ const ApplyCard = ({ data }) => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="travelDate" className="block mb-2 text-sm font-medium text-gray-900">Travel Date</label>
+                                    <label htmlFor="travelDate" className="block mb-2  font-medium text-gray-900">Travel Date</label>
                                     <DatePicker
                                         selected={values.travelDate}
                                         onChange={date => setFieldValue('travelDate', date)}
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         dateFormat="yyyy/MM/dd"
                                         placeholderText="Select a date"
                                     />
@@ -148,7 +148,7 @@ const ApplyCard = ({ data }) => {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-blue-900 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                    className="w-full bg-blue-900 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center"
                                 >
                                     Apply
                                 </button>

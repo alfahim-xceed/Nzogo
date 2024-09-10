@@ -12,6 +12,8 @@ const ManageGeneralRoutes = () => (
         <Route path="/embassy-details/:id" element={<EmbassyDetails/>}/>
         <Route path="/countries" element={<ExploreCountries/>}/>
         <Route path="/country-details/:id" element={<CountryDetails/>}/>
+
+
     </Routes>
 );
 

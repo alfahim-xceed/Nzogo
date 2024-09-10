@@ -82,9 +82,9 @@ const BookAppointment = () => {
     })) || [];
 
     return (
-        <div className="max-w-lg mx-auto p-8 mt-8">
-            <h1 className="text-2xl font-semibold mb-6">Book an Appointment</h1>
-            <form onSubmit={formik.handleSubmit} className="space-y-4">
+        <div className="max-w-lg mx-auto p-8 mt-8 mb-19">
+            <h1 className="text-xl font-semibold mb-7 text-center">Book an Appointment</h1>
+            <form onSubmit={formik.handleSubmit} className="space-y-4 text-xs">
                 {/* Country Select */}
                 <div>
                     <label className="block mb-1 text-gray-700">Country</label>

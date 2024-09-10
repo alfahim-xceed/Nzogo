@@ -55,14 +55,14 @@ const HomeForm = () => {
     return (
         <div className="max-w-4xl mx-auto px-4 py-12">
             <div className="bg-white p-6 rounded-lg shadow-md">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Check Visa Details</h1>
+                <h1 className="text-xl font-semibold text-gray-800 mb-6 text-center">Check Visa Details</h1>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
                     {({ isSubmitting, setFieldValue }) => (
-                        <Form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <Form className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
                             {/* Country Selection */}
                             <div className="flex flex-col">
                                 <label htmlFor="travelling_to_id" className="text-gray-700 font-medium mb-2">

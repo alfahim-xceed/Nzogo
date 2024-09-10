@@ -38,7 +38,7 @@ const PasswordForm = () => {
     };
 
     return (
-        <>
+        <div className="my-5">
             <Formik
                 initialValues={initialValues}
                 enableReinitialize={true}
@@ -96,7 +96,7 @@ const PasswordForm = () => {
                     </Form>
                 )}
             </Formik>
-        </>
+        </div>
     );
 };
 

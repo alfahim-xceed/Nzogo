@@ -50,27 +50,27 @@ const AppointmentList = () => {
                         {details && details.length > 0 ? (
                             details.map((data, index) => (
                                 <tr key={data.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.country.name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-900">{index + 1}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">{data.country.name}</td>
 
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDateString(data.appointment_schedule)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">{formatDateString(data.appointment_schedule)}</td>
 
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <Link className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-md shadow-sm focus:outline-none"
+                                    <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
+                                        <Link className="px-4 py-2 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-md shadow-sm focus:outline-none"
                                             to={`/appointment/details/${data.id}`}>
                                             Details
                                         </Link>
                                     </td>
 
 
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-500 hover:text-red-700 cursor-pointer" onClick={() => handleDelete(data.id)}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-xs text-red-500 hover:text-red-700 cursor-pointer" onClick={() => handleDelete(data.id)}>
                                         <FontAwesomeIcon icon={faTrashAlt} />
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No appointment to show.</td>
+                                <td colSpan="4" className="px-6 py-4 text-center text-gray-500 text-xs">No appointment to show.</td>
                             </tr>
                         )}
                     </tbody>

@@ -63,7 +63,6 @@ const ProfileForm = ({id}) => {
 
     return (
         <>
-
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -71,7 +70,7 @@ const ProfileForm = ({id}) => {
                 enableReinitialize={true}
             >
                 {({ isSubmitting }) => (
-                    <Form className="space-y-4">
+                    <Form className="space-y-4 text-xs">
                         <div className="flex flex-col">
                             <label htmlFor="name" className="text-gray-700 mb-2">Name</label>
                             <Field

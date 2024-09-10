@@ -23,13 +23,13 @@ const VisaDetails = () => {
     }
 
     // const bannerInfo = ;
-    console.log(" cc ", details);
+    // console.log(" cc ", details);
 
     return (
         <div>
             {details && <>
                 <Banner data={["BD", details.categoryCountryRequiredDocuments[0]?.country.name, details.categoryCountryRequiredDocuments[0]?.category.name]} />
-                <div className="w-[80%] mx-auto">
+                <div className="w-[80%] mx-auto mb-16">
                     <div className="mt-9  flex items-start justify-evenly">
                         <div className="w-1/2">
                             <Documents data={details.categoryCountryRequiredDocuments} />
