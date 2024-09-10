@@ -20,7 +20,7 @@ const CountryList = () => {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Select an country</h2>
+                <h2 className="text-xl font-semibold">Select a country</h2>
 
             </div>
             <div className="overflow-x-auto">
@@ -39,6 +39,12 @@ const CountryList = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <Link to={`/admin/manage-process-step/step-list/${country.id}`}>
                                             {country.name}
+                                        </Link>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <Link to={`/admin/manage-process-step/step-list/${country.id}`}
+                                            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-md shadow-sm focus:outline-none">
+                                            Select
                                         </Link>
                                     </td>
 

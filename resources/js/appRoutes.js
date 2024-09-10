@@ -68,14 +68,22 @@ function AppRoutes() {
                 <Route path="/appointment/book" element={<BookAppointment />} />
 
                 <Route path="/" element={<Layout />}>
+                    {/* user profile */}
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/user/manage-profile" element={<ManageProfile />} />
+
+
+                    {/* manage user */}
                     <Route path="/admin/user-list" element={<UserList />} />
                     <Route path="/admin/create-user" element={<CreateUser />} />
                     <Route path="/admin/update-user" element={<UpdateUser />} />
-                    <Route path="/user/manage-nid" element={<ManageNid />} />
-                    <Route path="/user/manage-passport" element={<ManagePassport />} />
-                    <Route path="/user/manage-profile" element={<ManageProfile />} />
 
+                    {/* manage nid */}
+                    <Route path="/user/manage-nid" element={<ManageNid />} />
+                    {/* manage passport */}
+                    <Route path="/user/manage-passport" element={<ManagePassport />} />
+
+                    {/* particular user applied visa list */}
                     <Route path="/user/applied-visa-list" element={<AppliedVisaList />} />
 
 

@@ -53,6 +53,11 @@ const UserList = () => {
 
     return (
         <div className="overflow-x-auto">
+
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">User List</h2>
+
+            </div>
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>

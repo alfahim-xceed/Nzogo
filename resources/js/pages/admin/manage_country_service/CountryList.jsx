@@ -21,13 +21,8 @@ const CountryList = () => {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Country List</h2>
-                <Link to="/admin/add-country">
-                    <button className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                        <FontAwesomeIcon icon={faPlus} className="mr-2" />
-                        Add New
-                    </button>
-                </Link>
+                <h2 className="text-xl font-semibold">Select a country</h2>
+
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -46,6 +41,12 @@ const CountryList = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <Link to={`/admin/manage-country-service/country-service-list/${country.id}`}>
                                             {country.name}
+                                        </Link>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <Link to={`/admin/manage-country-service/country-service-list/${country.id}`}
+                                            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-md shadow-sm focus:outline-none">
+                                            Select
                                         </Link>
                                     </td>
 
